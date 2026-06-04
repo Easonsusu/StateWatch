@@ -1,16 +1,20 @@
 import Foundation
 
-struct UserCheckIn: Identifiable, Equatable {
-    enum Mood: String, CaseIterable {
+struct UserCheckIn: Identifiable, Codable, Equatable {
+    enum Mood: String, CaseIterable, Codable, Identifiable {
         case low = "Low"
         case neutral = "Neutral"
         case good = "Good"
+
+        var id: String { rawValue }
     }
 
-    enum Intensity: String, CaseIterable {
+    enum Intensity: String, CaseIterable, Codable, Identifiable {
         case low = "Low"
         case medium = "Medium"
         case high = "High"
+
+        var id: String { rawValue }
     }
 
     let id: UUID
@@ -35,13 +39,14 @@ struct UserCheckIn: Identifiable, Equatable {
         self.perceivedStress = perceivedStress
         self.note = note
     }
+
+    var hasNote: Bool {
+        !note.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
+    // TODO: Store check-ins locally and combine them with same-day HealthKit summaries.
 }
 
 extension UserCheckIn {
-    static let mock = UserCheckIn(
-        mood: .neutral,
-        fatigue: .medium,
-        perceivedStress: .medium,
-        note: "Felt okay after a busy morning."
-    )
+    static let mock = MockSampleData.todayCheckIn
 }
