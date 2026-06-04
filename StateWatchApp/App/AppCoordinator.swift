@@ -16,9 +16,10 @@ final class AppCoordinator: ObservableObject {
                 self?.launchState = .dashboard
             })
         case .dashboard:
-            DashboardView(assessment: .mock)
+            DashboardView()
         }
     }
 
     // TODO: Persist onboarding completion locally after the real app target exists.
+    // TODO: Replace the mock dashboard with a locally generated StateAssessment after HealthKit wiring.
 }
