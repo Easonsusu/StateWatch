@@ -6,7 +6,7 @@ final class AppCoordinator: ObservableObject {
         case dashboard
     }
 
-    @Published var launchState: LaunchState = .onboarding
+    @Published var launchState: LaunchState = .dashboard
 
     @ViewBuilder
     var rootView: some View {
