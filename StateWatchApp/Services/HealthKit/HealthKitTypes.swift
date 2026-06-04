@@ -25,8 +25,7 @@ struct HealthKitPermission: Identifiable, Codable, Equatable {
 enum HealthKitPermissionAccess: String, Codable, Equatable {
     case notDetermined
     case requestCompleted
-    case sharingDenied
-    case sharingAuthorized
+    case deniedOrLimited
     case unavailable
     case unknown
 
@@ -36,10 +35,8 @@ enum HealthKitPermissionAccess: String, Codable, Equatable {
             return "Not Requested"
         case .requestCompleted:
             return "Requested"
-        case .sharingDenied:
+        case .deniedOrLimited:
             return "Denied or Limited"
-        case .sharingAuthorized:
-            return "Available"
         case .unavailable:
             return "Unavailable"
         case .unknown:
@@ -78,7 +75,7 @@ struct HealthKitAuthorizationResult: Codable, Equatable {
     static let mockDenied = HealthKitAuthorizationResult(
         isHealthDataAvailable: true,
         didRequestAuthorization: false,
-        statuses: HealthKitTypes.permissionStatuses(access: .sharingDenied),
+        statuses: HealthKitTypes.permissionStatuses(access: .deniedOrLimited),
         errorMessage: "Health access is denied or limited. StateWatch can continue with mock data until access is changed in Settings."
     )
 
