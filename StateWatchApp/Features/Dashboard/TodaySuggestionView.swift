@@ -5,7 +5,7 @@ struct TodaySuggestionView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Today suggestion")
+            Text("Today's suggestion")
                 .font(.headline)
             Text(suggestion)
             Text("Wellness guidance only, not medical advice.")
