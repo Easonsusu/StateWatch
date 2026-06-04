@@ -1,8 +1,8 @@
 {
   "images": [
     {
-      "idiom": "universal",
-      "platform": "ios",
+      "idiom": "watch-marketing",
+      "scale": "1x",
       "size": "1024x1024"
     }
   ],
