@@ -1,0 +1,850 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0BEC138EA3EA229A1B84DD4B /* StateWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA96331AEAE8DDC6AE343CF8 /* StateWatchApp.swift */; };
+		9CEED23D3BB6E3C2EF6B76B6 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC7AE0CAEE351EAECD47668 /* AppCoordinator.swift */; };
+		53FFE876097319951743F30D /* DailyHealthSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A57ED9AFD7DDB1725B8E7F /* DailyHealthSnapshot.swift */; };
+		6765537052C7181AB3E947F6 /* HealthBaseline.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8F5BD50E4760680B43F867 /* HealthBaseline.swift */; };
+		8CBC479BB9CC9B2BCDF0F394 /* StateAssessment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0BB8F8130B13AAC0B9896B /* StateAssessment.swift */; };
+		88EACA03513945BA11B16D42 /* HealthMetricType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039195CC2B0FCC75A5124F9F /* HealthMetricType.swift */; };
+		6BFAE487968ECF8D6D282007 /* UserCheckIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F4810A4EECE5330E442257 /* UserCheckIn.swift */; };
+		869E719C1BCF39EC5D3AA05E /* MockSampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2236905CD340B8005EFB409B /* MockSampleData.swift */; };
+		676AED9DA772D17547F0D54B /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9162192B69D430B68D19D5 /* HealthKitManager.swift */; };
+		4013B86B4825BBA82B03E2AF /* HealthKitAuthorizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8C24C9E22E455D80201DE5 /* HealthKitAuthorizationService.swift */; };
+		F3CAEC1D445534ED943E1FD2 /* HealthDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D09D0A0F13BAF9B571EE754 /* HealthDataFetcher.swift */; };
+		61956CA8E1DA6BBEC2B7446B /* MockHealthDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5E7C08B3E3AA74F5111A1A /* MockHealthDataFetcher.swift */; };
+		E752AE1A8C6A2C7BAC3EDEB7 /* BaselineCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79048EA44A73426FF08CCCA0 /* BaselineCalculator.swift */; };
+		CDCCB9920B9D22F52D4C98F0 /* RecoveryScoreEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98518824E396BD6854B32D4A /* RecoveryScoreEngine.swift */; };
+		4AA0FEBD294D9150B7284A18 /* SleepScoreEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4533467843482BBDEBE78154 /* SleepScoreEngine.swift */; };
+		B13A3D0B5BBFB8E365968FC1 /* StressFatigueScoreEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0B80C1A638197F3B18C4F50 /* StressFatigueScoreEngine.swift */; };
+		206B0FE8B8EC5C6B8175AACE /* OverallStateEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886748E508B0752D06A63544 /* OverallStateEngine.swift */; };
+		5B61A235BCF96AC51B02C68F /* ExplanationGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42476271F4AF839F67B233F /* ExplanationGenerator.swift */; };
+		2CB941AB09ACF25E77613F09 /* SuggestionGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF6A442A71EA0F1E35F9ADF /* SuggestionGenerator.swift */; };
+		D66824BB175E0D3B588B49EC /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B459419C761C9C0FA8D69BAC /* OnboardingView.swift */; };
+		4391F5A1AD345FD661D9B527 /* HealthPermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3C00CF85CD4AF8A7927D5C /* HealthPermissionView.swift */; };
+		55C28D91C049A59ACC5443B1 /* DisclaimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF10FA19CC37AAF5A36C0F2 /* DisclaimerView.swift */; };
+		24E4328E3CC26259A3990AE4 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A13807477DE67A97BCCF9CC /* DashboardView.swift */; };
+		DAFB098807124E82D12DDFC4 /* ScoreRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC163E3729080AA28ADAFD5E /* ScoreRingView.swift */; };
+		02BE34F4D8C7F07DE3B0B8EE /* ReasonCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A94081BAF63A296A8F2EA5 /* ReasonCardView.swift */; };
+		8CFD169683EF6272EF6825CB /* TodaySuggestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DCD0B8FBC46721B48E58A4 /* TodaySuggestionView.swift */; };
+		BB0ABD24E4702FBA1B0FB90D /* TrendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853652C566447B2CA7A58A15 /* TrendsView.swift */; };
+		455DD4A664E5851354CD9920 /* MetricChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C72C723877A11910304015 /* MetricChartView.swift */; };
+		446CCE8875A29EA1B5446D59 /* CheckInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F4627276151E5D357A595C /* CheckInView.swift */; };
+		51E93BF3C85FA5447C4695C3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD28289274924C633330254 /* SettingsView.swift */; };
+		26A5D5805F75B8EEF449819D /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264518E81625260D83E6272D /* PrivacyView.swift */; };
+		9B3BCE063A0C83DE4F2B6BDC /* DailyHealthSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A57ED9AFD7DDB1725B8E7F /* DailyHealthSnapshot.swift */; };
+		AD7BCB2B8E9837F46FBD1D0C /* HealthBaseline.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8F5BD50E4760680B43F867 /* HealthBaseline.swift */; };
+		B0A5678559FF8F3405D533E9 /* StateAssessment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0BB8F8130B13AAC0B9896B /* StateAssessment.swift */; };
+		8B8B8A5E574880D54805B37E /* HealthMetricType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039195CC2B0FCC75A5124F9F /* HealthMetricType.swift */; };
+		E4ACF6624B70733A25F403B8 /* UserCheckIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F4810A4EECE5330E442257 /* UserCheckIn.swift */; };
+		0246927AC5F4D9507B292DCF /* MockSampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2236905CD340B8005EFB409B /* MockSampleData.swift */; };
+		2320930913CB8693BF55CAD0 /* StateWatchWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A106FE680F4F943C00E6ABC1 /* StateWatchWatchApp.swift */; };
+		9B161F9D95FA2B2197EADE04 /* WatchDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CEC8652F64EEF8B1C402DE /* WatchDashboardView.swift */; };
+		020AD294E232EEAA418E9B15 /* WatchScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6787F57710496E230B5F3CB /* WatchScoreView.swift */; };
+		475E6B6DA305F647BCEAB541 /* WatchSuggestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C99B9AA3D66A5E28720FCE /* WatchSuggestionView.swift */; };
+		739149B27465A24F818A77CF /* BaselineCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E935F18D147B46483011FF69 /* BaselineCalculatorTests.swift */; };
+		C31F3409BEAB476C9500E8A2 /* RecoveryScoreEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD61DF151A3052AF940D1C /* RecoveryScoreEngineTests.swift */; };
+		45929C35B08CC6FC2D96A261 /* SleepScoreEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7961319B0F3E33F2242038 /* SleepScoreEngineTests.swift */; };
+		3C56188075BB739B7A9098AB /* OverallStateEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00E70CE8EC82A9CC7441A44 /* OverallStateEngineTests.swift */; };
+		8B437F571E48E29B77FA65EA /* ModelCodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCE6065EFFA39833DBAC185 /* ModelCodableTests.swift */; };
+		654352D083481CB3F2CE4EAE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91D4105804A8108983609354 /* Assets.xcassets */; };
+		EB7EFA62BB587DF042AFB1C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C273FDA27C713F4E89B8D78 /* Assets.xcassets */; };
+		40BE8EC08D20FD2F0D580A05 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDD80F8A4F0C1686025DD75F /* HealthKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4DE24B8E6F42FFE3C336F94E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 98F54143AB4E86B28C3AFEE0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4A7035D6BC597411FFABF132;
+			remoteInfo = StateWatch;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		4DC7AE0CAEE351EAECD47668 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/App/AppCoordinator.swift; sourceTree = "<group>"; };
+		AA96331AEAE8DDC6AE343CF8 /* StateWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/App/StateWatchApp.swift; sourceTree = "<group>"; };
+		A1F4627276151E5D357A595C /* CheckInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/CheckIn/CheckInView.swift; sourceTree = "<group>"; };
+		0A13807477DE67A97BCCF9CC /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Dashboard/DashboardView.swift; sourceTree = "<group>"; };
+		60A94081BAF63A296A8F2EA5 /* ReasonCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Dashboard/ReasonCardView.swift; sourceTree = "<group>"; };
+		FC163E3729080AA28ADAFD5E /* ScoreRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Dashboard/ScoreRingView.swift; sourceTree = "<group>"; };
+		A3DCD0B8FBC46721B48E58A4 /* TodaySuggestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Dashboard/TodaySuggestionView.swift; sourceTree = "<group>"; };
+		7EF10FA19CC37AAF5A36C0F2 /* DisclaimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Onboarding/DisclaimerView.swift; sourceTree = "<group>"; };
+		ED3C00CF85CD4AF8A7927D5C /* HealthPermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Onboarding/HealthPermissionView.swift; sourceTree = "<group>"; };
+		B459419C761C9C0FA8D69BAC /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Onboarding/OnboardingView.swift; sourceTree = "<group>"; };
+		264518E81625260D83E6272D /* PrivacyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Settings/PrivacyView.swift; sourceTree = "<group>"; };
+		4DD28289274924C633330254 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Settings/SettingsView.swift; sourceTree = "<group>"; };
+		18C72C723877A11910304015 /* MetricChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Trends/MetricChartView.swift; sourceTree = "<group>"; };
+		853652C566447B2CA7A58A15 /* TrendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Trends/TrendsView.swift; sourceTree = "<group>"; };
+		88A57ED9AFD7DDB1725B8E7F /* DailyHealthSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Models/DailyHealthSnapshot.swift; sourceTree = "<group>"; };
+		DE8F5BD50E4760680B43F867 /* HealthBaseline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Models/HealthBaseline.swift; sourceTree = "<group>"; };
+		039195CC2B0FCC75A5124F9F /* HealthMetricType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Models/HealthMetricType.swift; sourceTree = "<group>"; };
+		2236905CD340B8005EFB409B /* MockSampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Models/MockSampleData.swift; sourceTree = "<group>"; };
+		BA0BB8F8130B13AAC0B9896B /* StateAssessment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Models/StateAssessment.swift; sourceTree = "<group>"; };
+		93F4810A4EECE5330E442257 /* UserCheckIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Models/UserCheckIn.swift; sourceTree = "<group>"; };
+		91D4105804A8108983609354 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = StateWatchApp/Resources/Assets.xcassets; sourceTree = "<group>"; };
+		F083CE7B13FB89F932A9172B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = StateWatchApp/Resources/Info.plist; sourceTree = "<group>"; };
+		D42476271F4AF839F67B233F /* ExplanationGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Services/Explanation/ExplanationGenerator.swift; sourceTree = "<group>"; };
+		CEF6A442A71EA0F1E35F9ADF /* SuggestionGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Services/Explanation/SuggestionGenerator.swift; sourceTree = "<group>"; };
+		5D09D0A0F13BAF9B571EE754 /* HealthDataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Services/HealthKit/HealthDataFetcher.swift; sourceTree = "<group>"; };
+		3C8C24C9E22E455D80201DE5 /* HealthKitAuthorizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Services/HealthKit/HealthKitAuthorizationService.swift; sourceTree = "<group>"; };
+		7E9162192B69D430B68D19D5 /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Services/HealthKit/HealthKitManager.swift; sourceTree = "<group>"; };
+		3B5E7C08B3E3AA74F5111A1A /* MockHealthDataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Services/HealthKit/MockHealthDataFetcher.swift; sourceTree = "<group>"; };
+		79048EA44A73426FF08CCCA0 /* BaselineCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Services/Scoring/BaselineCalculator.swift; sourceTree = "<group>"; };
+		886748E508B0752D06A63544 /* OverallStateEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Services/Scoring/OverallStateEngine.swift; sourceTree = "<group>"; };
+		98518824E396BD6854B32D4A /* RecoveryScoreEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Services/Scoring/RecoveryScoreEngine.swift; sourceTree = "<group>"; };
+		4533467843482BBDEBE78154 /* SleepScoreEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Services/Scoring/SleepScoreEngine.swift; sourceTree = "<group>"; };
+		B0B80C1A638197F3B18C4F50 /* StressFatigueScoreEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Services/Scoring/StressFatigueScoreEngine.swift; sourceTree = "<group>"; };
+		E935F18D147B46483011FF69 /* BaselineCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/BaselineCalculatorTests.swift; sourceTree = "<group>"; };
+		40C0B250765F998AA81DAE61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = StateWatchTests/Info.plist; sourceTree = "<group>"; };
+		7CCE6065EFFA39833DBAC185 /* ModelCodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/ModelCodableTests.swift; sourceTree = "<group>"; };
+		A00E70CE8EC82A9CC7441A44 /* OverallStateEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/OverallStateEngineTests.swift; sourceTree = "<group>"; };
+		63FD61DF151A3052AF940D1C /* RecoveryScoreEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/RecoveryScoreEngineTests.swift; sourceTree = "<group>"; };
+		7D7961319B0F3E33F2242038 /* SleepScoreEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/SleepScoreEngineTests.swift; sourceTree = "<group>"; };
+		A106FE680F4F943C00E6ABC1 /* StateWatchWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/App/StateWatchWatchApp.swift; sourceTree = "<group>"; };
+		DDA00BD7ACAE0EB5046D8BB8 /* StateWatchComplicationBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/Complications/StateWatchComplicationBundle.swift; sourceTree = "<group>"; };
+		E67D696501BF3FC7D59194CA /* StateWatchWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/Complications/StateWatchWidgetView.swift; sourceTree = "<group>"; };
+		96CEC8652F64EEF8B1C402DE /* WatchDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/Features/WatchDashboardView.swift; sourceTree = "<group>"; };
+		A6787F57710496E230B5F3CB /* WatchScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/Features/WatchScoreView.swift; sourceTree = "<group>"; };
+		88C99B9AA3D66A5E28720FCE /* WatchSuggestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/Features/WatchSuggestionView.swift; sourceTree = "<group>"; };
+		9C273FDA27C713F4E89B8D78 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = StateWatchWatchApp/Resources/Assets.xcassets; sourceTree = "<group>"; };
+		FF0CF48A97B01E78D8BC2265 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = StateWatchWatchApp/Resources/Info.plist; sourceTree = "<group>"; };
+		57157261AC48F9302A3B476E /* StateWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StateWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABB217AE039EB9EFED5B9F29 /* StateWatchWatchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StateWatchWatchApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E02A90D9643568EA39115CFB /* StateWatchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StateWatchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DDD80F8A4F0C1686025DD75F /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6419175100970E52AA461C9C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				40BE8EC08D20FD2F0D580A05 /* HealthKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CAB57044D1B3422FDCBD4B90 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F115AF690239BFBFCB7B4DE6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		ADCF10F76EBF2A74473E9DC4 /* StateWatch */ = {
+			isa = PBXGroup;
+			children = (
+				0AF852CB4EC02D272EC1FE9E /* StateWatchApp */,
+				CCC14EC45EB304A12306FE9E /* StateWatchTests */,
+				A7F2C127398E1711FE528CE7 /* StateWatchWatchApp */,
+				ED2F3B048716C9DC7573911C /* Frameworks */,
+				00C45FD35CB0F9C5F764F070 /* Products */,
+			);
+			name = StateWatch;
+			sourceTree = "<group>";
+		};
+		0AF852CB4EC02D272EC1FE9E /* StateWatchApp */ = {
+			isa = PBXGroup;
+			children = (
+				1ED5466CF39B159088F638B8 /* App */,
+				51C20A7D54A825DDD54571B3 /* Features */,
+				9CEB3DCFEB4A57EF57C0F557 /* Models */,
+				4C168F13BBD37F19628161BD /* Resources */,
+				659C3DF2A163B0A381EBDBBD /* Services */,
+			);
+			name = StateWatchApp;
+			sourceTree = "<group>";
+		};
+		1ED5466CF39B159088F638B8 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				4DC7AE0CAEE351EAECD47668 /* AppCoordinator.swift */,
+				AA96331AEAE8DDC6AE343CF8 /* StateWatchApp.swift */,
+			);
+			name = App;
+			sourceTree = "<group>";
+		};
+		51C20A7D54A825DDD54571B3 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				EF733483456EF338D65CD179 /* CheckIn */,
+				FD31001C4EA117B3FE6EBF46 /* Dashboard */,
+				86C514403E246B11C055742D /* Onboarding */,
+				F3C5CA8C9253EACA3D4A4D37 /* Settings */,
+				EADF73B24CD26112927560C4 /* Trends */,
+			);
+			name = Features;
+			sourceTree = "<group>";
+		};
+		EF733483456EF338D65CD179 /* CheckIn */ = {
+			isa = PBXGroup;
+			children = (
+				A1F4627276151E5D357A595C /* CheckInView.swift */,
+			);
+			name = CheckIn;
+			sourceTree = "<group>";
+		};
+		FD31001C4EA117B3FE6EBF46 /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				0A13807477DE67A97BCCF9CC /* DashboardView.swift */,
+				60A94081BAF63A296A8F2EA5 /* ReasonCardView.swift */,
+				FC163E3729080AA28ADAFD5E /* ScoreRingView.swift */,
+				A3DCD0B8FBC46721B48E58A4 /* TodaySuggestionView.swift */,
+			);
+			name = Dashboard;
+			sourceTree = "<group>";
+		};
+		86C514403E246B11C055742D /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				7EF10FA19CC37AAF5A36C0F2 /* DisclaimerView.swift */,
+				ED3C00CF85CD4AF8A7927D5C /* HealthPermissionView.swift */,
+				B459419C761C9C0FA8D69BAC /* OnboardingView.swift */,
+			);
+			name = Onboarding;
+			sourceTree = "<group>";
+		};
+		F3C5CA8C9253EACA3D4A4D37 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				264518E81625260D83E6272D /* PrivacyView.swift */,
+				4DD28289274924C633330254 /* SettingsView.swift */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+		EADF73B24CD26112927560C4 /* Trends */ = {
+			isa = PBXGroup;
+			children = (
+				18C72C723877A11910304015 /* MetricChartView.swift */,
+				853652C566447B2CA7A58A15 /* TrendsView.swift */,
+			);
+			name = Trends;
+			sourceTree = "<group>";
+		};
+		9CEB3DCFEB4A57EF57C0F557 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				88A57ED9AFD7DDB1725B8E7F /* DailyHealthSnapshot.swift */,
+				DE8F5BD50E4760680B43F867 /* HealthBaseline.swift */,
+				039195CC2B0FCC75A5124F9F /* HealthMetricType.swift */,
+				2236905CD340B8005EFB409B /* MockSampleData.swift */,
+				BA0BB8F8130B13AAC0B9896B /* StateAssessment.swift */,
+				93F4810A4EECE5330E442257 /* UserCheckIn.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		4C168F13BBD37F19628161BD /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				91D4105804A8108983609354 /* Assets.xcassets */,
+				F083CE7B13FB89F932A9172B /* Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		659C3DF2A163B0A381EBDBBD /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				09CB366C81474365A02C4BAC /* Explanation */,
+				387792C6CB44229772A7644A /* HealthKit */,
+				9A4B44F70D75B2E7C7D7B3FD /* Scoring */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
+		09CB366C81474365A02C4BAC /* Explanation */ = {
+			isa = PBXGroup;
+			children = (
+				D42476271F4AF839F67B233F /* ExplanationGenerator.swift */,
+				CEF6A442A71EA0F1E35F9ADF /* SuggestionGenerator.swift */,
+			);
+			name = Explanation;
+			sourceTree = "<group>";
+		};
+		387792C6CB44229772A7644A /* HealthKit */ = {
+			isa = PBXGroup;
+			children = (
+				5D09D0A0F13BAF9B571EE754 /* HealthDataFetcher.swift */,
+				3C8C24C9E22E455D80201DE5 /* HealthKitAuthorizationService.swift */,
+				7E9162192B69D430B68D19D5 /* HealthKitManager.swift */,
+				3B5E7C08B3E3AA74F5111A1A /* MockHealthDataFetcher.swift */,
+			);
+			name = HealthKit;
+			sourceTree = "<group>";
+		};
+		9A4B44F70D75B2E7C7D7B3FD /* Scoring */ = {
+			isa = PBXGroup;
+			children = (
+				79048EA44A73426FF08CCCA0 /* BaselineCalculator.swift */,
+				886748E508B0752D06A63544 /* OverallStateEngine.swift */,
+				98518824E396BD6854B32D4A /* RecoveryScoreEngine.swift */,
+				4533467843482BBDEBE78154 /* SleepScoreEngine.swift */,
+				B0B80C1A638197F3B18C4F50 /* StressFatigueScoreEngine.swift */,
+			);
+			name = Scoring;
+			sourceTree = "<group>";
+		};
+		CCC14EC45EB304A12306FE9E /* StateWatchTests */ = {
+			isa = PBXGroup;
+			children = (
+				E935F18D147B46483011FF69 /* BaselineCalculatorTests.swift */,
+				40C0B250765F998AA81DAE61 /* Info.plist */,
+				7CCE6065EFFA39833DBAC185 /* ModelCodableTests.swift */,
+				A00E70CE8EC82A9CC7441A44 /* OverallStateEngineTests.swift */,
+				63FD61DF151A3052AF940D1C /* RecoveryScoreEngineTests.swift */,
+				7D7961319B0F3E33F2242038 /* SleepScoreEngineTests.swift */,
+			);
+			name = StateWatchTests;
+			sourceTree = "<group>";
+		};
+		A7F2C127398E1711FE528CE7 /* StateWatchWatchApp */ = {
+			isa = PBXGroup;
+			children = (
+				91581543C823F2A7F09B2E27 /* App */,
+				972F596C6058204C61AA3BC8 /* Complications */,
+				732088BE33F0083B8E1152BB /* Features */,
+				645C7608CD3854D8B2C803E9 /* Resources */,
+			);
+			name = StateWatchWatchApp;
+			sourceTree = "<group>";
+		};
+		91581543C823F2A7F09B2E27 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				A106FE680F4F943C00E6ABC1 /* StateWatchWatchApp.swift */,
+			);
+			name = App;
+			sourceTree = "<group>";
+		};
+		972F596C6058204C61AA3BC8 /* Complications */ = {
+			isa = PBXGroup;
+			children = (
+				DDA00BD7ACAE0EB5046D8BB8 /* StateWatchComplicationBundle.swift */,
+				E67D696501BF3FC7D59194CA /* StateWatchWidgetView.swift */,
+			);
+			name = Complications;
+			sourceTree = "<group>";
+		};
+		732088BE33F0083B8E1152BB /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				96CEC8652F64EEF8B1C402DE /* WatchDashboardView.swift */,
+				A6787F57710496E230B5F3CB /* WatchScoreView.swift */,
+				88C99B9AA3D66A5E28720FCE /* WatchSuggestionView.swift */,
+			);
+			name = Features;
+			sourceTree = "<group>";
+		};
+		645C7608CD3854D8B2C803E9 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9C273FDA27C713F4E89B8D78 /* Assets.xcassets */,
+				FF0CF48A97B01E78D8BC2265 /* Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		ED2F3B048716C9DC7573911C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DDD80F8A4F0C1686025DD75F /* HealthKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		00C45FD35CB0F9C5F764F070 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				57157261AC48F9302A3B476E /* StateWatch.app */,
+				ABB217AE039EB9EFED5B9F29 /* StateWatchWatchApp.app */,
+				E02A90D9643568EA39115CFB /* StateWatchTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4A7035D6BC597411FFABF132 /* StateWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D125827EE8B4150F1AD57F90 /* Build configuration list for PBXNativeTarget "StateWatch" */;
+			buildPhases = (
+				3EB653855794ACB8194696BC /* Sources */,
+				6419175100970E52AA461C9C /* Frameworks */,
+				166A09B4A5A2A8BE7565A775 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StateWatch;
+			productName = StateWatch;
+			productReference = 57157261AC48F9302A3B476E /* StateWatch.app */;
+			productType = "com.apple.product-type.application";
+		};
+		630F6089B0F19274BB930806 /* StateWatchWatchApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA64D10A92DD56914D1A41DB /* Build configuration list for PBXNativeTarget "StateWatchWatchApp" */;
+			buildPhases = (
+				8CA58B3836539C87BAF378EB /* Sources */,
+				CAB57044D1B3422FDCBD4B90 /* Frameworks */,
+				DDD6FE7A96F211931B4C861E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StateWatchWatchApp;
+			productName = StateWatchWatchApp;
+			productReference = ABB217AE039EB9EFED5B9F29 /* StateWatchWatchApp.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		510957F267710ADD72D63A39 /* StateWatchTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0AD37307DFDAE852A779B369 /* Build configuration list for PBXNativeTarget "StateWatchTests" */;
+			buildPhases = (
+				B6F43314D0693B2B792DAE17 /* Sources */,
+				F115AF690239BFBFCB7B4DE6 /* Frameworks */,
+				2BD6B9B82414E6AB1198F133 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C7AB50C595976B3E0AF6BF07 /* PBXTargetDependency */,
+			);
+			name = StateWatchTests;
+			productName = StateWatchTests;
+			productReference = E02A90D9643568EA39115CFB /* StateWatchTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		98F54143AB4E86B28C3AFEE0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					4A7035D6BC597411FFABF132 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					630F6089B0F19274BB930806 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					510957F267710ADD72D63A39 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = 4A7035D6BC597411FFABF132;
+					};
+				};
+			};
+			buildConfigurationList = 247BF104A9AD002C539DA531 /* Build configuration list for PBXProject "StateWatch" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = ADCF10F76EBF2A74473E9DC4;
+			productRefGroup = 00C45FD35CB0F9C5F764F070 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4A7035D6BC597411FFABF132 /* StateWatch */,
+				630F6089B0F19274BB930806 /* StateWatchWatchApp */,
+				510957F267710ADD72D63A39 /* StateWatchTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		166A09B4A5A2A8BE7565A775 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				654352D083481CB3F2CE4EAE /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DDD6FE7A96F211931B4C861E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EB7EFA62BB587DF042AFB1C3 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BD6B9B82414E6AB1198F133 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3EB653855794ACB8194696BC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0BEC138EA3EA229A1B84DD4B /* StateWatchApp.swift in Sources */,
+				9CEED23D3BB6E3C2EF6B76B6 /* AppCoordinator.swift in Sources */,
+				53FFE876097319951743F30D /* DailyHealthSnapshot.swift in Sources */,
+				6765537052C7181AB3E947F6 /* HealthBaseline.swift in Sources */,
+				8CBC479BB9CC9B2BCDF0F394 /* StateAssessment.swift in Sources */,
+				88EACA03513945BA11B16D42 /* HealthMetricType.swift in Sources */,
+				6BFAE487968ECF8D6D282007 /* UserCheckIn.swift in Sources */,
+				869E719C1BCF39EC5D3AA05E /* MockSampleData.swift in Sources */,
+				676AED9DA772D17547F0D54B /* HealthKitManager.swift in Sources */,
+				4013B86B4825BBA82B03E2AF /* HealthKitAuthorizationService.swift in Sources */,
+				F3CAEC1D445534ED943E1FD2 /* HealthDataFetcher.swift in Sources */,
+				61956CA8E1DA6BBEC2B7446B /* MockHealthDataFetcher.swift in Sources */,
+				E752AE1A8C6A2C7BAC3EDEB7 /* BaselineCalculator.swift in Sources */,
+				CDCCB9920B9D22F52D4C98F0 /* RecoveryScoreEngine.swift in Sources */,
+				4AA0FEBD294D9150B7284A18 /* SleepScoreEngine.swift in Sources */,
+				B13A3D0B5BBFB8E365968FC1 /* StressFatigueScoreEngine.swift in Sources */,
+				206B0FE8B8EC5C6B8175AACE /* OverallStateEngine.swift in Sources */,
+				5B61A235BCF96AC51B02C68F /* ExplanationGenerator.swift in Sources */,
+				2CB941AB09ACF25E77613F09 /* SuggestionGenerator.swift in Sources */,
+				D66824BB175E0D3B588B49EC /* OnboardingView.swift in Sources */,
+				4391F5A1AD345FD661D9B527 /* HealthPermissionView.swift in Sources */,
+				55C28D91C049A59ACC5443B1 /* DisclaimerView.swift in Sources */,
+				24E4328E3CC26259A3990AE4 /* DashboardView.swift in Sources */,
+				DAFB098807124E82D12DDFC4 /* ScoreRingView.swift in Sources */,
+				02BE34F4D8C7F07DE3B0B8EE /* ReasonCardView.swift in Sources */,
+				8CFD169683EF6272EF6825CB /* TodaySuggestionView.swift in Sources */,
+				BB0ABD24E4702FBA1B0FB90D /* TrendsView.swift in Sources */,
+				455DD4A664E5851354CD9920 /* MetricChartView.swift in Sources */,
+				446CCE8875A29EA1B5446D59 /* CheckInView.swift in Sources */,
+				51E93BF3C85FA5447C4695C3 /* SettingsView.swift in Sources */,
+				26A5D5805F75B8EEF449819D /* PrivacyView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8CA58B3836539C87BAF378EB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9B3BCE063A0C83DE4F2B6BDC /* DailyHealthSnapshot.swift in Sources */,
+				AD7BCB2B8E9837F46FBD1D0C /* HealthBaseline.swift in Sources */,
+				B0A5678559FF8F3405D533E9 /* StateAssessment.swift in Sources */,
+				8B8B8A5E574880D54805B37E /* HealthMetricType.swift in Sources */,
+				E4ACF6624B70733A25F403B8 /* UserCheckIn.swift in Sources */,
+				0246927AC5F4D9507B292DCF /* MockSampleData.swift in Sources */,
+				2320930913CB8693BF55CAD0 /* StateWatchWatchApp.swift in Sources */,
+				9B161F9D95FA2B2197EADE04 /* WatchDashboardView.swift in Sources */,
+				020AD294E232EEAA418E9B15 /* WatchScoreView.swift in Sources */,
+				475E6B6DA305F647BCEAB541 /* WatchSuggestionView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B6F43314D0693B2B792DAE17 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				739149B27465A24F818A77CF /* BaselineCalculatorTests.swift in Sources */,
+				C31F3409BEAB476C9500E8A2 /* RecoveryScoreEngineTests.swift in Sources */,
+				45929C35B08CC6FC2D96A261 /* SleepScoreEngineTests.swift in Sources */,
+				3C56188075BB739B7A9098AB /* OverallStateEngineTests.swift in Sources */,
+				8B437F571E48E29B77FA65EA /* ModelCodableTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C7AB50C595976B3E0AF6BF07 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4A7035D6BC597411FFABF132 /* StateWatch */;
+			targetProxy = 4DE24B8E6F42FFE3C336F94E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		73BFC4993D558C2844970A56 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		3C5BC6FE1E438E679FB7F74F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		EA360DEB381C44FDC209AFF5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = StateWatchApp/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.easonsusu.StateWatch;
+				PRODUCT_MODULE_NAME = StateWatchApp;
+				PRODUCT_NAME = StateWatch;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B7926C15FE36E4BA206F0B22 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = StateWatchApp/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.easonsusu.StateWatch;
+				PRODUCT_MODULE_NAME = StateWatchApp;
+				PRODUCT_NAME = StateWatch;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		3D8581709F4BC26260BD1FFD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = StateWatchWatchApp/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.easonsusu.StateWatch.watchapp;
+				PRODUCT_MODULE_NAME = StateWatchWatchApp;
+				PRODUCT_NAME = StateWatchWatchApp;
+				SDKROOT = watchos;
+				SKIP_INSTALL = NO;
+				SUPPORTED_PLATFORMS = "watchos watchsimulator";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		5AB6A7B4312D4ADF65B895AD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = StateWatchWatchApp/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.easonsusu.StateWatch.watchapp;
+				PRODUCT_MODULE_NAME = StateWatchWatchApp;
+				PRODUCT_NAME = StateWatchWatchApp;
+				SDKROOT = watchos;
+				SKIP_INSTALL = NO;
+				SUPPORTED_PLATFORMS = "watchos watchsimulator";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+		0FDEFC4302813C22AF141CA7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = StateWatchTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.easonsusu.StateWatchTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StateWatch.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/StateWatch";
+			};
+			name = Debug;
+		};
+		779A6DE1C6EB04ECC0A3779E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = StateWatchTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.easonsusu.StateWatchTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StateWatch.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/StateWatch";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		247BF104A9AD002C539DA531 /* Build configuration list for PBXProject "StateWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				73BFC4993D558C2844970A56 /* Debug */,
+				3C5BC6FE1E438E679FB7F74F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D125827EE8B4150F1AD57F90 /* Build configuration list for PBXNativeTarget "StateWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EA360DEB381C44FDC209AFF5 /* Debug */,
+				B7926C15FE36E4BA206F0B22 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA64D10A92DD56914D1A41DB /* Build configuration list for PBXNativeTarget "StateWatchWatchApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3D8581709F4BC26260BD1FFD /* Debug */,
+				5AB6A7B4312D4ADF65B895AD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0AD37307DFDAE852A779B369 /* Build configuration list for PBXNativeTarget "StateWatchTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0FDEFC4302813C22AF141CA7 /* Debug */,
+				779A6DE1C6EB04ECC0A3779E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 98F54143AB4E86B28C3AFEE0 /* Project object */;
+}
