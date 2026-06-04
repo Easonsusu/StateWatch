@@ -1,6 +1,6 @@
 import Foundation
 
-enum HealthMetricType: String, CaseIterable, Identifiable {
+enum HealthMetricType: String, CaseIterable, Codable, Identifiable, Equatable {
     case restingHeartRate
     case heartRateVariability
     case sleepDuration
@@ -34,6 +34,15 @@ enum HealthMetricType: String, CaseIterable, Identifiable {
         case .exerciseMinutes, .mindfulMinutes: return "min"
         case .standHours: return "hr"
         case .steps: return "steps"
+        }
+    }
+
+    var wellnessArea: String {
+        switch self {
+        case .restingHeartRate, .heartRateVariability: return "Recovery"
+        case .sleepDuration: return "Sleep"
+        case .activeEnergy, .exerciseMinutes, .standHours, .steps: return "Activity Load"
+        case .mindfulMinutes: return "Stress/Fatigue"
         }
     }
 }
