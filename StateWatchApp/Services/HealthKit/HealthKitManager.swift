@@ -103,7 +103,7 @@ final class HealthKitManager: ObservableObject {
 
         if !result.isHealthDataAvailable {
             authorizationState = .unavailable
-        } else if result.statuses.contains(where: { $0.access == .sharingDenied }) || result.errorMessage != nil {
+        } else if result.statuses.contains(where: { $0.access == .deniedOrLimited }) || result.errorMessage != nil {
             authorizationState = .deniedOrLimited
         } else if result.didRequestAuthorization {
             authorizationState = .readAccessRequested
