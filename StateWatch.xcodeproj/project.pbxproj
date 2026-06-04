@@ -417,7 +417,7 @@
 			name = StateWatchWatchApp;
 			productName = StateWatchWatchApp;
 			productReference = ABB217AE039EB9EFED5B9F29 /* StateWatchWatchApp.app */;
-			productType = "com.apple.product-type.application.watchapp2";
+			productType = "com.apple.product-type.application";
 		};
 		510957F267710ADD72D63A39 /* StateWatchTests */ = {
 			isa = PBXNativeTarget;
@@ -707,6 +707,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
+				EXECUTABLE_NAME = "$(EXECUTABLE_PREFIX)$(PRODUCT_NAME)$(EXECUTABLE_SUFFIX)";
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = StateWatchWatchApp/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -714,6 +715,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.0;
+				MACH_O_TYPE = mh_execute;
 				PRODUCT_BUNDLE_IDENTIFIER = com.easonsusu.StateWatch.watchapp;
 				PRODUCT_MODULE_NAME = StateWatchWatchApp;
 				PRODUCT_NAME = StateWatchWatchApp;
@@ -723,6 +725,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
 		};
@@ -734,6 +737,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
+				EXECUTABLE_NAME = "$(EXECUTABLE_PREFIX)$(PRODUCT_NAME)$(EXECUTABLE_SUFFIX)";
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = StateWatchWatchApp/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -741,6 +745,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.0;
+				MACH_O_TYPE = mh_execute;
 				PRODUCT_BUNDLE_IDENTIFIER = com.easonsusu.StateWatch.watchapp;
 				PRODUCT_MODULE_NAME = StateWatchWatchApp;
 				PRODUCT_NAME = StateWatchWatchApp;
@@ -750,6 +755,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
 		};
