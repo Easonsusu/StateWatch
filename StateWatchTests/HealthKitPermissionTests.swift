@@ -24,7 +24,7 @@ final class HealthKitPermissionTests: XCTestCase {
         }
     }
 
-    func testMockAuthorizationResultsRepresentGrantedAndDeniedFlows() {
+    func testMockAuthorizationResultsRepresentRequestedAndDeniedFlows() {
         let requested = HealthKitAuthorizationResult.mockReadAccessRequested
         let denied = HealthKitAuthorizationResult.mockDenied
 
@@ -34,7 +34,7 @@ final class HealthKitPermissionTests: XCTestCase {
 
         XCTAssertTrue(denied.isHealthDataAvailable)
         XCTAssertFalse(denied.didRequestAuthorization)
-        XCTAssertTrue(denied.statuses.allSatisfy { $0.access == .sharingDenied })
+        XCTAssertTrue(denied.statuses.allSatisfy { $0.access == .deniedOrLimited })
         XCTAssertNotNil(denied.errorMessage)
     }
 
