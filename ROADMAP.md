@@ -1,16 +1,19 @@
 # Roadmap
 
-## Phase 0: Foundation
+## Phase 0: Foundation - ready to merge
 
 - Add documentation and safety guardrails.
 - Add Swift models, services, placeholder views, mock data, and test placeholders.
 - Avoid creating a real Xcode project until target setup is planned.
 
-## Phase 1: Xcode project setup
+## Phase 1: Xcode project setup - in progress
 
-- Create iOS app, watch app, watch extension, and test targets.
+- Create iOS app, watch app, and test targets.
 - Add shared model/service files to the correct target memberships.
-- Verify the placeholder app builds on iOS simulator and watchOS simulator.
+- Launch the iOS app into the mock dashboard.
+- Launch the watchOS app into the mock watch dashboard.
+- Keep HealthKit services mocked and local-only.
+- Verify the placeholder app builds on iOS simulator and watchOS simulator from a full Xcode installation.
 
 ## Phase 2: Local HealthKit MVP
 
