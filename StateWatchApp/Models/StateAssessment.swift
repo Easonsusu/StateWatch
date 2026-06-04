@@ -1,6 +1,6 @@
 import Foundation
 
-struct StateAssessment: Identifiable, Equatable {
+struct StateAssessment: Identifiable, Codable, Equatable {
     let id: UUID
     let date: Date
     let overallScore: Int
@@ -26,7 +26,7 @@ struct StateAssessment: Identifiable, Equatable {
     ) {
         self.id = id
         self.date = date
-        self.overallScore = overallScore
+        self.overallScore = min(100, max(0, overallScore))
         self.level = level
         self.recovery = recovery
         self.sleep = sleep
@@ -35,19 +35,39 @@ struct StateAssessment: Identifiable, Equatable {
         self.reasons = reasons
         self.suggestions = suggestions
     }
+
+    var components: [ScoreComponent] {
+        [recovery, sleep, stressFatigue, activityLoad]
+    }
+
+    var primarySuggestion: String {
+        suggestions.first ?? "Check in with how you feel before adjusting your day."
+    }
+
+    // TODO: Add data-quality metadata once real local HealthKit reads can be partial or unavailable.
 }
 
-struct ScoreComponent: Equatable {
+struct ScoreComponent: Identifiable, Codable, Equatable {
+    let id: String
     let title: String
     let score: Int
     let summary: String
+
+    init(id: String? = nil, title: String, score: Int, summary: String) {
+        self.id = id ?? title
+        self.title = title
+        self.score = min(100, max(0, score))
+        self.summary = summary
+    }
 }
 
-enum StateLevel: String, CaseIterable {
+enum StateLevel: String, CaseIterable, Codable, Identifiable {
     case steady = "Steady"
     case mixed = "Mixed"
     case low = "Low"
     case needsRest = "Needs Rest"
+
+    var id: String { rawValue }
 
     static func level(for score: Int) -> StateLevel {
         switch score {
@@ -60,22 +80,6 @@ enum StateLevel: String, CaseIterable {
 }
 
 extension StateAssessment {
-    static let mock = StateAssessment(
-        date: .now,
-        overallScore: 76,
-        level: .mixed,
-        recovery: ScoreComponent(title: "Recovery", score: 78, summary: "Recovery signals look generally steady today."),
-        sleep: ScoreComponent(title: "Sleep", score: 82, summary: "Sleep duration is close to your recent pattern."),
-        stressFatigue: ScoreComponent(title: "Stress/Fatigue", score: 68, summary: "A few signals may suggest taking the day a little easier."),
-        activityLoad: ScoreComponent(title: "Activity Load", score: 74, summary: "Recent activity looks moderate."),
-        reasons: [
-            "Sleep duration is near your recent baseline.",
-            "Recovery signals are mixed but not sharply different from recent mock data.",
-            "Your check-in adds useful context for today's wellness reflection."
-        ],
-        suggestions: [
-            "Consider a lighter activity day if that matches how you feel.",
-            "A consistent bedtime tonight may support recovery."
-        ]
-    )
+    static let mock = MockSampleData.todayAssessment
+    static let mockLow = MockSampleData.lowEnergyAssessment
 }

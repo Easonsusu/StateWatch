@@ -4,7 +4,7 @@ import SwiftUI
 struct StateWatchWatchApp: App {
     var body: some Scene {
         WindowGroup {
-            WatchDashboardView(assessment: .mock)
+            WatchDashboardView()
         }
     }
 }

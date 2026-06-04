@@ -3,17 +3,19 @@ import SwiftUI
 struct DashboardView: View {
     let assessment: StateAssessment
 
+    init(assessment: StateAssessment = .mock) {
+        self.assessment = assessment
+    }
+
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: 20) {
+                LazyVStack(spacing: 16) {
                     ScoreRingView(score: assessment.overallScore, title: assessment.level.rawValue)
+                        .padding(.vertical, 12)
 
-                    VStack(spacing: 12) {
-                        componentRow(assessment.recovery)
-                        componentRow(assessment.sleep)
-                        componentRow(assessment.stressFatigue)
-                        componentRow(assessment.activityLoad)
+                    ForEach(assessment.components) { component in
+                        componentRow(component)
                     }
 
                     ForEach(assessment.reasons, id: \.self) { reason in
@@ -26,24 +28,34 @@ struct DashboardView: View {
             }
             .navigationTitle("Today")
         }
+        // TODO: Inject a real assessment once local HealthKit snapshots and scoring are wired together.
     }
 
     private func componentRow(_ component: ScoreComponent) -> some View {
-        HStack {
-            VStack(alignment: .leading) {
-                Text(component.title).font(.headline)
-                Text(component.summary).font(.caption).foregroundStyle(.secondary)
+        HStack(alignment: .center, spacing: 12) {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(component.title)
+                    .font(.headline)
+                Text(component.summary)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             }
-            Spacer()
+            Spacer(minLength: 8)
             Text("\(component.score)")
                 .font(.headline.monospacedDigit())
+                .foregroundStyle(.primary)
         }
         .padding()
+        .frame(maxWidth: .infinity, alignment: .leading)
         .background(.thinMaterial)
         .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 }
 
-#Preview {
-    DashboardView(assessment: .mock)
+#Preview("Mock Today") {
+    DashboardView()
+}
+
+#Preview("Lower Energy Mock") {
+    DashboardView(assessment: .mockLow)
 }

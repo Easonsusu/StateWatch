@@ -1,6 +1,6 @@
 import Foundation
 
-struct DailyHealthSnapshot: Identifiable, Equatable {
+struct DailyHealthSnapshot: Identifiable, Codable, Equatable {
     let id: UUID
     let date: Date
     let restingHeartRate: Double?
@@ -38,34 +38,29 @@ struct DailyHealthSnapshot: Identifiable, Equatable {
         self.mindfulMinutes = mindfulMinutes
         self.checkIn = checkIn
     }
+
+    var availableMetrics: [HealthMetricType] {
+        HealthMetricType.allCases.filter { value(for: $0) != nil }
+    }
+
+    func value(for metric: HealthMetricType) -> Double? {
+        switch metric {
+        case .restingHeartRate: return restingHeartRate
+        case .heartRateVariability: return heartRateVariability
+        case .sleepDuration: return sleepDurationHours
+        case .activeEnergy: return activeEnergyKcal
+        case .exerciseMinutes: return exerciseMinutes
+        case .standHours: return standHours
+        case .steps: return stepCount
+        case .mindfulMinutes: return mindfulMinutes
+        }
+    }
+
+    // TODO: Populate these optional values from local HealthKit reads after authorization is implemented.
 }
 
 extension DailyHealthSnapshot {
-    static let mockToday = DailyHealthSnapshot(
-        date: .now,
-        restingHeartRate: 58,
-        heartRateVariability: 62,
-        sleepDurationHours: 7.4,
-        activeEnergyKcal: 520,
-        exerciseMinutes: 38,
-        standHours: 10,
-        stepCount: 8200,
-        mindfulMinutes: 6,
-        checkIn: .mock
-    )
-
-    static let mockWeek: [DailyHealthSnapshot] = (0..<7).map { offset in
-        DailyHealthSnapshot(
-            date: Calendar.current.date(byAdding: .day, value: -offset, to: .now) ?? .now,
-            restingHeartRate: 58 + Double(offset % 3),
-            heartRateVariability: 62 - Double(offset * 2),
-            sleepDurationHours: 7.4 - Double(offset % 2) * 0.6,
-            activeEnergyKcal: 480 + Double(offset * 20),
-            exerciseMinutes: 30 + Double(offset % 4) * 5,
-            standHours: 9 + Double(offset % 3),
-            stepCount: 7000 + Double(offset * 350),
-            mindfulMinutes: Double(offset % 2) * 5,
-            checkIn: offset == 0 ? .mock : nil
-        )
-    }
+    static let mockToday = MockSampleData.todaySnapshot
+    static let mockWeek = MockSampleData.weeklySnapshots
+    static let mockPartial = MockSampleData.partialSnapshot
 }
