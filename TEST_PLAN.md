@@ -2,7 +2,7 @@
 
 ## Current scope
 
-StateWatch now includes a runnable iOS app target, watchOS app target, and XCTest target. The current test focus is the mock dashboard, read-only HealthKit permission flow, and local-only HealthKit data fetch foundation.
+StateWatch now includes a runnable iOS app target, watchOS app target, and XCTest target. The current test focus is the mock dashboard, read-only HealthKit permission flow, local-only HealthKit data fetch foundation, and rule-based baseline/scoring engine.
 
 ## Foundation checks
 
@@ -13,14 +13,28 @@ StateWatch now includes a runnable iOS app target, watchOS app target, and XCTes
 - Confirm no file claims medical diagnosis or disease detection.
 - Confirm HealthKit data upload is not introduced.
 
-## Future automated tests
+## Automated Scoring Tests
 
 - Baseline calculation handles empty, sparse, and normal mock histories.
-- Recovery scoring responds conservatively to HRV and resting heart rate changes.
-- Sleep scoring reflects duration and consistency without medical claims.
-- Overall state combines components and generates user-facing reasons.
+- Baseline calculation ignores nil metric values.
+- Baseline calculation requires enough valid samples before exposing a metric average.
+- Baseline calculation supports 7-day, 14-day, and 30-day windows.
+- Sparse baseline history produces low or unavailable confidence.
+- Recovery scoring responds conservatively to HRV below baseline.
+- Recovery scoring responds conservatively to resting heart rate above baseline.
+- Sleep scoring reflects duration below baseline and recent sleep trend.
+- Missing sleep data returns a cautious placeholder and unavailable confidence.
+- Overall state combines recovery, sleep, stress/fatigue context, and activity load with the MVP weights.
+- Scores are clamped between 0 and 100.
+- Low-data history produces lower-confidence StateAssessment output.
 - Suggestion generation avoids medical advice and uses cautious language.
 - HealthKit aggregation keeps missing data optional and never treats missing samples as a negative signal.
+
+## Future Automated Tests
+
+- Add fixture histories for low activity, high activity, strong sleep consistency, and mixed signal days.
+- Add UI snapshot or preview checks once the dashboard consumes scored mock histories.
+- Add regression tests for any debug-only HealthKit assessment preview added in a later phase.
 
 ## Manual QA for MVP
 
@@ -43,3 +57,13 @@ StateWatch now includes a runnable iOS app target, watchOS app target, and XCTes
 - Confirm available HealthKit samples populate optional snapshot fields and unavailable metrics remain `nil`.
 - Confirm no HealthKit write prompt appears.
 - Confirm no network calls or upload paths are introduced.
+
+## Manual Scoring Checks
+
+- Run the `StateWatch` scheme on an iPhone simulator and confirm the dashboard still shows the mock wellness assessment.
+- Run the `StateWatchWatchApp` scheme on an Apple Watch simulator and confirm the watch dashboard still shows mock assessment data.
+- Confirm no production dashboard path has been switched to live HealthKit data.
+- Run the XCTest target and confirm baseline/scoring tests pass.
+- Review score explanations for cautious wellness wording.
+- Confirm sparse or missing mock history produces lower confidence language instead of negative health conclusions.
+- Confirm no score text claims to detect illness, disease, a medical condition, or clinical stress.

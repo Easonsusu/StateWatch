@@ -9,6 +9,7 @@ struct StateAssessment: Identifiable, Codable, Equatable {
     let sleep: ScoreComponent
     let stressFatigue: ScoreComponent
     let activityLoad: ScoreComponent
+    let confidence: ScoreConfidence
     let reasons: [String]
     let suggestions: [String]
 
@@ -21,6 +22,7 @@ struct StateAssessment: Identifiable, Codable, Equatable {
         sleep: ScoreComponent,
         stressFatigue: ScoreComponent,
         activityLoad: ScoreComponent,
+        confidence: ScoreConfidence? = nil,
         reasons: [String],
         suggestions: [String]
     ) {
@@ -32,6 +34,7 @@ struct StateAssessment: Identifiable, Codable, Equatable {
         self.sleep = sleep
         self.stressFatigue = stressFatigue
         self.activityLoad = activityLoad
+        self.confidence = confidence ?? ScoreConfidence.combined([recovery.confidence, sleep.confidence, stressFatigue.confidence, activityLoad.confidence])
         self.reasons = reasons
         self.suggestions = suggestions
     }
@@ -51,12 +54,14 @@ struct ScoreComponent: Identifiable, Codable, Equatable {
     let id: String
     let title: String
     let score: Int
+    let confidence: ScoreConfidence
     let summary: String
 
-    init(id: String? = nil, title: String, score: Int, summary: String) {
+    init(id: String? = nil, title: String, score: Int, confidence: ScoreConfidence = .medium, summary: String) {
         self.id = id ?? title
         self.title = title
         self.score = min(100, max(0, score))
+        self.confidence = confidence
         self.summary = summary
     }
 }

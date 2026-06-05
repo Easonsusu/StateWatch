@@ -16,5 +16,32 @@ final class SleepScoreEngineTests: XCTestCase {
         XCTAssertFalse(component.summary.localizedCaseInsensitiveContains("diagnosis"))
     }
 
-    // TODO: Add duration and consistency scenario tests after target setup.
+    func testSleepBelowBaselineLowersSleepScore() {
+        let baseline = HealthBaseline(
+            window: .sevenDays,
+            restingHeartRate: .unavailable,
+            averageHeartRate: .unavailable,
+            heartRateVariability: .unavailable,
+            sleepDuration: .available(average: 7.5, validSampleCount: 7),
+            activeEnergy: .unavailable,
+            exerciseMinutes: .unavailable,
+            stepCount: .unavailable,
+            sampleCount: 7
+        )
+        let steady = DailyHealthSnapshot(date: .now, sleepDurationHours: 7.4)
+        let shorter = DailyHealthSnapshot(date: .now, sleepDurationHours: 5.8)
+
+        let steadyScore = SleepScoreEngine().score(snapshot: steady, baseline: baseline).score
+        let shorterScore = SleepScoreEngine().score(snapshot: shorter, baseline: baseline).score
+
+        XCTAssertLessThan(shorterScore, steadyScore)
+    }
+
+    func testMissingSleepDataReturnsUnavailableConfidence() {
+        let component = SleepScoreEngine().score(snapshot: DailyHealthSnapshot(date: .now), baseline: .empty)
+
+        XCTAssertEqual(component.confidence, .unavailable)
+        XCTAssertGreaterThanOrEqual(component.score, 0)
+        XCTAssertLessThanOrEqual(component.score, 100)
+    }
 }
