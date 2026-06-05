@@ -6,11 +6,47 @@ struct OverallStateEngine {
     private let stressFatigueEngine = StressFatigueScoreEngine()
 
     func assess(snapshot: DailyHealthSnapshot, baseline: HealthBaseline) -> StateAssessment {
-        let recovery = recoveryEngine.score(snapshot: snapshot, baseline: baseline)
-        let sleep = sleepEngine.score(snapshot: snapshot, baseline: baseline)
-        let stressFatigue = stressFatigueEngine.score(snapshot: snapshot, baseline: baseline)
-        let activityLoad = activityScore(snapshot: snapshot, baseline: baseline)
-        let overall = [recovery, sleep, stressFatigue, activityLoad].map(\.score).reduce(0, +) / 4
+        assess(snapshot: snapshot, baseline: baseline, recentSnapshots: [])
+    }
+
+    func assess(history: [DailyHealthSnapshot], window: BaselineWindow = .thirtyDays) -> StateAssessment? {
+        let sortedHistory = history.sorted { $0.date < $1.date }
+        guard let latest = sortedHistory.last else { return nil }
+
+        let priorSnapshots = Array(sortedHistory.dropLast())
+        let baseline = BaselineCalculator().calculate(from: priorSnapshots, window: window)
+        return assess(snapshot: latest, baseline: baseline, recentSnapshots: sortedHistory)
+    }
+
+    static func weightedOverallScore(
+        recovery: Int,
+        sleep: Int,
+        stressFatigue: Int,
+        activityLoad: Int
+    ) -> Int {
+        let score = Double(recovery) * 0.35
+            + Double(sleep) * 0.25
+            + Double(stressFatigue) * 0.25
+            + Double(activityLoad) * 0.15
+
+        return min(100, max(0, Int(score.rounded())))
+    }
+
+    private func assess(
+        snapshot: DailyHealthSnapshot,
+        baseline: HealthBaseline,
+        recentSnapshots: [DailyHealthSnapshot]
+    ) -> StateAssessment {
+        let recovery = recoveryEngine.score(snapshot: snapshot, baseline: baseline, recentSnapshots: recentSnapshots)
+        let sleep = sleepEngine.score(snapshot: snapshot, baseline: baseline, recentSnapshots: recentSnapshots)
+        let stressFatigue = stressFatigueEngine.score(snapshot: snapshot, baseline: baseline, recentSnapshots: recentSnapshots)
+        let activityLoad = activityScore(snapshot: snapshot, baseline: baseline, recentSnapshots: recentSnapshots)
+        let overall = Self.weightedOverallScore(
+            recovery: recovery.score,
+            sleep: sleep.score,
+            stressFatigue: stressFatigue.score,
+            activityLoad: activityLoad.score
+        )
 
         let explanations = ExplanationGenerator().reasons(
             snapshot: snapshot,
@@ -31,11 +67,96 @@ struct OverallStateEngine {
         )
     }
 
-    private func activityScore(snapshot: DailyHealthSnapshot, baseline: HealthBaseline) -> ScoreComponent {
-        let activeEnergy = snapshot.activeEnergyKcal ?? baseline.activeEnergyAverage ?? 0
-        let score = activeEnergy > 900 ? 62 : 74
-        return ScoreComponent(title: "Activity Load", score: score, summary: "Activity load is estimated from today's movement signals.")
+    private func activityScore(
+        snapshot: DailyHealthSnapshot,
+        baseline: HealthBaseline,
+        recentSnapshots: [DailyHealthSnapshot]
+    ) -> ScoreComponent {
+        var score = 74
+        var confidences: [ScoreConfidence] = []
+        var usedSignals = 0
+
+        applyActivityRule(
+            currentValue: snapshot.stepCount,
+            baselineMetric: baseline.stepCount,
+            to: &score,
+            usedSignals: &usedSignals,
+            confidences: &confidences
+        )
+        applyActivityRule(
+            currentValue: snapshot.activeEnergyKcal,
+            baselineMetric: baseline.activeEnergy,
+            to: &score,
+            usedSignals: &usedSignals,
+            confidences: &confidences
+        )
+
+        let recentExercise = recentAverage(recentSnapshots, keyPath: \.exerciseMinutes) ?? snapshot.exerciseMinutes
+        applyActivityRule(
+            currentValue: recentExercise,
+            baselineMetric: baseline.exerciseMinutes,
+            to: &score,
+            usedSignals: &usedSignals,
+            confidences: &confidences
+        )
+
+        guard usedSignals > 0 else {
+            return ScoreComponent(
+                title: "Activity Load",
+                score: 50,
+                confidence: .unavailable,
+                summary: "Activity data is limited today, so this score stays cautious."
+            )
+        }
+
+        let confidence = ScoreConfidence.combined(confidences)
+        let summary: String
+        switch confidence {
+        case .high, .medium:
+            summary = "Activity load compares steps, active energy, and exercise minutes with your baseline."
+        case .low:
+            summary = "Activity load uses limited baseline data, so treat this as a softer wellness estimate."
+        case .unavailable:
+            summary = "Activity data is limited today, so this score stays cautious."
+        }
+
+        return ScoreComponent(title: "Activity Load", score: score, confidence: confidence, summary: summary)
     }
 
-    // TODO: Add missing-data confidence and user-visible data availability notes.
+    private func applyActivityRule(
+        currentValue: Double?,
+        baselineMetric: MetricBaseline,
+        to score: inout Int,
+        usedSignals: inout Int,
+        confidences: inout [ScoreConfidence]
+    ) {
+        guard let currentValue,
+              let baselineAverage = baselineMetric.average,
+              baselineAverage > 0
+        else {
+            return
+        }
+
+        usedSignals += 1
+        confidences.append(baselineMetric.confidence)
+        let ratio = currentValue / baselineAverage
+
+        if ratio > 1.7 {
+            score -= 8
+        } else if ratio > 1.35 {
+            score -= 4
+        } else if ratio < 0.5 {
+            score -= 4
+        } else if ratio >= 0.8 && ratio <= 1.2 {
+            score += 2
+        }
+    }
+
+    private func recentAverage(_ snapshots: [DailyHealthSnapshot], keyPath: KeyPath<DailyHealthSnapshot, Double?>) -> Double? {
+        let values = snapshots.suffix(3).compactMap { $0[keyPath: keyPath] }
+        guard !values.isEmpty else { return nil }
+        return values.reduce(0, +) / Double(values.count)
+    }
+
+    // TODO: Wire HealthKit-backed histories into this engine only after a safe debug review surface exists.
 }
