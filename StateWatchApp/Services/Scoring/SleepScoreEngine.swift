@@ -13,7 +13,7 @@ struct SleepScoreEngine {
         return ScoreComponent(
             title: "Sleep",
             score: clamp(score),
-            summary: "Sleep score reflects duration and recent consistency, not sleep health diagnosis."
+            summary: "Sleep score reflects duration and recent consistency as wellness context."
         )
     }
 

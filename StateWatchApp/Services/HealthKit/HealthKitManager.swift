@@ -15,15 +15,18 @@ final class HealthKitManager: ObservableObject {
     @Published private(set) var lastErrorMessage: String?
 
     private let authorizationService: HealthKitAuthorizing
-    private let fetcher: HealthDataFetcher
+    private let healthKitFetcher: HealthDataFetcher
+    private let fallbackFetcher: HealthDataFetcher
 
     init(
         authorizationService: HealthKitAuthorizing = HealthKitAuthorizationService(),
-        fetcher: HealthDataFetcher = MockHealthDataFetcher(),
+        fetcher: HealthDataFetcher = HealthKitDataFetcher(),
+        fallbackFetcher: HealthDataFetcher = MockHealthDataFetcher(),
         initialAuthorizationResult: HealthKitAuthorizationResult = .notDetermined
     ) {
         self.authorizationService = authorizationService
-        self.fetcher = fetcher
+        self.healthKitFetcher = fetcher
+        self.fallbackFetcher = fallbackFetcher
         authorizationState = .notDetermined
         permissionStatuses = HealthKitTypes.permissionStatuses(access: .notDetermined)
         lastErrorMessage = nil
@@ -41,12 +44,21 @@ final class HealthKitManager: ObservableObject {
     }
 
     func todaySnapshot() async -> DailyHealthSnapshot {
-        // TODO: Connect this to local-only HealthKit fetching after permission-gated fetchers exist.
-        await fetcher.fetchTodaySnapshot()
+        // TODO: Connect fetched snapshots to baseline and scoring in the next phase.
+        await activeFetcher.fetchTodaySnapshot()
+    }
+
+    func recentSnapshots(days: Int = HealthKitDataFetcher.defaultLookbackDays) async -> [DailyHealthSnapshot] {
+        // TODO: Feed these local-only snapshots into baseline and scoring in the next phase.
+        await activeFetcher.fetchRecentSnapshots(days: days)
     }
 
     var shouldUseMockData: Bool {
         authorizationState != .readAccessRequested
+    }
+
+    private var activeFetcher: HealthDataFetcher {
+        shouldUseMockData ? fallbackFetcher : healthKitFetcher
     }
 
     var statusTitle: String {
@@ -78,6 +90,7 @@ final class HealthKitManager: ObservableObject {
     static var previewReadAccessRequested: HealthKitManager {
         HealthKitManager(
             authorizationService: MockHealthKitAuthorizationService(requestResult: .mockReadAccessRequested),
+            fetcher: MockHealthDataFetcher(),
             initialAuthorizationResult: .mockReadAccessRequested
         )
     }
@@ -85,6 +98,7 @@ final class HealthKitManager: ObservableObject {
     static var previewDenied: HealthKitManager {
         HealthKitManager(
             authorizationService: MockHealthKitAuthorizationService(requestResult: .mockDenied),
+            fetcher: MockHealthDataFetcher(),
             initialAuthorizationResult: .mockDenied
         )
     }
@@ -93,6 +107,7 @@ final class HealthKitManager: ObservableObject {
         let unavailable = HealthKitAuthorizationResult.unavailable(reason: "HealthKit is unavailable in this preview.")
         return HealthKitManager(
             authorizationService: MockHealthKitAuthorizationService(requestResult: unavailable),
+            fetcher: MockHealthDataFetcher(),
             initialAuthorizationResult: unavailable
         )
     }
