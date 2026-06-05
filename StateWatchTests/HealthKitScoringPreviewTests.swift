@@ -17,6 +17,20 @@ final class HealthKitScoringPreviewTests: XCTestCase {
         XCTAssertTrue(message.localizedCaseInsensitiveContains("not available"))
     }
 
+    func testFailedStateWhenSnapshotLoaderThrows() async {
+        let viewModel = HealthKitScoringPreviewViewModel(
+            snapshotLoader: { _ in throw PreviewLoaderError.failed },
+            healthDataAvailability: { true }
+        )
+
+        await viewModel.loadPreview()
+
+        guard case .failed(let message) = viewModel.state else {
+            return XCTFail("Expected failed state, got \(viewModel.state)")
+        }
+        XCTAssertTrue(message.localizedCaseInsensitiveContains("could not be loaded"))
+    }
+
     func testEmptyDataStateWhenSnapshotsContainNoMetrics() async {
         let snapshots = (1...3).map { DailyHealthSnapshot(date: date(day: $0)) }
         let viewModel = HealthKitScoringPreviewViewModel(
@@ -27,6 +41,21 @@ final class HealthKitScoringPreviewTests: XCTestCase {
         await viewModel.loadPreview()
 
         XCTAssertEqual(viewModel.state, .emptyData)
+    }
+
+    func testDashboardDefaultsToMockAssessment() {
+        let dashboard = DashboardView()
+
+        XCTAssertEqual(dashboard.assessment, .mock)
+    }
+
+    func testPreviewReportCanBeCreatedFromMockSnapshots() throws {
+        let report = try XCTUnwrap(HealthKitScoringPreviewReport.make(from: MockSampleData.weeklySnapshots))
+
+        XCTAssertEqual(report.snapshotCount, MockSampleData.weeklySnapshots.count)
+        XCTAssertEqual(report.latestSnapshot, MockSampleData.weeklySnapshots.sorted { $0.date < $1.date }.last)
+        XCTAssertGreaterThan(report.latestAvailableMetricsCount, 0)
+        XCTAssertNotNil(report.assessment)
     }
 
     func testPreviewReportBuildsBaselineAssessmentAndMissingDataNotice() throws {
@@ -73,5 +102,9 @@ final class HealthKitScoringPreviewTests: XCTestCase {
     private func date(day: Int) -> Date {
         let components = DateComponents(timeZone: TimeZone(secondsFromGMT: 0), year: 2026, month: 1, day: day)
         return Calendar(identifier: .gregorian).date(from: components) ?? Date(timeIntervalSince1970: 0)
+    }
+
+    private enum PreviewLoaderError: Error {
+        case failed
     }
 }
