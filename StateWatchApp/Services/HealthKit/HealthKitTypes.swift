@@ -125,7 +125,7 @@ enum HealthKitTypes {
             id: .heartRateVariabilitySDNN,
             displayName: "Heart Rate Variability",
             wellnessReason: "Supports a local wellness estimate of recovery and strain when available.",
-            exampleUse: "Used as an optional signal, never as a diagnosis."
+            exampleUse: "Used as an optional wellness signal with user context."
         ),
         HealthKitPermission(
             id: .sleepAnalysis,
@@ -156,7 +156,7 @@ enum HealthKitTypes {
     static let infoPlistPrivacyNotes: [String] = [
         "Apple Health access is read-only for the MVP.",
         "StateWatch does not request permission to write HealthKit data.",
-        "Health data stays local and supports wellness summaries, not diagnosis."
+        "Health data stays local and supports wellness summaries only."
     ]
 
     static func permissionStatuses(access: HealthKitPermissionAccess) -> [HealthKitPermissionStatus] {

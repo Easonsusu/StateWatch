@@ -1,14 +1,26 @@
 # HealthKit Data Map
 
-This map is a planning document. Full HealthKit implementation is intentionally left for a later task.
+StateWatch reads Apple Health data locally for wellness summaries. HealthKit data is not uploaded, used for advertising, or used beyond local wellness context.
 
-| Wellness area | Candidate HealthKit data | MVP use | Notes |
+## Read Types
+
+| HealthKit type | Unit / value | `DailyHealthSnapshot` field | Aggregation |
 | --- | --- | --- | --- |
-| Recovery | Resting heart rate, HRV | Compare with personal baseline | Explain as wellness signal, not medical status. |
-| Sleep | Sleep analysis, time asleep | Duration and consistency | Avoid claims about sleep disorders. |
-| Stress/fatigue | HRV trend, resting heart rate trend, mindfulness minutes, user check-in | Conservative fatigue context | Do not claim stress diagnosis. |
-| Activity load | Active energy, exercise minutes, steps, stand hours | Load and recovery balance | Avoid performance or medical claims. |
-| Subjective context | User check-in | User-provided complement to wearable data | Stored locally in MVP. |
+| `HKQuantityTypeIdentifier.heartRate` | bpm | `averageHeartRate` | Average samples per calendar day. |
+| `HKQuantityTypeIdentifier.restingHeartRate` | bpm | `restingHeartRate` | Average samples per calendar day. |
+| `HKQuantityTypeIdentifier.heartRateVariabilitySDNN` | milliseconds | `heartRateVariability` | Average SDNN samples per calendar day. |
+| `HKCategoryTypeIdentifier.sleepAnalysis` | asleep intervals | `sleepDurationHours` | Sum asleep interval seconds per calendar day, then convert to hours. |
+| `HKQuantityTypeIdentifier.stepCount` | count | `stepCount` | Sum samples per calendar day. |
+| `HKQuantityTypeIdentifier.activeEnergyBurned` | kilocalories | `activeEnergyKcal` | Sum samples per calendar day. |
+| `HKWorkoutType.workoutType()` | workout intervals | `exerciseMinutes` | Sum workout interval seconds per calendar day, then convert to minutes. |
+
+## Daily Aggregation
+
+- `HealthKitDataFetcher` reads the last 30 days by default.
+- Day boundaries use the user's current `Calendar` and time zone.
+- Fetched samples are converted into lightweight local values before aggregation.
+- Sleep and workout intervals that cross midnight are split across calendar days.
+- Returned snapshots are sorted oldest to newest, with `date` set to the local start of each day.
 
 ## Permission principles
 
@@ -17,8 +29,14 @@ This map is a planning document. Full HealthKit implementation is intentionally 
 - Continue gracefully if the user denies permission.
 - Use mock data in previews and tests.
 
+## Missing Data Behavior
+
+- Missing metrics remain `nil`.
+- Empty HealthKit query results do not crash the fetcher.
+- Missing values are not interpreted as negative wellness signals.
+- `MockHealthDataFetcher` remains available for previews, tests, denied permission states, and unavailable HealthKit environments.
+
 ## TODO
 
-- Finalize exact `HKQuantityTypeIdentifier` and `HKCategoryTypeIdentifier` values.
-- Add Info.plist HealthKit usage descriptions in the future Xcode project.
-- Add unit tests around denied, partial, and unavailable HealthKit access.
+- Connect `DailyHealthSnapshot` histories to baseline and scoring in the next phase.
+- Add an in-app debug/demo surface for reviewing fetched snapshots before replacing mock dashboard data.
