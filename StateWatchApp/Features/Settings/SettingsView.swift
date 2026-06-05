@@ -6,7 +6,13 @@ struct SettingsView: View {
             List {
                 Section("Privacy") {
                     NavigationLink("Privacy", destination: PrivacyView())
-                    NavigationLink("Data Permissions", destination: DataPermissionView())
+                }
+
+                Section("Apple Health") {
+                    NavigationLink("Health Permissions", destination: DataPermissionView())
+                    Text("StateWatch requests read-only Apple Health access for local wellness summaries.")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
                 }
 
                 Section("Data") {

@@ -2,6 +2,7 @@ import SwiftUI
 
 struct DashboardView: View {
     let assessment: StateAssessment
+    @State private var isShowingSettings = false
 
     init(assessment: StateAssessment = .mock) {
         self.assessment = assessment
@@ -27,6 +28,16 @@ struct DashboardView: View {
                 .padding()
             }
             .navigationTitle("Today")
+            .toolbar {
+                Button {
+                    isShowingSettings = true
+                } label: {
+                    Label("Settings", systemImage: "gearshape")
+                }
+            }
+            .sheet(isPresented: $isShowingSettings) {
+                SettingsView()
+            }
         }
         // TODO: Inject a real assessment once local HealthKit snapshots and scoring are wired together.
     }
