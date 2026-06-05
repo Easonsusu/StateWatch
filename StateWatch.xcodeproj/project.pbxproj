@@ -40,6 +40,7 @@
 		51E93BF3C85FA5447C4695C3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD28289274924C633330254 /* SettingsView.swift */; };
 		B22B22B22B22B22B22B22B22 /* DataPermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44D44D44D44D44D44D44D44 /* DataPermissionView.swift */; };
 		26A5D5805F75B8EEF449819D /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264518E81625260D83E6272D /* PrivacyView.swift */; };
+		F5A300000000000000000003 /* HealthKitScoringPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A400000000000000000004 /* HealthKitScoringPreviewView.swift */; };
 		9B3BCE063A0C83DE4F2B6BDC /* DailyHealthSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A57ED9AFD7DDB1725B8E7F /* DailyHealthSnapshot.swift */; };
 		AD7BCB2B8E9837F46FBD1D0C /* HealthBaseline.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8F5BD50E4760680B43F867 /* HealthBaseline.swift */; };
 		B0A5678559FF8F3405D533E9 /* StateAssessment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0BB8F8130B13AAC0B9896B /* StateAssessment.swift */; };
@@ -55,6 +56,7 @@
 		45929C35B08CC6FC2D96A261 /* SleepScoreEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7961319B0F3E33F2242038 /* SleepScoreEngineTests.swift */; };
 		3C56188075BB739B7A9098AB /* OverallStateEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00E70CE8EC82A9CC7441A44 /* OverallStateEngineTests.swift */; };
 		C33C33C33C33C33C33C33C33 /* HealthKitPermissionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66F66F66F66F66F66F66F66 /* HealthKitPermissionTests.swift */; };
+		F5A100000000000000000001 /* HealthKitScoringPreviewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A200000000000000000002 /* HealthKitScoringPreviewTests.swift */; };
 		8B437F571E48E29B77FA65EA /* ModelCodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCE6065EFFA39833DBAC185 /* ModelCodableTests.swift */; };
 		654352D083481CB3F2CE4EAE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91D4105804A8108983609354 /* Assets.xcassets */; };
 		EB7EFA62BB587DF042AFB1C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C273FDA27C713F4E89B8D78 /* Assets.xcassets */; };
@@ -83,6 +85,7 @@
 		ED3C00CF85CD4AF8A7927D5C /* HealthPermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Onboarding/HealthPermissionView.swift; sourceTree = "<group>"; };
 		B459419C761C9C0FA8D69BAC /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Onboarding/OnboardingView.swift; sourceTree = "<group>"; };
 		D44D44D44D44D44D44D44D44 /* DataPermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Settings/DataPermissionView.swift; sourceTree = "<group>"; };
+		F5A400000000000000000004 /* HealthKitScoringPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Debug/HealthKitScoringPreviewView.swift; sourceTree = "<group>"; };
 		264518E81625260D83E6272D /* PrivacyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Settings/PrivacyView.swift; sourceTree = "<group>"; };
 		4DD28289274924C633330254 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Settings/SettingsView.swift; sourceTree = "<group>"; };
 		18C72C723877A11910304015 /* MetricChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Trends/MetricChartView.swift; sourceTree = "<group>"; };
@@ -110,6 +113,7 @@
 		B0B80C1A638197F3B18C4F50 /* StressFatigueScoreEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Services/Scoring/StressFatigueScoreEngine.swift; sourceTree = "<group>"; };
 		E935F18D147B46483011FF69 /* BaselineCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/BaselineCalculatorTests.swift; sourceTree = "<group>"; };
 		F66F66F66F66F66F66F66F66 /* HealthKitPermissionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/HealthKitPermissionTests.swift; sourceTree = "<group>"; };
+		F5A200000000000000000002 /* HealthKitScoringPreviewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/HealthKitScoringPreviewTests.swift; sourceTree = "<group>"; };
 		40C0B250765F998AA81DAE61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = StateWatchTests/Info.plist; sourceTree = "<group>"; };
 		7CCE6065EFFA39833DBAC185 /* ModelCodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/ModelCodableTests.swift; sourceTree = "<group>"; };
 		A00E70CE8EC82A9CC7441A44 /* OverallStateEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/OverallStateEngineTests.swift; sourceTree = "<group>"; };
@@ -192,6 +196,7 @@
 			isa = PBXGroup;
 			children = (
 				EF733483456EF338D65CD179 /* CheckIn */,
+				F5A500000000000000000005 /* Debug */,
 				FD31001C4EA117B3FE6EBF46 /* Dashboard */,
 				86C514403E246B11C055742D /* Onboarding */,
 				F3C5CA8C9253EACA3D4A4D37 /* Settings */,
@@ -206,6 +211,14 @@
 				A1F4627276151E5D357A595C /* CheckInView.swift */,
 			);
 			name = CheckIn;
+			sourceTree = "<group>";
+		};
+		F5A500000000000000000005 /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				F5A400000000000000000004 /* HealthKitScoringPreviewView.swift */,
+			);
+			name = Debug;
 			sourceTree = "<group>";
 		};
 		FD31001C4EA117B3FE6EBF46 /* Dashboard */ = {
@@ -319,6 +332,7 @@
 			children = (
 				E935F18D147B46483011FF69 /* BaselineCalculatorTests.swift */,
 				F66F66F66F66F66F66F66F66 /* HealthKitPermissionTests.swift */,
+				F5A200000000000000000002 /* HealthKitScoringPreviewTests.swift */,
 				40C0B250765F998AA81DAE61 /* Info.plist */,
 				7CCE6065EFFA39833DBAC185 /* ModelCodableTests.swift */,
 				A00E70CE8EC82A9CC7441A44 /* OverallStateEngineTests.swift */,
@@ -559,6 +573,7 @@
 				51E93BF3C85FA5447C4695C3 /* SettingsView.swift in Sources */,
 				B22B22B22B22B22B22B22B22 /* DataPermissionView.swift in Sources */,
 				26A5D5805F75B8EEF449819D /* PrivacyView.swift in Sources */,
+				F5A300000000000000000003 /* HealthKitScoringPreviewView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -588,6 +603,7 @@
 				45929C35B08CC6FC2D96A261 /* SleepScoreEngineTests.swift in Sources */,
 				3C56188075BB739B7A9098AB /* OverallStateEngineTests.swift in Sources */,
 				C33C33C33C33C33C33C33C33 /* HealthKitPermissionTests.swift in Sources */,
+				F5A100000000000000000001 /* HealthKitScoringPreviewTests.swift in Sources */,
 				8B437F571E48E29B77FA65EA /* ModelCodableTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

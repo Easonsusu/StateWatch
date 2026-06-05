@@ -93,11 +93,18 @@ Scores are clamped from 0 to 100. The MVP labels are intentionally plain:
 - 40-59: Low
 - 0-39: Needs rest
 
+## HealthKit Scoring Preview
+
+Real HealthKit-derived scoring is currently available only in the debug-only
+`HealthKitScoringPreviewView` under Settings. The production dashboard continues
+to use mock `StateAssessment` data until local HealthKit histories have been
+reviewed on devices with realistic sample availability.
+
 ## TODO
 
 - Validate the rule weights with more mock histories before wiring the dashboard
   to HealthKit-backed data.
-- Add a debug-only review path that compares mock and local HealthKit-derived
-  assessments before changing the visible dashboard.
+- Use the debug preview to compare mock and local HealthKit-derived assessments
+  before changing the visible dashboard.
 - Revisit confidence thresholds after real-device testing with sparse Apple
   Health histories.

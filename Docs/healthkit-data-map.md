@@ -36,7 +36,14 @@ StateWatch reads Apple Health data locally for wellness summaries. HealthKit dat
 - Missing values are not interpreted as negative wellness signals.
 - `MockHealthDataFetcher` remains available for previews, tests, denied permission states, and unavailable HealthKit environments.
 
+## Debug Scoring Preview
+
+- Debug builds include a Settings -> Developer Preview -> HealthKit Scoring Preview screen.
+- The preview loads recent snapshots through `HealthKitDataFetcher`, calculates a 30-day baseline, and creates a local `StateAssessment`.
+- The preview is for manual inspection only; the production dashboard still uses mock assessment data.
+- Preview output stays local on device and does not add any upload path.
+
 ## TODO
 
-- Connect `DailyHealthSnapshot` histories to baseline and scoring in the next phase.
-- Add an in-app debug/demo surface for reviewing fetched snapshots before replacing mock dashboard data.
+- Review local HealthKit-derived scoring output on real devices before replacing mock dashboard data.
+- Decide whether the production dashboard should use live local scoring after preview confidence and missing-data behavior are validated.

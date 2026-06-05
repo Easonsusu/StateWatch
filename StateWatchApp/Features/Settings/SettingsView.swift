@@ -15,6 +15,12 @@ struct SettingsView: View {
                         .foregroundStyle(.secondary)
                 }
 
+                #if DEBUG
+                Section("Developer Preview") {
+                    NavigationLink("HealthKit Scoring Preview", destination: HealthKitScoringPreviewView())
+                }
+                #endif
+
                 Section("Data") {
                     Text("HealthKit data stays local in the MVP.")
                     Button("Reset Local Mock Data") {
