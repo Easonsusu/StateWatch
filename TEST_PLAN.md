@@ -44,6 +44,13 @@ StateWatch now includes a runnable iOS app target, watchOS app target, and XCTes
 - Sparse history shows lower-confidence preview guidance.
 - Partial latest snapshots show a missing-data notice.
 
+## GitHub Actions CI
+
+- Pull requests and pushes to `main` run `.github/workflows/ios-watchos-ci.yml`.
+- CI checks diff whitespace, builds the `StateWatch` iOS scheme, runs the `StateWatch` XCTest suite, and builds the `StateWatchWatchApp` watchOS scheme.
+- CI disables code signing and compiler index storage for build/test verification.
+- Local/manual testing is still required for HealthKit permission UI behavior and any real Apple Health data scenarios.
+
 ## Manual QA for MVP
 
 - First launch shows disclaimer before HealthKit permission request.

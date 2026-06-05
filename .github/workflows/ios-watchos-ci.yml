@@ -1,0 +1,99 @@
+name: iOS and watchOS CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    name: Build and Test
+    runs-on: macos-15
+    timeout-minutes: 45
+
+    env:
+      PROJECT: StateWatch.xcodeproj
+      IOS_SCHEME: StateWatch
+      WATCH_SCHEME: StateWatchWatchApp
+      CODE_SIGNING_ALLOWED: "NO"
+      COMPILER_INDEX_STORE_ENABLE: "NO"
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Show Xcode version
+        run: |
+          xcodebuild -version
+          xcode-select -p
+
+      - name: Check diff whitespace
+        run: |
+          set -euo pipefail
+          git diff --check
+
+          if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
+            git diff --check "origin/${GITHUB_BASE_REF}...HEAD"
+          elif git rev-parse --verify "${{ github.event.before }}" >/dev/null 2>&1; then
+            git diff --check "${{ github.event.before }}..HEAD"
+          else
+            git diff --check HEAD~1..HEAD
+          fi
+
+      - name: Select iOS simulator
+        run: |
+          set -euo pipefail
+          # xcodebuild test needs a concrete simulator, so use an available UDID
+          # instead of the generic iOS simulator destination used for build-only jobs.
+          IOS_SIMULATOR_ID="$(xcrun simctl list devices available | awk -F '[()]' '/iPhone/ { print $2; exit }')"
+
+          if [ -z "$IOS_SIMULATOR_ID" ]; then
+            echo "No available iPhone simulator found."
+            xcrun simctl list devices available
+            exit 1
+          fi
+
+          echo "IOS_DESTINATION=platform=iOS Simulator,id=${IOS_SIMULATOR_ID}" >> "$GITHUB_ENV"
+          echo "Using iOS destination: platform=iOS Simulator,id=${IOS_SIMULATOR_ID}"
+
+      - name: Build iOS app
+        run: |
+          set -euo pipefail
+          xcodebuild \
+            -project "$PROJECT" \
+            -scheme "$IOS_SCHEME" \
+            -sdk iphonesimulator \
+            -destination "$IOS_DESTINATION" \
+            CODE_SIGNING_ALLOWED="$CODE_SIGNING_ALLOWED" \
+            COMPILER_INDEX_STORE_ENABLE="$COMPILER_INDEX_STORE_ENABLE" \
+            build
+
+      - name: Run iOS tests
+        run: |
+          set -euo pipefail
+          xcodebuild \
+            -project "$PROJECT" \
+            -scheme "$IOS_SCHEME" \
+            -sdk iphonesimulator \
+            -destination "$IOS_DESTINATION" \
+            CODE_SIGNING_ALLOWED="$CODE_SIGNING_ALLOWED" \
+            COMPILER_INDEX_STORE_ENABLE="$COMPILER_INDEX_STORE_ENABLE" \
+            test
+
+      - name: Build watchOS app
+        run: |
+          set -euo pipefail
+          xcodebuild \
+            -project "$PROJECT" \
+            -scheme "$WATCH_SCHEME" \
+            -sdk watchsimulator \
+            -destination "generic/platform=watchOS Simulator" \
+            CODE_SIGNING_ALLOWED="$CODE_SIGNING_ALLOWED" \
+            COMPILER_INDEX_STORE_ENABLE="$COMPILER_INDEX_STORE_ENABLE" \
+            build
