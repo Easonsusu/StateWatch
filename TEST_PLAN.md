@@ -2,7 +2,7 @@
 
 ## Current scope
 
-StateWatch now includes a runnable iOS app target, watchOS app target, and XCTest target. The current test focus is the mock dashboard, read-only HealthKit permission flow, local-only HealthKit data fetch foundation, and rule-based baseline/scoring engine.
+StateWatch now includes a runnable iOS app target, watchOS app target, and XCTest target. The current test focus is the mock dashboard, read-only HealthKit permission flow, local-only HealthKit data fetch foundation, rule-based baseline/scoring engine, and debug-only HealthKit scoring preview.
 
 ## Foundation checks
 
@@ -34,7 +34,15 @@ StateWatch now includes a runnable iOS app target, watchOS app target, and XCTes
 
 - Add fixture histories for low activity, high activity, strong sleep consistency, and mixed signal days.
 - Add UI snapshot or preview checks once the dashboard consumes scored mock histories.
-- Add regression tests for any debug-only HealthKit assessment preview added in a later phase.
+
+## Automated Debug Preview Tests
+
+- Preview reports are not created from empty HealthKit history.
+- All-nil snapshot histories show the empty-data state.
+- Unavailable HealthKit environments show an unavailable state without loading samples.
+- Preview reports include snapshot count, latest date, available metric count, baseline confidence, and assessment output.
+- Sparse history shows lower-confidence preview guidance.
+- Partial latest snapshots show a missing-data notice.
 
 ## Manual QA for MVP
 
@@ -67,3 +75,17 @@ StateWatch now includes a runnable iOS app target, watchOS app target, and XCTes
 - Review score explanations for cautious wellness wording.
 - Confirm sparse or missing mock history produces lower confidence language instead of negative health conclusions.
 - Confirm no score text claims to detect illness, disease, a medical condition, or clinical stress.
+
+## Manual HealthKit Scoring Preview Checks
+
+- Run the `StateWatch` scheme on an iPhone simulator or device.
+- Open Dashboard -> Settings.
+- Open Developer Preview -> HealthKit Scoring Preview.
+- Tap Load HealthKit Preview.
+- Confirm the screen handles unavailable Apple Health access without crashing.
+- Confirm no recent Apple Health samples show: "No recent Apple Health samples were available. The main dashboard can continue using mock data."
+- Confirm sparse data can show: "There is not enough recent data to produce a confident preview yet."
+- Confirm loaded data shows snapshot count, latest snapshot date, available metrics count, baseline confidence, component scores, component confidence, reasons, and suggestions.
+- Confirm the production dashboard remains mock-backed after returning from the preview.
+- Confirm no HealthKit write prompt appears.
+- Confirm no network calls or upload paths are introduced.
