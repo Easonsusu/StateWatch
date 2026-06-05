@@ -37,7 +37,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<!-- TODO: Add NSHealthShareUsageDescription when read-only HealthKit authorization is implemented. -->
-	<!-- Do not add NSHealthUpdateUsageDescription for the MVP because StateWatch will not write HealthKit data. -->
+	<key>NSHealthShareUsageDescription</key>
+	<string>StateWatch requests read-only Apple Health access to support local wellness summaries using optional signals such as sleep, heart rate, HRV, activity, and workouts. Health data stays on this device for the MVP.</string>
 </dict>
 </plist>

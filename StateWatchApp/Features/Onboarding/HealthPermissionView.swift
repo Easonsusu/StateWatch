@@ -5,12 +5,13 @@ struct HealthPermissionView: View {
 
     @StateObject private var healthKitManager: HealthKitManager
 
+    @MainActor
     init(
         onContinue: @escaping () -> Void,
-        healthKitManager: HealthKitManager = HealthKitManager()
+        healthKitManager: HealthKitManager? = nil
     ) {
         self.onContinue = onContinue
-        _healthKitManager = StateObject(wrappedValue: healthKitManager)
+        _healthKitManager = StateObject(wrappedValue: healthKitManager ?? HealthKitManager())
     }
 
     var body: some View {

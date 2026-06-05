@@ -37,6 +37,4 @@ final class HealthKitPermissionTests: XCTestCase {
         XCTAssertTrue(denied.statuses.allSatisfy { $0.access == .deniedOrLimited })
         XCTAssertNotNil(denied.errorMessage)
     }
-
-    // TODO: Move these into a real XCTest target after the Xcode project is created.
 }

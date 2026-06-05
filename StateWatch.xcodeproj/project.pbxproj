@@ -17,6 +17,7 @@
 		869E719C1BCF39EC5D3AA05E /* MockSampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2236905CD340B8005EFB409B /* MockSampleData.swift */; };
 		676AED9DA772D17547F0D54B /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9162192B69D430B68D19D5 /* HealthKitManager.swift */; };
 		4013B86B4825BBA82B03E2AF /* HealthKitAuthorizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8C24C9E22E455D80201DE5 /* HealthKitAuthorizationService.swift */; };
+		A11A11A11A11A11A11A11A11 /* HealthKitTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55E55E55E55E55E55E55E55 /* HealthKitTypes.swift */; };
 		F3CAEC1D445534ED943E1FD2 /* HealthDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D09D0A0F13BAF9B571EE754 /* HealthDataFetcher.swift */; };
 		61956CA8E1DA6BBEC2B7446B /* MockHealthDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5E7C08B3E3AA74F5111A1A /* MockHealthDataFetcher.swift */; };
 		E752AE1A8C6A2C7BAC3EDEB7 /* BaselineCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79048EA44A73426FF08CCCA0 /* BaselineCalculator.swift */; };
@@ -37,6 +38,7 @@
 		455DD4A664E5851354CD9920 /* MetricChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C72C723877A11910304015 /* MetricChartView.swift */; };
 		446CCE8875A29EA1B5446D59 /* CheckInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F4627276151E5D357A595C /* CheckInView.swift */; };
 		51E93BF3C85FA5447C4695C3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD28289274924C633330254 /* SettingsView.swift */; };
+		B22B22B22B22B22B22B22B22 /* DataPermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44D44D44D44D44D44D44D44 /* DataPermissionView.swift */; };
 		26A5D5805F75B8EEF449819D /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264518E81625260D83E6272D /* PrivacyView.swift */; };
 		9B3BCE063A0C83DE4F2B6BDC /* DailyHealthSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A57ED9AFD7DDB1725B8E7F /* DailyHealthSnapshot.swift */; };
 		AD7BCB2B8E9837F46FBD1D0C /* HealthBaseline.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8F5BD50E4760680B43F867 /* HealthBaseline.swift */; };
@@ -52,6 +54,7 @@
 		C31F3409BEAB476C9500E8A2 /* RecoveryScoreEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD61DF151A3052AF940D1C /* RecoveryScoreEngineTests.swift */; };
 		45929C35B08CC6FC2D96A261 /* SleepScoreEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7961319B0F3E33F2242038 /* SleepScoreEngineTests.swift */; };
 		3C56188075BB739B7A9098AB /* OverallStateEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00E70CE8EC82A9CC7441A44 /* OverallStateEngineTests.swift */; };
+		C33C33C33C33C33C33C33C33 /* HealthKitPermissionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66F66F66F66F66F66F66F66 /* HealthKitPermissionTests.swift */; };
 		8B437F571E48E29B77FA65EA /* ModelCodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCE6065EFFA39833DBAC185 /* ModelCodableTests.swift */; };
 		654352D083481CB3F2CE4EAE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91D4105804A8108983609354 /* Assets.xcassets */; };
 		EB7EFA62BB587DF042AFB1C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C273FDA27C713F4E89B8D78 /* Assets.xcassets */; };
@@ -79,6 +82,7 @@
 		7EF10FA19CC37AAF5A36C0F2 /* DisclaimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Onboarding/DisclaimerView.swift; sourceTree = "<group>"; };
 		ED3C00CF85CD4AF8A7927D5C /* HealthPermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Onboarding/HealthPermissionView.swift; sourceTree = "<group>"; };
 		B459419C761C9C0FA8D69BAC /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Onboarding/OnboardingView.swift; sourceTree = "<group>"; };
+		D44D44D44D44D44D44D44D44 /* DataPermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Settings/DataPermissionView.swift; sourceTree = "<group>"; };
 		264518E81625260D83E6272D /* PrivacyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Settings/PrivacyView.swift; sourceTree = "<group>"; };
 		4DD28289274924C633330254 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Settings/SettingsView.swift; sourceTree = "<group>"; };
 		18C72C723877A11910304015 /* MetricChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Trends/MetricChartView.swift; sourceTree = "<group>"; };
@@ -91,11 +95,13 @@
 		93F4810A4EECE5330E442257 /* UserCheckIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Models/UserCheckIn.swift; sourceTree = "<group>"; };
 		91D4105804A8108983609354 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = StateWatchApp/Resources/Assets.xcassets; sourceTree = "<group>"; };
 		F083CE7B13FB89F932A9172B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = StateWatchApp/Resources/Info.plist; sourceTree = "<group>"; };
+		A77A77A77A77A77A77A77A77 /* StateWatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StateWatchApp/Resources/StateWatch.entitlements; sourceTree = "<group>"; };
 		D42476271F4AF839F67B233F /* ExplanationGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Services/Explanation/ExplanationGenerator.swift; sourceTree = "<group>"; };
 		CEF6A442A71EA0F1E35F9ADF /* SuggestionGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Services/Explanation/SuggestionGenerator.swift; sourceTree = "<group>"; };
 		5D09D0A0F13BAF9B571EE754 /* HealthDataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Services/HealthKit/HealthDataFetcher.swift; sourceTree = "<group>"; };
 		3C8C24C9E22E455D80201DE5 /* HealthKitAuthorizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Services/HealthKit/HealthKitAuthorizationService.swift; sourceTree = "<group>"; };
 		7E9162192B69D430B68D19D5 /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Services/HealthKit/HealthKitManager.swift; sourceTree = "<group>"; };
+		E55E55E55E55E55E55E55E55 /* HealthKitTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Services/HealthKit/HealthKitTypes.swift; sourceTree = "<group>"; };
 		3B5E7C08B3E3AA74F5111A1A /* MockHealthDataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Services/HealthKit/MockHealthDataFetcher.swift; sourceTree = "<group>"; };
 		79048EA44A73426FF08CCCA0 /* BaselineCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Services/Scoring/BaselineCalculator.swift; sourceTree = "<group>"; };
 		886748E508B0752D06A63544 /* OverallStateEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Services/Scoring/OverallStateEngine.swift; sourceTree = "<group>"; };
@@ -103,6 +109,7 @@
 		4533467843482BBDEBE78154 /* SleepScoreEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Services/Scoring/SleepScoreEngine.swift; sourceTree = "<group>"; };
 		B0B80C1A638197F3B18C4F50 /* StressFatigueScoreEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Services/Scoring/StressFatigueScoreEngine.swift; sourceTree = "<group>"; };
 		E935F18D147B46483011FF69 /* BaselineCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/BaselineCalculatorTests.swift; sourceTree = "<group>"; };
+		F66F66F66F66F66F66F66F66 /* HealthKitPermissionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/HealthKitPermissionTests.swift; sourceTree = "<group>"; };
 		40C0B250765F998AA81DAE61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = StateWatchTests/Info.plist; sourceTree = "<group>"; };
 		7CCE6065EFFA39833DBAC185 /* ModelCodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/ModelCodableTests.swift; sourceTree = "<group>"; };
 		A00E70CE8EC82A9CC7441A44 /* OverallStateEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/OverallStateEngineTests.swift; sourceTree = "<group>"; };
@@ -225,6 +232,7 @@
 		F3C5CA8C9253EACA3D4A4D37 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				D44D44D44D44D44D44D44D44 /* DataPermissionView.swift */,
 				264518E81625260D83E6272D /* PrivacyView.swift */,
 				4DD28289274924C633330254 /* SettingsView.swift */,
 			);
@@ -258,6 +266,7 @@
 			children = (
 				91D4105804A8108983609354 /* Assets.xcassets */,
 				F083CE7B13FB89F932A9172B /* Info.plist */,
+				A77A77A77A77A77A77A77A77 /* StateWatch.entitlements */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -287,6 +296,7 @@
 				5D09D0A0F13BAF9B571EE754 /* HealthDataFetcher.swift */,
 				3C8C24C9E22E455D80201DE5 /* HealthKitAuthorizationService.swift */,
 				7E9162192B69D430B68D19D5 /* HealthKitManager.swift */,
+				E55E55E55E55E55E55E55E55 /* HealthKitTypes.swift */,
 				3B5E7C08B3E3AA74F5111A1A /* MockHealthDataFetcher.swift */,
 			);
 			name = HealthKit;
@@ -308,6 +318,7 @@
 			isa = PBXGroup;
 			children = (
 				E935F18D147B46483011FF69 /* BaselineCalculatorTests.swift */,
+				F66F66F66F66F66F66F66F66 /* HealthKitPermissionTests.swift */,
 				40C0B250765F998AA81DAE61 /* Info.plist */,
 				7CCE6065EFFA39833DBAC185 /* ModelCodableTests.swift */,
 				A00E70CE8EC82A9CC7441A44 /* OverallStateEngineTests.swift */,
@@ -449,6 +460,11 @@
 				TargetAttributes = {
 					4A7035D6BC597411FFABF132 = {
 						CreatedOnToolsVersion = 16.0;
+						SystemCapabilities = {
+							com.apple.HealthKit = {
+								enabled = 1;
+							};
+						};
 					};
 					630F6089B0F19274BB930806 = {
 						CreatedOnToolsVersion = 16.0;
@@ -520,6 +536,7 @@
 				869E719C1BCF39EC5D3AA05E /* MockSampleData.swift in Sources */,
 				676AED9DA772D17547F0D54B /* HealthKitManager.swift in Sources */,
 				4013B86B4825BBA82B03E2AF /* HealthKitAuthorizationService.swift in Sources */,
+				A11A11A11A11A11A11A11A11 /* HealthKitTypes.swift in Sources */,
 				F3CAEC1D445534ED943E1FD2 /* HealthDataFetcher.swift in Sources */,
 				61956CA8E1DA6BBEC2B7446B /* MockHealthDataFetcher.swift in Sources */,
 				E752AE1A8C6A2C7BAC3EDEB7 /* BaselineCalculator.swift in Sources */,
@@ -540,6 +557,7 @@
 				455DD4A664E5851354CD9920 /* MetricChartView.swift in Sources */,
 				446CCE8875A29EA1B5446D59 /* CheckInView.swift in Sources */,
 				51E93BF3C85FA5447C4695C3 /* SettingsView.swift in Sources */,
+				B22B22B22B22B22B22B22B22 /* DataPermissionView.swift in Sources */,
 				26A5D5805F75B8EEF449819D /* PrivacyView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -569,6 +587,7 @@
 				C31F3409BEAB476C9500E8A2 /* RecoveryScoreEngineTests.swift in Sources */,
 				45929C35B08CC6FC2D96A261 /* SleepScoreEngineTests.swift in Sources */,
 				3C56188075BB739B7A9098AB /* OverallStateEngineTests.swift in Sources */,
+				C33C33C33C33C33C33C33C33 /* HealthKitPermissionTests.swift in Sources */,
 				8B437F571E48E29B77FA65EA /* ModelCodableTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -649,6 +668,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = StateWatchApp/Resources/StateWatch.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
@@ -676,6 +696,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = StateWatchApp/Resources/StateWatch.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";

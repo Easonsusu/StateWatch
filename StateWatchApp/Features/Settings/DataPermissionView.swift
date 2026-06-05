@@ -3,8 +3,9 @@ import SwiftUI
 struct DataPermissionView: View {
     @StateObject private var healthKitManager: HealthKitManager
 
-    init(healthKitManager: HealthKitManager = HealthKitManager()) {
-        _healthKitManager = StateObject(wrappedValue: healthKitManager)
+    @MainActor
+    init(healthKitManager: HealthKitManager? = nil) {
+        _healthKitManager = StateObject(wrappedValue: healthKitManager ?? HealthKitManager())
     }
 
     var body: some View {
@@ -38,7 +39,7 @@ struct DataPermissionView: View {
                 Label("Mock data remains available for previews and tests", systemImage: "square.stack.3d.up")
             }
 
-            Section("Info.plist TODO") {
+            Section("Privacy Strings") {
                 ForEach(HealthKitTypes.infoPlistPrivacyNotes, id: \.self) { note in
                     Text(note)
                         .font(.footnote)

@@ -154,9 +154,9 @@ enum HealthKitTypes {
     ]
 
     static let infoPlistPrivacyNotes: [String] = [
-        "Add NSHealthShareUsageDescription before enabling HealthKit in a real Xcode target.",
-        "Do not add NSHealthUpdateUsageDescription for the MVP because StateWatch requests read access only.",
-        "The share usage string should say Health data stays local and supports wellness summaries, not diagnosis."
+        "Apple Health access is read-only for the MVP.",
+        "StateWatch does not request permission to write HealthKit data.",
+        "Health data stays local and supports wellness summaries, not diagnosis."
     ]
 
     static func permissionStatuses(access: HealthKitPermissionAccess) -> [HealthKitPermissionStatus] {
