@@ -121,6 +121,29 @@ Do not show:
 - Multiple suggestions at once.
 - Medical-sounding alerts.
 
+## Phase 5.7 Watch Frames
+
+Use compact Watch frames around `198 x 242`. The design should be score-first,
+dark, legible, and readable within a few seconds.
+
+Create:
+
+- `[Phase 5.7] Overall Score Screen`
+- `[Phase 5.7] Component Summary Screen`
+- `[Phase 5.7] Suggestion Screen`
+- `[Phase 5.7] Confidence / Last Updated Screen`
+
+Content:
+
+- Overall score screen: `76`, `Mixed`, `Today looks mixed overall`
+- Component summary screen: `Recovery 68`, `Sleep 81`, `Load 75`
+- Suggestion screen: `Consider a lighter day if that matches how you feel.`
+- Confidence screen: `Confidence: Medium`, `Updated 12:40`,
+  `Local Apple Health estimate`
+
+Use `Not medical advice` only if space allows. Prefer keeping that fuller
+disclaimer on iPhone.
+
 ## TODO
 
 - Validate Watch layouts in Figma at actual watch sizes.

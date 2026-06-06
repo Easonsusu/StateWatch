@@ -63,6 +63,18 @@ StateWatch now includes a runnable iOS app target, watchOS app target, and XCTes
 - Verify no medical, diagnosis, disease detection, clinical stress detection, or alarming wording appears in UI.
 - Verify Figma design specs are reviewed before SwiftUI implementation begins.
 
+## Figma Phase 5.7 Review
+
+- Verify the Figma file `StateWatch UI Design System` contains `[Phase 5.7]` frames on `01 Design Tokens`, `02 iPhone Dashboard`, `03 Watch App`, `04 Watch Complications`, `05 Components`, and `06 Handoff Notes`.
+- Verify all Phase 5.7 layers are editable and not flattened screenshots.
+- Verify the token board includes final color, score-state, confidence-state, typography, spacing, radius, and effect specs.
+- Verify iPhone dashboard frames cover normal, low data, loading, HealthKit unavailable, permission-needed, and debug-preview entry states.
+- Verify Watch frames are glanceable within a few seconds and avoid tiny paragraphs.
+- Verify complication variants do not overflow in normal, low confidence, stale data, or unavailable states.
+- Verify low-data and unavailable wording is calm and non-alarming.
+- Verify no medical, diagnosis, disease detection, clinical stress detection, warning, or health-risk wording appears in mockups.
+- Verify Phase 5.8 SwiftUI work starts from Figma tokens and components rather than generic UI invention.
+
 ## Manual QA for MVP
 
 - First launch shows disclaimer before HealthKit permission request.

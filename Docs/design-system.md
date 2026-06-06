@@ -54,6 +54,74 @@ Use semantic roles first. Exact values should be finalized in Figma tokens.
 - `accent.amber`: mixed or limited-data state.
 - `accent.rose`: low-energy state, used gently and never as an alarm.
 
+## Phase 5.7 Token Values
+
+These values are the current high-fidelity Figma token target and are reflected
+in the editable Phase 5.7 Figma frames.
+
+### Core Colors
+
+- `backgroundPrimary`: `#080B12`
+- `backgroundSecondary`: `#0E1320`
+- `panel`: `#141B2A`
+- `panelElevated`: `#182033`
+- `border`: `#28344A`
+- `textPrimary`: `#F4F8FF`
+- `textSecondary`: `#AAB7CC`
+- `textMuted`: `#65738C`
+- `accentCyan`: `#35E7FF`
+- `accentBlue`: `#4D7CFF`
+- `accentViolet`: `#8E6CFF`
+- `recoveryGreen`: `#5CF2B1`
+- `cautionAmber`: `#FFCA63`
+- `softRed`: `#FF6B6B`
+
+### Score State Colors
+
+- `80-100`: `recoveryGreen` with optional `accentCyan`
+- `60-79`: `accentCyan`
+- `40-59`: `cautionAmber`
+- `below 40`: `softRed`, used gently and without alarm styling
+- `unavailable`: `textMuted`
+
+### Confidence State Colors
+
+- `high`: `recoveryGreen`
+- `medium`: `accentCyan`
+- `low`: `cautionAmber`
+- `unavailable`: `textMuted`
+
+### Typography Tokens
+
+Inter is acceptable for Figma mockups. SwiftUI should use system fonts unless a
+product font decision is made later.
+
+- Hero Score: 72, semibold
+- Screen Title: 28, semibold
+- Section Title: 15, semibold
+- Card Title: 16, semibold
+- Metric Value: 22, semibold
+- Body: 15, regular
+- Caption: 12, regular
+- Badge: 12, medium
+
+### Spacing Tokens
+
+- `4`
+- `8`
+- `12`
+- `16`
+- `20`
+- `24`
+- `32`
+
+### Radius Tokens
+
+- Small: `12`
+- Medium: `18`
+- Large: `24`
+- Pill: `999`
+
 ## Typography Hierarchy
 
 Use Apple-like system typography in SwiftUI and mirror it in Figma.
@@ -123,6 +191,8 @@ Glass panels should feel premium and calm.
 - Do not use glow behind long text.
 - Do not use glow to create urgency.
 - Keep glow accessible against dark backgrounds.
+- Phase 5.7 allows glow only on score rings, active progress, and tiny accents.
+- Avoid heavy cyberpunk neon and medical-device alarm styling.
 
 ## Icon Style
 
