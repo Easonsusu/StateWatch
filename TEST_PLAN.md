@@ -51,6 +51,18 @@ StateWatch now includes a runnable iOS app target, watchOS app target, and XCTes
 - CI disables code signing and compiler index storage for build/test verification.
 - Local/manual testing is still required for HealthKit permission UI behavior and any real Apple Health data scenarios.
 
+## Design and UI QA
+
+- Verify dark mode readability across dashboard, settings, Watch, and debug preview surfaces.
+- Verify score ring legibility at iPhone and Apple Watch sizes.
+- Verify component cards have clear hierarchy for title, value, confidence, and summary text.
+- Verify low-data states are calm, non-alarming, and do not treat missing data as a negative wellness signal.
+- Verify the Watch app is glanceable within a few seconds.
+- Verify complication layouts do not overflow in accessory circular, rectangular, inline, or corner families.
+- Verify text remains readable on small Apple Watch screens.
+- Verify no medical, diagnosis, disease detection, clinical stress detection, or alarming wording appears in UI.
+- Verify Figma design specs are reviewed before SwiftUI implementation begins.
+
 ## Manual QA for MVP
 
 - First launch shows disclaimer before HealthKit permission request.
