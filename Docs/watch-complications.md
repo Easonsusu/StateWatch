@@ -28,6 +28,29 @@ Do not implement this model in Swift yet.
 - Stale data should be obvious but calm.
 - Tap behavior should open the Watch app dashboard or relevant summary screen.
 
+## Phase 5.7 Visual Decisions
+
+Create high-fidelity concepts for each family with variants for normal, low
+confidence, stale data, and unavailable/no data.
+
+Allowed state wording:
+
+- `Mixed`
+- `Steady`
+- `Low data`
+- `No data`
+
+Avoid:
+
+- `High stress`
+- `Bad recovery`
+- `Health risk`
+- `Warning`
+
+All family notes should include:
+
+- `Tap opens StateWatch Watch app.`
+
 ## accessoryCircular
 
 Allowed content:
@@ -75,6 +98,13 @@ Design constraints:
 
 - Must remain legible at very small size.
 - Do not rely on glow for readability.
+
+Phase 5.7 variants:
+
+- Normal: score `76`, optional small ring, optional `MIX`
+- Low confidence: muted ring, `76`, `LOW`
+- Stale data: muted score with tiny stale dot
+- Unavailable: `--`, `No data`
 
 ## accessoryRectangular
 
@@ -124,6 +154,13 @@ Design constraints:
 - Prefer one supporting line over two.
 - Avoid medical or urgent phrasing.
 
+Phase 5.7 variants:
+
+- Normal: `State 76 - Mixed`, `Take it lighter today`
+- Low confidence: `Low data`, `Cautious estimate`
+- Stale data: `State 76`, `Update pending`
+- Unavailable: `StateWatch`, `No data`
+
 ## accessoryInline
 
 Allowed content:
@@ -168,6 +205,13 @@ Design constraints:
 
 - Keep copy under a short phrase.
 - Avoid punctuation-heavy text.
+
+Phase 5.7 variants:
+
+- Normal: `State 76 Mixed`
+- Low confidence: `State low data`
+- Stale data: `State update pending`
+- Unavailable: `State no data`
 
 ## accessoryCorner
 
@@ -216,6 +260,13 @@ Design constraints:
 
 - Must remain readable on curved placement.
 - Use minimal glow.
+
+Phase 5.7 variants:
+
+- Normal: score `76` with tiny arc or dot
+- Low confidence: muted score and dot
+- Stale data: muted score
+- Unavailable: `--`
 
 ## TODO
 

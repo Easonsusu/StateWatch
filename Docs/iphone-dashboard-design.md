@@ -163,6 +163,49 @@ readiness is approved.
 - Label it clearly as a developer preview.
 - Do not replace production dashboard data yet.
 
+## Phase 5.7 Figma Frames
+
+Use `393 x 852` iPhone frames with dark background, premium glass cards, a large
+score ring, high-contrast text, and restrained cyan, blue, and green accents.
+
+Create:
+
+- `[Phase 5.7] Main Dashboard / Normal State`
+- `[Phase 5.7] Low Data State`
+- `[Phase 5.7] Loading State`
+- `[Phase 5.7] HealthKit Unavailable State`
+- `[Phase 5.7] Permission Needed State`
+- `[Phase 5.7] Debug Preview Entry State`
+
+Normal state content:
+
+- `Today`
+- Score `76`
+- State label `Mixed`
+- Confidence `Medium`
+- `Updated 12:40`
+- Component cards for `Recovery 68`, `Sleep 81`, `Fatigue Context 64`, and
+  `Activity Load 75`
+- Reasons:
+  - `Your recent signals look mixed.`
+  - `Sleep is close to your recent pattern.`
+  - `Recovery signals are slightly softer than your baseline.`
+- Suggestion:
+  - `Consider a lighter day if that matches how you feel.`
+- 7-day mini trend
+
+State copy:
+
+- Low data: `Recent data is limited, so this estimate is cautious.`
+- Loading: `Analyzing recent signals...`
+- Loading note: `This stays on device and uses Apple Health data only when available.`
+- Unavailable: `Apple Health data is unavailable.`
+- Unavailable note: `StateWatch can keep showing demo data until local Health data is available.`
+- Permission: `Connect Apple Health`
+- Permission note: `StateWatch requests read-only access to selected Apple Health signals for local wellness summaries.`
+
+Do not use red warning styling for low-data or unavailable states.
+
 ## TODO
 
 - Convert this layout into detailed Figma frames.
