@@ -75,6 +75,18 @@ StateWatch now includes a runnable iOS app target, watchOS app target, and XCTes
 - Verify no medical, diagnosis, disease detection, clinical stress detection, warning, or health-risk wording appears in mockups.
 - Verify Phase 5.8 SwiftUI work starts from Figma tokens and components rather than generic UI invention.
 
+## SwiftUI Design System Foundation
+
+- Verify design system components render in SwiftUI previews.
+- Verify the score ring remains legible in dark mode across steady, mixed, cautious, and no-data examples.
+- Verify glass cards do not overpower text or create heavy neon effects.
+- Verify confidence badge wording is calm, especially `Low data`.
+- Verify metric cards have a clear hierarchy for title, value, subtitle, and optional progress.
+- Verify the mini trend chart handles empty data without crashing or implying a negative wellness state.
+- Verify components do not introduce medical, diagnosis, disease detection, clinical stress detection, or alarming wording.
+- Verify production `DashboardView` still behaves as before and remains mock-backed.
+- Verify the Watch app still behaves as before and is not changed by the iOS design-system foundation.
+
 ## Manual QA for MVP
 
 - First launch shows disclaimer before HealthKit permission request.

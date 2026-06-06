@@ -41,6 +41,17 @@
 		B22B22B22B22B22B22B22B22 /* DataPermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44D44D44D44D44D44D44D44 /* DataPermissionView.swift */; };
 		26A5D5805F75B8EEF449819D /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264518E81625260D83E6272D /* PrivacyView.swift */; };
 		F5A300000000000000000003 /* HealthKitScoringPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A400000000000000000004 /* HealthKitScoringPreviewView.swift */; };
+		E58000000000000000000001 /* StateWatchColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59000000000000000000001 /* StateWatchColors.swift */; };
+		E58000000000000000000002 /* StateWatchTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59000000000000000000002 /* StateWatchTypography.swift */; };
+		E58000000000000000000003 /* StateWatchSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59000000000000000000003 /* StateWatchSpacing.swift */; };
+		E58000000000000000000004 /* StateWatchTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59000000000000000000004 /* StateWatchTheme.swift */; };
+		E58000000000000000000005 /* StateWatchGlassCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59000000000000000000005 /* StateWatchGlassCard.swift */; };
+		E58000000000000000000006 /* StateWatchScoreRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59000000000000000000006 /* StateWatchScoreRing.swift */; };
+		E58000000000000000000007 /* StateWatchMetricCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59000000000000000000007 /* StateWatchMetricCard.swift */; };
+		E58000000000000000000008 /* StateWatchConfidenceBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59000000000000000000008 /* StateWatchConfidenceBadge.swift */; };
+		E58000000000000000000009 /* StateWatchReasonRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59000000000000000000009 /* StateWatchReasonRow.swift */; };
+		E5800000000000000000000A /* StateWatchSuggestionCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5900000000000000000000A /* StateWatchSuggestionCard.swift */; };
+		E5800000000000000000000B /* StateWatchMiniTrendChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5900000000000000000000B /* StateWatchMiniTrendChart.swift */; };
 		9B3BCE063A0C83DE4F2B6BDC /* DailyHealthSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A57ED9AFD7DDB1725B8E7F /* DailyHealthSnapshot.swift */; };
 		AD7BCB2B8E9837F46FBD1D0C /* HealthBaseline.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8F5BD50E4760680B43F867 /* HealthBaseline.swift */; };
 		B0A5678559FF8F3405D533E9 /* StateAssessment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0BB8F8130B13AAC0B9896B /* StateAssessment.swift */; };
@@ -58,6 +69,7 @@
 		C33C33C33C33C33C33C33C33 /* HealthKitPermissionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66F66F66F66F66F66F66F66 /* HealthKitPermissionTests.swift */; };
 		F5A100000000000000000001 /* HealthKitScoringPreviewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A200000000000000000002 /* HealthKitScoringPreviewTests.swift */; };
 		8B437F571E48E29B77FA65EA /* ModelCodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCE6065EFFA39833DBAC185 /* ModelCodableTests.swift */; };
+		E5800000000000000000000C /* StateWatchThemeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5900000000000000000000C /* StateWatchThemeTests.swift */; };
 		654352D083481CB3F2CE4EAE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91D4105804A8108983609354 /* Assets.xcassets */; };
 		EB7EFA62BB587DF042AFB1C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C273FDA27C713F4E89B8D78 /* Assets.xcassets */; };
 		40BE8EC08D20FD2F0D580A05 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDD80F8A4F0C1686025DD75F /* HealthKit.framework */; };
@@ -111,6 +123,17 @@
 		98518824E396BD6854B32D4A /* RecoveryScoreEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Services/Scoring/RecoveryScoreEngine.swift; sourceTree = "<group>"; };
 		4533467843482BBDEBE78154 /* SleepScoreEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Services/Scoring/SleepScoreEngine.swift; sourceTree = "<group>"; };
 		B0B80C1A638197F3B18C4F50 /* StressFatigueScoreEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Services/Scoring/StressFatigueScoreEngine.swift; sourceTree = "<group>"; };
+		E59000000000000000000001 /* StateWatchColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/DesignSystem/StateWatchColors.swift; sourceTree = "<group>"; };
+		E59000000000000000000002 /* StateWatchTypography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/DesignSystem/StateWatchTypography.swift; sourceTree = "<group>"; };
+		E59000000000000000000003 /* StateWatchSpacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/DesignSystem/StateWatchSpacing.swift; sourceTree = "<group>"; };
+		E59000000000000000000004 /* StateWatchTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/DesignSystem/StateWatchTheme.swift; sourceTree = "<group>"; };
+		E59000000000000000000005 /* StateWatchGlassCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/DesignSystem/Components/StateWatchGlassCard.swift; sourceTree = "<group>"; };
+		E59000000000000000000006 /* StateWatchScoreRing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/DesignSystem/Components/StateWatchScoreRing.swift; sourceTree = "<group>"; };
+		E59000000000000000000007 /* StateWatchMetricCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/DesignSystem/Components/StateWatchMetricCard.swift; sourceTree = "<group>"; };
+		E59000000000000000000008 /* StateWatchConfidenceBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/DesignSystem/Components/StateWatchConfidenceBadge.swift; sourceTree = "<group>"; };
+		E59000000000000000000009 /* StateWatchReasonRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/DesignSystem/Components/StateWatchReasonRow.swift; sourceTree = "<group>"; };
+		E5900000000000000000000A /* StateWatchSuggestionCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/DesignSystem/Components/StateWatchSuggestionCard.swift; sourceTree = "<group>"; };
+		E5900000000000000000000B /* StateWatchMiniTrendChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/DesignSystem/Components/StateWatchMiniTrendChart.swift; sourceTree = "<group>"; };
 		E935F18D147B46483011FF69 /* BaselineCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/BaselineCalculatorTests.swift; sourceTree = "<group>"; };
 		F66F66F66F66F66F66F66F66 /* HealthKitPermissionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/HealthKitPermissionTests.swift; sourceTree = "<group>"; };
 		F5A200000000000000000002 /* HealthKitScoringPreviewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/HealthKitScoringPreviewTests.swift; sourceTree = "<group>"; };
@@ -119,6 +142,7 @@
 		A00E70CE8EC82A9CC7441A44 /* OverallStateEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/OverallStateEngineTests.swift; sourceTree = "<group>"; };
 		63FD61DF151A3052AF940D1C /* RecoveryScoreEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/RecoveryScoreEngineTests.swift; sourceTree = "<group>"; };
 		7D7961319B0F3E33F2242038 /* SleepScoreEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/SleepScoreEngineTests.swift; sourceTree = "<group>"; };
+		E5900000000000000000000C /* StateWatchThemeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/StateWatchThemeTests.swift; sourceTree = "<group>"; };
 		A106FE680F4F943C00E6ABC1 /* StateWatchWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/App/StateWatchWatchApp.swift; sourceTree = "<group>"; };
 		DDA00BD7ACAE0EB5046D8BB8 /* StateWatchComplicationBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/Complications/StateWatchComplicationBundle.swift; sourceTree = "<group>"; };
 		E67D696501BF3FC7D59194CA /* StateWatchWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/Complications/StateWatchWidgetView.swift; sourceTree = "<group>"; };
@@ -175,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				1ED5466CF39B159088F638B8 /* App */,
+				E5A000000000000000000001 /* DesignSystem */,
 				51C20A7D54A825DDD54571B3 /* Features */,
 				9CEB3DCFEB4A57EF57C0F557 /* Models */,
 				4C168F13BBD37F19628161BD /* Resources */,
@@ -190,6 +215,32 @@
 				AA96331AEAE8DDC6AE343CF8 /* StateWatchApp.swift */,
 			);
 			name = App;
+			sourceTree = "<group>";
+		};
+		E5A000000000000000000001 /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				E5A000000000000000000002 /* Components */,
+				E59000000000000000000001 /* StateWatchColors.swift */,
+				E59000000000000000000002 /* StateWatchTypography.swift */,
+				E59000000000000000000003 /* StateWatchSpacing.swift */,
+				E59000000000000000000004 /* StateWatchTheme.swift */,
+			);
+			name = DesignSystem;
+			sourceTree = "<group>";
+		};
+		E5A000000000000000000002 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				E59000000000000000000008 /* StateWatchConfidenceBadge.swift */,
+				E59000000000000000000005 /* StateWatchGlassCard.swift */,
+				E59000000000000000000007 /* StateWatchMetricCard.swift */,
+				E5900000000000000000000B /* StateWatchMiniTrendChart.swift */,
+				E59000000000000000000009 /* StateWatchReasonRow.swift */,
+				E59000000000000000000006 /* StateWatchScoreRing.swift */,
+				E5900000000000000000000A /* StateWatchSuggestionCard.swift */,
+			);
+			name = Components;
 			sourceTree = "<group>";
 		};
 		51C20A7D54A825DDD54571B3 /* Features */ = {
@@ -338,6 +389,7 @@
 				A00E70CE8EC82A9CC7441A44 /* OverallStateEngineTests.swift */,
 				63FD61DF151A3052AF940D1C /* RecoveryScoreEngineTests.swift */,
 				7D7961319B0F3E33F2242038 /* SleepScoreEngineTests.swift */,
+				E5900000000000000000000C /* StateWatchThemeTests.swift */,
 			);
 			name = StateWatchTests;
 			sourceTree = "<group>";
@@ -574,6 +626,17 @@
 				B22B22B22B22B22B22B22B22 /* DataPermissionView.swift in Sources */,
 				26A5D5805F75B8EEF449819D /* PrivacyView.swift in Sources */,
 				F5A300000000000000000003 /* HealthKitScoringPreviewView.swift in Sources */,
+				E58000000000000000000001 /* StateWatchColors.swift in Sources */,
+				E58000000000000000000002 /* StateWatchTypography.swift in Sources */,
+				E58000000000000000000003 /* StateWatchSpacing.swift in Sources */,
+				E58000000000000000000004 /* StateWatchTheme.swift in Sources */,
+				E58000000000000000000005 /* StateWatchGlassCard.swift in Sources */,
+				E58000000000000000000006 /* StateWatchScoreRing.swift in Sources */,
+				E58000000000000000000007 /* StateWatchMetricCard.swift in Sources */,
+				E58000000000000000000008 /* StateWatchConfidenceBadge.swift in Sources */,
+				E58000000000000000000009 /* StateWatchReasonRow.swift in Sources */,
+				E5800000000000000000000A /* StateWatchSuggestionCard.swift in Sources */,
+				E5800000000000000000000B /* StateWatchMiniTrendChart.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -605,6 +668,7 @@
 				C33C33C33C33C33C33C33C33 /* HealthKitPermissionTests.swift in Sources */,
 				F5A100000000000000000001 /* HealthKitScoringPreviewTests.swift in Sources */,
 				8B437F571E48E29B77FA65EA /* ModelCodableTests.swift in Sources */,
+				E5800000000000000000000C /* StateWatchThemeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
