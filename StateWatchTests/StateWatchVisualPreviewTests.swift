@@ -30,15 +30,46 @@ final class StateWatchVisualPreviewTests: XCTestCase {
         XCTAssertEqual(content.metrics.count, 4)
     }
 
+    func testAllPreviewStatesUseCalmNonMedicalCopy() {
+        for state in StateWatchVisualPreviewState.allCases {
+            XCTAssertNoForbiddenMedicalWording(
+                in: state.content.searchableText,
+                "Unexpected forbidden wording in \(state.title)"
+            )
+        }
+    }
+
+    func testVisualPreviewStatesAreStaticMockContent() {
+        let normal = StateWatchVisualPreviewState.normal.content
+        let lowData = StateWatchVisualPreviewState.lowData.content
+        let unavailable = StateWatchVisualPreviewState.unavailable.content
+
+        XCTAssertEqual(normal.trendCaption, "Mock data")
+        XCTAssertEqual(lowData.trendCaption, "Limited")
+        XCTAssertEqual(unavailable.trendCaption, "No data")
+        XCTAssertEqual(Set(StateWatchVisualPreviewState.allCases.map(\.title)), ["Normal", "Low Data", "Unavailable"])
+    }
+
     private func XCTAssertNoForbiddenMedicalWording(
         in text: String,
+        _ message: String = "Unexpected medical-style wording",
         file: StaticString = #filePath,
         line: UInt = #line
     ) {
-        for forbiddenTerm in ["diagnos", "disease", "illness", "clinical stress", "detect"] {
+        for forbiddenTerm in [
+            "diagnos",
+            "disease",
+            "illness",
+            "clinical stress",
+            "detect",
+            "treatment",
+            "prevention",
+            "health risk",
+            "warning"
+        ] {
             XCTAssertFalse(
                 text.localizedCaseInsensitiveContains(forbiddenTerm),
-                "Unexpected medical-style wording: \(forbiddenTerm)",
+                "\(message): \(forbiddenTerm)",
                 file: file,
                 line: line
             )

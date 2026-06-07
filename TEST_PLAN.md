@@ -101,6 +101,21 @@ StateWatch now includes a runnable iOS app target, watchOS app target, and XCTes
 - Confirm low-data and unavailable copy is calm and non-medical.
 - Confirm dark mode readability, score ring legibility, and glass-card hierarchy.
 
+## Phase 5.10 QA Audit
+
+- Confirm GitHub Actions CI passes before merge.
+- Confirm production `DashboardView` remains mock-backed.
+- Confirm Settings -> Developer Preview -> HealthKit Scoring Preview opens.
+- Confirm Settings -> Developer Preview -> Visual Dashboard Preview opens.
+- Confirm Visual Dashboard Preview has Normal, Low Data, and Unavailable states.
+- Confirm Visual Dashboard Preview does not request HealthKit permissions.
+- Confirm Visual Dashboard Preview does not fetch real HealthKit data.
+- Confirm Watch app still builds.
+- Confirm no HealthKit write permission is requested.
+- Confirm no networking or upload path exists.
+- Confirm no medical or alarming UI wording exists.
+- Confirm dark mode readability manually in Xcode previews or simulator when available.
+
 ## Manual QA for MVP
 
 - First launch shows disclaimer before HealthKit permission request.
