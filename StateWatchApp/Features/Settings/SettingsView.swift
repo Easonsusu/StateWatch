@@ -18,6 +18,7 @@ struct SettingsView: View {
                 #if DEBUG
                 Section("Developer Preview") {
                     NavigationLink("HealthKit Scoring Preview", destination: HealthKitScoringPreviewView())
+                    NavigationLink("Visual Dashboard Preview", destination: StateWatchVisualPreviewView())
                 }
                 #endif
 

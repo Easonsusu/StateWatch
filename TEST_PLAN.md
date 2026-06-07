@@ -87,6 +87,20 @@ StateWatch now includes a runnable iOS app target, watchOS app target, and XCTes
 - Verify production `DashboardView` still behaves as before and remains mock-backed.
 - Verify the Watch app still behaves as before and is not changed by the iOS design-system foundation.
 
+## Debug Visual Preview Dashboard
+
+- Run the `StateWatch` scheme on an iPhone simulator.
+- Open Dashboard -> Settings.
+- Under Developer Preview, open Visual Dashboard Preview.
+- Confirm the preview uses the new technology-style design system components.
+- Confirm Normal, Low Data, and Unavailable preview states are available.
+- Confirm production `DashboardView` is unchanged and remains mock-backed.
+- Confirm HealthKit Scoring Preview still opens from the same Developer Preview section.
+- Confirm Visual Dashboard Preview does not request HealthKit permission.
+- Confirm Visual Dashboard Preview does not fetch real HealthKit data.
+- Confirm low-data and unavailable copy is calm and non-medical.
+- Confirm dark mode readability, score ring legibility, and glass-card hierarchy.
+
 ## Manual QA for MVP
 
 - First launch shows disclaimer before HealthKit permission request.

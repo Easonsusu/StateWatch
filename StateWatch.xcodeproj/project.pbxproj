@@ -41,6 +41,7 @@
 		B22B22B22B22B22B22B22B22 /* DataPermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44D44D44D44D44D44D44D44 /* DataPermissionView.swift */; };
 		26A5D5805F75B8EEF449819D /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264518E81625260D83E6272D /* PrivacyView.swift */; };
 		F5A300000000000000000003 /* HealthKitScoringPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A400000000000000000004 /* HealthKitScoringPreviewView.swift */; };
+		F5B100000000000000000001 /* StateWatchVisualPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B200000000000000000002 /* StateWatchVisualPreviewView.swift */; };
 		E58000000000000000000001 /* StateWatchColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59000000000000000000001 /* StateWatchColors.swift */; };
 		E58000000000000000000002 /* StateWatchTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59000000000000000000002 /* StateWatchTypography.swift */; };
 		E58000000000000000000003 /* StateWatchSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59000000000000000000003 /* StateWatchSpacing.swift */; };
@@ -70,6 +71,7 @@
 		F5A100000000000000000001 /* HealthKitScoringPreviewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A200000000000000000002 /* HealthKitScoringPreviewTests.swift */; };
 		8B437F571E48E29B77FA65EA /* ModelCodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCE6065EFFA39833DBAC185 /* ModelCodableTests.swift */; };
 		E5800000000000000000000C /* StateWatchThemeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5900000000000000000000C /* StateWatchThemeTests.swift */; };
+		F5B400000000000000000004 /* StateWatchVisualPreviewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B500000000000000000005 /* StateWatchVisualPreviewTests.swift */; };
 		654352D083481CB3F2CE4EAE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91D4105804A8108983609354 /* Assets.xcassets */; };
 		EB7EFA62BB587DF042AFB1C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C273FDA27C713F4E89B8D78 /* Assets.xcassets */; };
 		40BE8EC08D20FD2F0D580A05 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDD80F8A4F0C1686025DD75F /* HealthKit.framework */; };
@@ -98,6 +100,7 @@
 		B459419C761C9C0FA8D69BAC /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Onboarding/OnboardingView.swift; sourceTree = "<group>"; };
 		D44D44D44D44D44D44D44D44 /* DataPermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Settings/DataPermissionView.swift; sourceTree = "<group>"; };
 		F5A400000000000000000004 /* HealthKitScoringPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Debug/HealthKitScoringPreviewView.swift; sourceTree = "<group>"; };
+		F5B200000000000000000002 /* StateWatchVisualPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Debug/VisualPreview/StateWatchVisualPreviewView.swift; sourceTree = "<group>"; };
 		264518E81625260D83E6272D /* PrivacyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Settings/PrivacyView.swift; sourceTree = "<group>"; };
 		4DD28289274924C633330254 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Settings/SettingsView.swift; sourceTree = "<group>"; };
 		18C72C723877A11910304015 /* MetricChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Trends/MetricChartView.swift; sourceTree = "<group>"; };
@@ -143,6 +146,7 @@
 		63FD61DF151A3052AF940D1C /* RecoveryScoreEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/RecoveryScoreEngineTests.swift; sourceTree = "<group>"; };
 		7D7961319B0F3E33F2242038 /* SleepScoreEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/SleepScoreEngineTests.swift; sourceTree = "<group>"; };
 		E5900000000000000000000C /* StateWatchThemeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/StateWatchThemeTests.swift; sourceTree = "<group>"; };
+		F5B500000000000000000005 /* StateWatchVisualPreviewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/StateWatchVisualPreviewTests.swift; sourceTree = "<group>"; };
 		A106FE680F4F943C00E6ABC1 /* StateWatchWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/App/StateWatchWatchApp.swift; sourceTree = "<group>"; };
 		DDA00BD7ACAE0EB5046D8BB8 /* StateWatchComplicationBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/Complications/StateWatchComplicationBundle.swift; sourceTree = "<group>"; };
 		E67D696501BF3FC7D59194CA /* StateWatchWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/Complications/StateWatchWidgetView.swift; sourceTree = "<group>"; };
@@ -268,8 +272,17 @@
 			isa = PBXGroup;
 			children = (
 				F5A400000000000000000004 /* HealthKitScoringPreviewView.swift */,
+				F5B300000000000000000003 /* VisualPreview */,
 			);
 			name = Debug;
+			sourceTree = "<group>";
+		};
+		F5B300000000000000000003 /* VisualPreview */ = {
+			isa = PBXGroup;
+			children = (
+				F5B200000000000000000002 /* StateWatchVisualPreviewView.swift */,
+			);
+			name = VisualPreview;
 			sourceTree = "<group>";
 		};
 		FD31001C4EA117B3FE6EBF46 /* Dashboard */ = {
@@ -390,6 +403,7 @@
 				63FD61DF151A3052AF940D1C /* RecoveryScoreEngineTests.swift */,
 				7D7961319B0F3E33F2242038 /* SleepScoreEngineTests.swift */,
 				E5900000000000000000000C /* StateWatchThemeTests.swift */,
+				F5B500000000000000000005 /* StateWatchVisualPreviewTests.swift */,
 			);
 			name = StateWatchTests;
 			sourceTree = "<group>";
@@ -626,6 +640,7 @@
 				B22B22B22B22B22B22B22B22 /* DataPermissionView.swift in Sources */,
 				26A5D5805F75B8EEF449819D /* PrivacyView.swift in Sources */,
 				F5A300000000000000000003 /* HealthKitScoringPreviewView.swift in Sources */,
+				F5B100000000000000000001 /* StateWatchVisualPreviewView.swift in Sources */,
 				E58000000000000000000001 /* StateWatchColors.swift in Sources */,
 				E58000000000000000000002 /* StateWatchTypography.swift in Sources */,
 				E58000000000000000000003 /* StateWatchSpacing.swift in Sources */,
@@ -669,6 +684,7 @@
 				F5A100000000000000000001 /* HealthKitScoringPreviewTests.swift in Sources */,
 				8B437F571E48E29B77FA65EA /* ModelCodableTests.swift in Sources */,
 				E5800000000000000000000C /* StateWatchThemeTests.swift in Sources */,
+				F5B400000000000000000004 /* StateWatchVisualPreviewTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
