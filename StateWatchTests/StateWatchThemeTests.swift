@@ -30,6 +30,30 @@ final class StateWatchThemeTests: XCTestCase {
         XCTAssertEqual(StateWatchTheme.scoreColorCategory(for: nil), .unavailable)
     }
 
+    func testScoreColorCategoryBoundaryValues() {
+        let cases: [(score: Int?, category: StateWatchTheme.ScoreColorCategory)] = [
+            (nil, .unavailable),
+            (-1, .low),
+            (0, .low),
+            (39, .low),
+            (40, .caution),
+            (59, .caution),
+            (60, .medium),
+            (79, .medium),
+            (80, .high),
+            (100, .high),
+            (101, .high)
+        ]
+
+        for testCase in cases {
+            XCTAssertEqual(
+                StateWatchTheme.scoreColorCategory(for: testCase.score),
+                testCase.category,
+                "Unexpected category for \(String(describing: testCase.score))"
+            )
+        }
+    }
+
     func testConfidenceLabelMapping() {
         XCTAssertEqual(StateWatchTheme.confidenceLabel(for: .high), "High")
         XCTAssertEqual(StateWatchTheme.confidenceLabel(for: .medium), "Medium")
@@ -47,5 +71,25 @@ final class StateWatchThemeTests: XCTestCase {
 
     func testMiniTrendNormalizationUsesMidpointForFlatValues() {
         XCTAssertEqual(StateWatchMiniTrendChart.normalizedValues([42, 42, 42]), [0.5, 0.5, 0.5])
+    }
+
+    func testMiniTrendNormalizationIgnoresNonFiniteValues() {
+        XCTAssertEqual(
+            StateWatchMiniTrendChart.normalizedValues([10, Double.nan, Double.infinity, 20, -Double.infinity, 30]),
+            [0, 0.5, 1]
+        )
+    }
+
+    func testMiniTrendNormalizationReturnsEmptyWhenOnlyNonFiniteValuesExist() {
+        XCTAssertEqual(StateWatchMiniTrendChart.normalizedValues([Double.nan, Double.infinity, -Double.infinity]), [])
+    }
+
+    func testMiniTrendNormalizationKeepsMixedValuesBetweenZeroAndOne() {
+        let normalized = StateWatchMiniTrendChart.normalizedValues([-20, 0, 40, 100])
+
+        XCTAssertEqual(normalized.count, 4)
+        XCTAssertTrue(normalized.allSatisfy { $0 >= 0 && $0 <= 1 })
+        XCTAssertEqual(normalized.first, 0)
+        XCTAssertEqual(normalized.last, 1)
     }
 }
