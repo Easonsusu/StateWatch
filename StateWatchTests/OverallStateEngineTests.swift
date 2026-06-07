@@ -61,6 +61,32 @@ final class OverallStateEngineTests: XCTestCase {
         XCTAssertTrue(assessment.reasons.contains { $0.localizedCaseInsensitiveContains("lower confidence") })
     }
 
+    func testAllNilHistoryStaysCautiousAndDoesNotUseMedicalWording() throws {
+        let history = (1...4).map { day in
+            DailyHealthSnapshot(date: date(day: day))
+        }
+
+        let assessment = try XCTUnwrap(OverallStateEngine().assess(history: history, window: .sevenDays))
+        let userFacingText = (
+            assessment.reasons
+                + assessment.suggestions
+                + assessment.components.map(\.summary)
+                + [assessment.level.rawValue]
+        ).joined(separator: " ")
+
+        XCTAssertEqual(assessment.confidence, .unavailable)
+        XCTAssertTrue(assessment.components.allSatisfy { $0.confidence == .unavailable })
+        XCTAssertGreaterThanOrEqual(assessment.overallScore, 0)
+        XCTAssertLessThanOrEqual(assessment.overallScore, 100)
+        XCTAssertTrue(assessment.reasons.contains { $0.localizedCaseInsensitiveContains("lower confidence") })
+        for forbiddenTerm in ["diagnos", "disease", "illness", "clinical stress", "detect"] {
+            XCTAssertFalse(
+                userFacingText.localizedCaseInsensitiveContains(forbiddenTerm),
+                "Unexpected medical-style wording: \(forbiddenTerm)"
+            )
+        }
+    }
+
     private func date(day: Int) -> Date {
         let components = DateComponents(timeZone: TimeZone(secondsFromGMT: 0), year: 2026, month: 1, day: day)
         return Calendar(identifier: .gregorian).date(from: components) ?? Date(timeIntervalSince1970: 0)
