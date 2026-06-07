@@ -38,6 +38,100 @@ final class HealthKitPermissionTests: XCTestCase {
         XCTAssertNotNil(denied.errorMessage)
     }
 
+    func testUnavailableAuthorizationResultMarksEveryPermissionUnavailable() {
+        let result = HealthKitAuthorizationResult.unavailable(reason: "Health data is not available on this device.")
+
+        XCTAssertFalse(result.isHealthDataAvailable)
+        XCTAssertFalse(result.didRequestAuthorization)
+        XCTAssertEqual(result.errorMessage, "Health data is not available on this device.")
+        XCTAssertEqual(result.statuses.count, HealthKitTypes.readPermissions.count)
+        XCTAssertTrue(result.statuses.allSatisfy { $0.access == .unavailable })
+    }
+
+    func testFailedAuthorizationResultDoesNotGrantReadAccess() {
+        let result = HealthKitAuthorizationResult.failed(
+            errorMessage: "Health access could not be requested. StateWatch can continue with mock data."
+        )
+
+        XCTAssertTrue(result.isHealthDataAvailable)
+        XCTAssertFalse(result.didRequestAuthorization)
+        XCTAssertEqual(result.errorMessage, "Health access could not be requested. StateWatch can continue with mock data.")
+        XCTAssertTrue(result.statuses.allSatisfy { $0.access == .unknown })
+    }
+
+    @MainActor
+    func testManagerUsesFallbackFetcherWhenAuthorizationIsDenied() async {
+        let healthCounter = FetchCallCounter()
+        let fallbackCounter = FetchCallCounter()
+        let healthSnapshot = snapshot(day: 1, stepCount: 9_000)
+        let fallbackSnapshot = snapshot(day: 2, stepCount: 3_200)
+        let manager = HealthKitManager(
+            authorizationService: MockHealthKitAuthorizationService(requestResult: .mockDenied),
+            fetcher: RecordingHealthDataFetcher(
+                todaySnapshot: healthSnapshot,
+                recentSnapshots: [healthSnapshot],
+                counter: healthCounter
+            ),
+            fallbackFetcher: RecordingHealthDataFetcher(
+                todaySnapshot: fallbackSnapshot,
+                recentSnapshots: [fallbackSnapshot],
+                counter: fallbackCounter
+            ),
+            initialAuthorizationResult: .mockDenied
+        )
+
+        let today = await manager.todaySnapshot()
+        let recent = await manager.recentSnapshots(days: 5)
+        let healthTodayCalls = await healthCounter.todayCalls
+        let healthRecentCalls = await healthCounter.recentCalls
+        let fallbackTodayCalls = await fallbackCounter.todayCalls
+        let fallbackRecentCalls = await fallbackCounter.recentCalls
+        let fallbackRecentDays = await fallbackCounter.recentDays
+
+        XCTAssertEqual(manager.authorizationState, .deniedOrLimited)
+        XCTAssertTrue(manager.shouldUseMockData)
+        XCTAssertEqual(today, fallbackSnapshot)
+        XCTAssertEqual(recent, [fallbackSnapshot])
+        XCTAssertEqual(healthTodayCalls, 0)
+        XCTAssertEqual(healthRecentCalls, 0)
+        XCTAssertEqual(fallbackTodayCalls, 1)
+        XCTAssertEqual(fallbackRecentCalls, 1)
+        XCTAssertEqual(fallbackRecentDays, [5])
+    }
+
+    @MainActor
+    func testManagerUsesHealthFetcherOnlyAfterReadAccessRequestCompletes() async {
+        let healthCounter = FetchCallCounter()
+        let fallbackCounter = FetchCallCounter()
+        let healthSnapshot = snapshot(day: 3, stepCount: 8_100)
+        let fallbackSnapshot = snapshot(day: 4, stepCount: 2_400)
+        let manager = HealthKitManager(
+            authorizationService: MockHealthKitAuthorizationService(requestResult: .mockReadAccessRequested),
+            fetcher: RecordingHealthDataFetcher(
+                todaySnapshot: healthSnapshot,
+                recentSnapshots: [healthSnapshot],
+                counter: healthCounter
+            ),
+            fallbackFetcher: RecordingHealthDataFetcher(
+                todaySnapshot: fallbackSnapshot,
+                recentSnapshots: [fallbackSnapshot],
+                counter: fallbackCounter
+            ),
+            initialAuthorizationResult: .notDetermined
+        )
+
+        await manager.requestAuthorization()
+        let today = await manager.todaySnapshot()
+        let healthTodayCalls = await healthCounter.todayCalls
+        let fallbackTodayCalls = await fallbackCounter.todayCalls
+
+        XCTAssertEqual(manager.authorizationState, .readAccessRequested)
+        XCTAssertFalse(manager.shouldUseMockData)
+        XCTAssertEqual(today, healthSnapshot)
+        XCTAssertEqual(healthTodayCalls, 1)
+        XCTAssertEqual(fallbackTodayCalls, 0)
+    }
+
     func testDailyAggregatorGroupsHeartRateSamplesByCalendarDay() {
         let snapshots = HealthKitDailyAggregator.snapshots(
             heartRates: [
@@ -164,5 +258,44 @@ final class HealthKitPermissionTests: XCTestCase {
             minute: minute
         )
         return testCalendar.date(from: components) ?? Date(timeIntervalSince1970: 0)
+    }
+
+    private func snapshot(day: Int, stepCount: Double) -> DailyHealthSnapshot {
+        DailyHealthSnapshot(
+            id: UUID(uuidString: "00000000-0000-0000-0000-\(String(format: "%012d", day))") ?? UUID(),
+            date: date(year: 2026, month: 1, day: day),
+            stepCount: stepCount
+        )
+    }
+}
+
+private actor FetchCallCounter {
+    private(set) var todayCalls = 0
+    private(set) var recentCalls = 0
+    private(set) var recentDays: [Int] = []
+
+    func recordToday() {
+        todayCalls += 1
+    }
+
+    func recordRecent(days: Int) {
+        recentCalls += 1
+        recentDays.append(days)
+    }
+}
+
+private struct RecordingHealthDataFetcher: HealthDataFetcher {
+    let todaySnapshot: DailyHealthSnapshot
+    let recentSnapshots: [DailyHealthSnapshot]
+    let counter: FetchCallCounter
+
+    func fetchTodaySnapshot() async -> DailyHealthSnapshot {
+        await counter.recordToday()
+        return todaySnapshot
+    }
+
+    func fetchRecentSnapshots(days: Int) async -> [DailyHealthSnapshot] {
+        await counter.recordRecent(days: days)
+        return recentSnapshots
     }
 }
