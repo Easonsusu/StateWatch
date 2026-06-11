@@ -46,6 +46,7 @@ StateWatch is still pre-release. The production iPhone dashboard and watchOS app
 - Local persistence for snapshots and baselines.
 - Real-device HealthKit QA.
 - WidgetKit complication target and timelines.
+- App Groups or WatchConnectivity-backed state sharing.
 - App Store release assets and final onboarding polish.
 - Networking, upload paths, server sync, login, subscriptions, or backend services.
 - AI features.
@@ -100,7 +101,7 @@ xcodebuild -project StateWatch.xcodeproj -scheme StateWatch -sdk iphonesimulator
 1. Open `StateWatch.xcodeproj` in Xcode.
 2. Select the `StateWatchWatchApp` scheme.
 3. Select an Apple Watch simulator.
-4. Build and run. The watch app should launch to the mock watch dashboard.
+4. Build and run. The watch app should launch to the refreshed mock-backed watch dashboard.
 
 Command-line build:
 
