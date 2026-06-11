@@ -4,7 +4,7 @@ StateWatch is an early-stage, local-first SwiftUI iOS + watchOS wellness app for
 
 The repository includes a runnable Xcode project, HealthKit read-permission handling, a local-only HealthKit data fetcher, baseline calculation, rule-based scoring engines, XCTest coverage, CI, a SwiftUI design-system foundation, a debug-only HealthKit Scoring Preview, and a debug-only Visual Dashboard Preview.
 
-StateWatch is still pre-release. The production iPhone dashboard now uses the StateWatch design system and premium dark technology-style UI, but it remains mock-backed. HealthKit-derived scoring is still validated through debug previews and should only reach the production dashboard through a future gated rollout.
+StateWatch is still pre-release. The production iPhone dashboard and watchOS app now use the StateWatch dark technology-style visual direction, but both remain mock-backed. HealthKit-derived scoring is still validated through debug previews and should only reach production dashboard surfaces through a future gated rollout.
 
 ## Current Status
 
@@ -12,7 +12,7 @@ StateWatch is still pre-release. The production iPhone dashboard now uses the St
 - Runnable watchOS app target: `StateWatchWatchApp`.
 - XCTest target: `StateWatchTests`.
 - Production iPhone dashboard: redesigned with StateWatch design-system components and mock `StateAssessment` data.
-- Production watch dashboard: mock-backed.
+- Production watch dashboard: visually refreshed and mock-backed.
 - HealthKit permission flow: implemented for read-only access.
 - HealthKit data fetcher: implemented locally for recent Apple Health samples.
 - Baseline and scoring engines: implemented as local rule-based wellness estimates.
@@ -34,13 +34,14 @@ StateWatch is still pre-release. The production iPhone dashboard now uses the St
 - Rule-based recovery, sleep, fatigue-context, activity-load, and overall scoring engines.
 - SwiftUI design-system tokens and reusable components.
 - Production iPhone dashboard design refresh using the StateWatch design system while staying mock-backed.
+- Production watchOS dashboard visual refresh while staying mock-backed.
 - Debug-only HealthKit Scoring Preview for inspecting snapshots, baselines, scoring output, missing-data behavior, reasons, and suggestions.
 - Debug-only Visual Dashboard Preview for validating the future visual direction.
 - Manual QA checklist, stabilization tests, and GitHub Actions CI.
 
 ## Intentionally Deferred
 
-- Production HealthKit-backed dashboard.
+- Production HealthKit-backed iPhone or Watch dashboard.
 - Feature flag for switching the production dashboard from mock data to local HealthKit-derived scoring.
 - Local persistence for snapshots and baselines.
 - Real-device HealthKit QA.
