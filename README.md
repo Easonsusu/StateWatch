@@ -1,58 +1,129 @@
 # StateWatch
 
-StateWatch is a SwiftUI iOS + watchOS wellness app concept for reflecting daily recovery, sleep, stress/fatigue, and activity load using Apple Watch and Apple Health data.
+StateWatch is an early-stage, local-first SwiftUI iOS + watchOS wellness app for reviewing recent recovery, sleep, fatigue context, and activity load signals from Apple Watch and Apple Health data.
 
-This repository now includes an initial runnable Xcode project with mock-data-only iOS, watchOS, and test targets. Real HealthKit fetching, networking, and AI features are intentionally not implemented yet.
+The repository includes a runnable Xcode project, HealthKit read-permission handling, a local-only HealthKit data fetcher, baseline calculation, rule-based scoring engines, XCTest coverage, CI, a SwiftUI design-system foundation, a debug-only HealthKit Scoring Preview, and a debug-only Visual Dashboard Preview.
 
-## Product stance
+StateWatch is still pre-release. The production iPhone dashboard now uses the StateWatch design system and premium dark technology-style UI, but it remains mock-backed. HealthKit-derived scoring is still validated through debug previews and should only reach the production dashboard through a future gated rollout.
 
-StateWatch is not a medical diagnosis app. It should never claim to detect illness or disease. The app uses cautious wellness wording and should encourage users to seek professional guidance for medical concerns.
+## Current Status
 
-For the MVP, HealthKit data stays on device. The app must not upload HealthKit data to a server or use HealthKit data for advertising, marketing, data mining, or profiling.
+- Runnable iOS app target: `StateWatch`.
+- Runnable watchOS app target: `StateWatchWatchApp`.
+- XCTest target: `StateWatchTests`.
+- Production iPhone dashboard: redesigned with StateWatch design-system components and mock `StateAssessment` data.
+- Production watch dashboard: mock-backed.
+- HealthKit permission flow: implemented for read-only access.
+- HealthKit data fetcher: implemented locally for recent Apple Health samples.
+- Baseline and scoring engines: implemented as local rule-based wellness estimates.
+- Debug HealthKit Scoring Preview: available from Settings in debug builds.
+- Debug Visual Dashboard Preview: available from Settings in debug builds.
+- CI: GitHub Actions runs whitespace checks, iOS build, iOS tests, and watchOS build.
 
-## Current structure
+## Implemented
+
+- `StateWatch.xcodeproj` with iOS, watchOS, and XCTest targets.
+- SwiftUI app entry points for iPhone and Apple Watch.
+- Core models including `DailyHealthSnapshot`, `HealthBaseline`, `StateAssessment`, `HealthMetricType`, and `UserCheckIn`.
+- Mock sample data for previews, tests, and the default dashboard data source.
+- HealthKit read-only permission foundation.
+- HealthKit read type definitions for heart rate, resting heart rate, HRV SDNN, sleep analysis, step count, active energy burned, and workouts.
+- Local-only `HealthKitDataFetcher` that converts recent HealthKit samples into `[DailyHealthSnapshot]`.
+- `MockHealthDataFetcher` for previews, tests, denied permission states, and unavailable HealthKit environments.
+- Baseline calculation across 7-day, 14-day, and 30-day windows.
+- Rule-based recovery, sleep, fatigue-context, activity-load, and overall scoring engines.
+- SwiftUI design-system tokens and reusable components.
+- Production iPhone dashboard design refresh using the StateWatch design system while staying mock-backed.
+- Debug-only HealthKit Scoring Preview for inspecting snapshots, baselines, scoring output, missing-data behavior, reasons, and suggestions.
+- Debug-only Visual Dashboard Preview for validating the future visual direction.
+- Manual QA checklist, stabilization tests, and GitHub Actions CI.
+
+## Intentionally Deferred
+
+- Production HealthKit-backed dashboard.
+- Feature flag for switching the production dashboard from mock data to local HealthKit-derived scoring.
+- Local persistence for snapshots and baselines.
+- Real-device HealthKit QA.
+- WidgetKit complication target and timelines.
+- App Store release assets and final onboarding polish.
+- Networking, upload paths, server sync, login, subscriptions, or backend services.
+- AI features.
+- HealthKit write access.
+
+## Privacy and Medical Safety Stance
+
+StateWatch is a wellness app, not a medical diagnosis app. It must not claim to diagnose, detect disease, detect illness, detect clinical stress, provide treatment guidance, or replace professional medical advice.
+
+For the MVP:
+
+- HealthKit data must remain local-only.
+- HealthKit data must not be uploaded to a server.
+- HealthKit data must not be used for advertising, marketing, profiling, or data mining.
+- HealthKit write access must not be added unless explicitly discussed and approved for a future phase.
+- Missing, denied, unavailable, empty, or partial HealthKit data should lower confidence or show calm fallback messaging instead of creating negative wellness conclusions.
+- UI copy should use cautious wellness wording such as "recent signals," "wellness estimate," "fatigue context," "mixed," and "low data."
+
+## Project Structure
 
 ```text
 StateWatch.xcodeproj/         Xcode project with iOS, watchOS, and test targets
-Docs/                         Product and engineering documentation
+.github/workflows/            GitHub Actions CI workflow
+Docs/                         Product, architecture, safety, design, and release docs
 StateWatchApp/                iOS SwiftUI app source, shared models, services, and resources
 StateWatchWatchApp/           watchOS app source, shared model usage, and resources
-StateWatchTests/              XCTest target files using mock data
+StateWatchTests/              XCTest target files using mock data and pure helper coverage
+MANUAL_QA_CHECKLIST.md        Manual QA checklist for stabilization and release review
 ```
 
-## Targets
+The complication Swift files remain placeholders. A future task should add a dedicated WidgetKit target before enabling real complication timelines.
 
-- `StateWatch`: iOS SwiftUI app target. Launches directly into `DashboardView` with mock `StateAssessment` data for Phase 1.
-- `StateWatchWatchApp`: watchOS SwiftUI app target. Launches into `WatchDashboardView` with mock `StateAssessment` data.
-- `StateWatchTests`: XCTest target hosted by the iOS app target.
+## How to Run
 
-The complication/widget Swift files remain in the project navigator as placeholders, but they are not compiled into a target yet. A future task should add a dedicated Widget Extension target before enabling real complication timelines.
+A full Xcode installation is required. Command Line Tools alone are not enough for simulator builds with `xcodebuild`.
 
-## Opening in Xcode
+### iOS App
 
 1. Open `StateWatch.xcodeproj` in Xcode.
-2. Select the `StateWatch` scheme and an iPhone simulator.
-3. Build and run. The app should open to the mock dashboard.
-4. Select the `StateWatchWatchApp` scheme and a watch simulator.
-5. Build and run. The watch app should open to the mock watch dashboard.
-6. Select the `StateWatch` scheme and run tests to execute `StateWatchTests`.
+2. Select the `StateWatch` scheme.
+3. Select an iPhone simulator.
+4. Build and run. The app should launch to the redesigned mock-backed dashboard.
 
-A full Xcode installation is required. Command Line Tools alone are not enough for `xcodebuild`.
+Command-line build:
 
-## Mock-only Phase 1 behavior
+```sh
+xcodebuild -project StateWatch.xcodeproj -scheme StateWatch -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO COMPILER_INDEX_STORE_ENABLE=NO build
+```
 
-- HealthKit services remain placeholders and mock-backed.
-- The app does not request real HealthKit authorization in this phase.
-- No networking is added.
-- No AI features are added.
-- Mock data is used for previews, tests, the iOS dashboard, and the watch dashboard.
+### watchOS App
 
-## Merge order
+1. Open `StateWatch.xcodeproj` in Xcode.
+2. Select the `StateWatchWatchApp` scheme.
+3. Select an Apple Watch simulator.
+4. Build and run. The watch app should launch to the mock watch dashboard.
 
-PR #2 (`chore/initial-project-foundation`) should merge first. PR #3 (`feature/core-models-and-mock-dashboard`) should merge after PR #2. This Xcode project branch is stacked after PR #3.
+Command-line build:
 
-PR #1 is a separate Copilot scaffold that overlaps with PR #2. Do not merge duplicate foundation work from PR #1 if PR #2 is the chosen foundation branch.
+```sh
+xcodebuild -project StateWatch.xcodeproj -scheme StateWatchWatchApp -sdk watchsimulator -destination 'generic/platform=watchOS Simulator' CODE_SIGNING_ALLOWED=NO COMPILER_INDEX_STORE_ENABLE=NO build
+```
 
-## Next setup step
+### XCTest
 
-After this project setup branch is merged, implement HealthKit authorization as the next task while keeping HealthKit data local-only and continuing to use mock data for previews and tests.
+In Xcode, select the `StateWatch` scheme and run Product > Test.
+
+Command-line test:
+
+```sh
+xcodebuild -project StateWatch.xcodeproj -scheme StateWatch -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO COMPILER_INDEX_STORE_ENABLE=NO test
+```
+
+## CI
+
+GitHub Actions runs on pull requests and pushes to `main`. The workflow checks:
+
+- `git diff --check`.
+- iOS build for the `StateWatch` scheme.
+- iOS XCTest for the `StateWatch` scheme.
+- watchOS build for the `StateWatchWatchApp` scheme.
+
+Manual testing is still required for real-device HealthKit permission behavior, Apple Health data availability, and visual QA in Xcode previews or simulators.

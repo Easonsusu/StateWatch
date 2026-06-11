@@ -93,3 +93,45 @@ final class StateWatchThemeTests: XCTestCase {
         XCTAssertEqual(normalized.last, 1)
     }
 }
+
+final class DashboardDisplayModelTests: XCTestCase {
+    func testDashboardDisplayModelUsesMockAssessmentValues() {
+        let model = DashboardDisplayModel(assessment: .mock)
+
+        XCTAssertEqual(model.score, 76)
+        XCTAssertEqual(model.stateLabel, "Mixed")
+        XCTAssertEqual(model.confidence, .medium)
+        XCTAssertEqual(model.trendCaption, "Mock data")
+        XCTAssertEqual(model.trendValues, [62, 67, 64, 72, 70, 76, 74])
+    }
+
+    func testDashboardDisplayModelMapsExpectedMetricCards() {
+        let model = DashboardDisplayModel(assessment: .mock)
+
+        XCTAssertEqual(model.metrics.map(\.title), ["Recovery", "Sleep", "Fatigue Context", "Activity Load"])
+        XCTAssertEqual(model.metrics.map(\.value), ["78", "82", "68", "74"])
+        XCTAssertEqual(model.metrics.map(\.progress), [0.78, 0.82, 0.68, 0.74])
+    }
+
+    func testDashboardDisplayModelUsesCalmNonMedicalCopy() {
+        let model = DashboardDisplayModel(assessment: .mockLow)
+        let searchableText = model.searchableText
+
+        for forbiddenTerm in [
+            "diagnos",
+            "disease",
+            "illness",
+            "clinical stress",
+            "detect",
+            "treatment",
+            "prevention",
+            "health risk",
+            "warning"
+        ] {
+            XCTAssertFalse(
+                searchableText.localizedCaseInsensitiveContains(forbiddenTerm),
+                "Unexpected dashboard wording: \(forbiddenTerm)"
+            )
+        }
+    }
+}
