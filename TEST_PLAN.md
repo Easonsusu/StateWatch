@@ -155,6 +155,25 @@ StateWatch now includes a runnable iOS app target, watchOS app target, and XCTes
 - Confirm `plutil -lint StateWatch.xcodeproj/project.pbxproj` passes.
 - Confirm GitHub Actions CI passes for iOS build, XCTest, and watchOS build before merge.
 
+## Phase 6.2 Watch App Visual Refresh
+
+- Confirm PR #22 is merged before starting the Watch visual refresh branch.
+- Confirm Watch app builds.
+- Confirm Watch app launches to the refreshed mock-backed UI.
+- Confirm the overall score screen is readable on a small Apple Watch simulator.
+- Confirm the component summary is readable and includes Recovery, Sleep, Fatigue Context, and Activity Load.
+- Confirm the suggestion screen uses calm non-medical wording.
+- Confirm confidence and demo/updated text are visible.
+- Confirm Watch app does not request HealthKit permission.
+- Confirm Watch app does not fetch HealthKit data.
+- Confirm no WidgetKit target was added.
+- Confirm no App Groups were added.
+- Confirm iPhone `DashboardView` still builds and remains mock-backed.
+- Confirm no networking, upload path, AI feature, HealthKit write access, or medical diagnosis wording was introduced.
+- Confirm `git diff --check origin/main...HEAD` passes.
+- Confirm `plutil -lint StateWatch.xcodeproj/project.pbxproj` passes.
+- Confirm GitHub Actions CI passes for iOS build, XCTest, and watchOS build before merge.
+
 ## Manual QA for MVP
 
 - First launch shows disclaimer before HealthKit permission request.
