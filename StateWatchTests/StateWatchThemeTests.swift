@@ -108,9 +108,56 @@ final class DashboardDisplayModelTests: XCTestCase {
     func testDashboardDisplayModelMapsExpectedMetricCards() {
         let model = DashboardDisplayModel(assessment: .mock)
 
+        XCTAssertEqual(model.metrics.count, 4)
         XCTAssertEqual(model.metrics.map(\.title), ["Recovery", "Sleep", "Fatigue Context", "Activity Load"])
         XCTAssertEqual(model.metrics.map(\.value), ["78", "82", "68", "74"])
         XCTAssertEqual(model.metrics.map(\.progress), [0.78, 0.82, 0.68, 0.74])
+    }
+
+    func testDashboardDisplayModelPreservesReasonsAndSuggestion() {
+        let assessment = StateAssessment.mock
+        let model = DashboardDisplayModel(assessment: assessment)
+
+        XCTAssertEqual(model.reasons, assessment.reasons)
+        XCTAssertEqual(model.suggestion, assessment.primarySuggestion)
+        XCTAssertFalse(model.reasons.isEmpty)
+        XCTAssertFalse(model.suggestion.isEmpty)
+    }
+
+    func testDashboardDisplayModelDisclosesMockDataSource() {
+        let model = DashboardDisplayModel(assessment: .mock)
+
+        XCTAssertTrue(model.updatedText.localizedCaseInsensitiveContains("Demo data"))
+        XCTAssertEqual(model.trendCaption, "Mock data")
+        XCTAssertTrue(model.searchableText.localizedCaseInsensitiveContains("Mock data"))
+    }
+
+    func testDashboardDisplayModelDoesNotImplyHealthKitDerivedProductionData() {
+        let model = DashboardDisplayModel(assessment: .mock)
+        let searchableText = model.searchableText
+
+        for forbiddenSourceClaim in [
+            "HealthKit",
+            "Apple Health",
+            "live data",
+            "real data",
+            "fetched",
+            "synced"
+        ] {
+            XCTAssertFalse(
+                searchableText.localizedCaseInsensitiveContains(forbiddenSourceClaim),
+                "Unexpected production dashboard data-source wording: \(forbiddenSourceClaim)"
+            )
+        }
+    }
+
+    func testLowDataDashboardDisplayModelStaysMockBacked() {
+        let model = DashboardDisplayModel(assessment: .mockLow)
+
+        XCTAssertEqual(model.metrics.count, 4)
+        XCTAssertEqual(model.trendValues, [62, 67, 64, 72, 70, 76, 74])
+        XCTAssertEqual(model.trendCaption, "Mock data")
+        XCTAssertTrue(model.updatedText.localizedCaseInsensitiveContains("Demo data"))
     }
 
     func testDashboardDisplayModelUsesCalmNonMedicalCopy() {

@@ -133,6 +133,28 @@ StateWatch now includes a runnable iOS app target, watchOS app target, and XCTes
 - Confirm Watch app still builds and behavior is unchanged.
 - Confirm CI passes before merge.
 
+## Phase 6.1 Production Dashboard Design QA Audit
+
+- Confirm PR #21 is merged before starting the audit branch.
+- Confirm iPhone app launches to the redesigned `DashboardView`.
+- Confirm production `DashboardView` still defaults to mock `StateAssessment` data.
+- Confirm dashboard display text labels data as mock or demo where appropriate.
+- Confirm dashboard trend values remain static mock values.
+- Confirm dashboard display model exposes exactly four cards: Recovery, Sleep, Fatigue Context, and Activity Load.
+- Confirm dashboard reasons and suggestion text are preserved from the supplied mock assessment.
+- Confirm dashboard-related files do not reference `HealthKitDataFetcher`, `HealthKitAuthorizationService`, `HealthKitManager`, `requestAuthorization`, `fetchRecentSnapshots`, or `OverallStateEngine`.
+- Confirm Dashboard does not request Apple Health permission or fetch HealthKit samples.
+- Confirm Settings gear opens Settings.
+- Confirm Settings -> Apple Health -> Health Permissions still opens.
+- Confirm Settings -> Developer Preview -> HealthKit Scoring Preview still opens in DEBUG.
+- Confirm Settings -> Developer Preview -> Visual Dashboard Preview still opens in DEBUG.
+- Confirm dashboard copy avoids diagnosis, disease, illness, clinical stress, detection, treatment, prevention, health-risk, or warning wording.
+- Confirm no networking, upload path, AI feature, WidgetKit target, App Group, or HealthKit write authorization is introduced.
+- Confirm no Watch app behavior changes are included in the QA PR.
+- Confirm `git diff --check origin/main...HEAD` passes.
+- Confirm `plutil -lint StateWatch.xcodeproj/project.pbxproj` passes.
+- Confirm GitHub Actions CI passes for iOS build, XCTest, and watchOS build before merge.
+
 ## Manual QA for MVP
 
 - First launch shows disclaimer before HealthKit permission request.
