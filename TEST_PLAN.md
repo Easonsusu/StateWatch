@@ -234,6 +234,35 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Confirm changed plist and entitlement files pass `plutil -lint`.
 - Confirm GitHub Actions CI passes for iOS build, XCTest, watchOS app build, and WidgetKit complication build before merge.
 
+## Phase 6.9 Mock App Group Shared State QA Audit
+
+- Confirm this phase is tests and documentation only.
+- Confirm App Group entitlement `group.com.easonsusu.StateWatch` was added in Phase 6.8 and remains mock-only.
+- Confirm `SharedReadinessStore.appGroupIdentifier` remains `group.com.easonsusu.StateWatch`.
+- Confirm `SharedReadinessStore.storageKey` remains `statewatch.shared.readiness.summary.v1`.
+- Confirm mock shared summary values remain score 76, label Mixed, confidence Medium, updated text Demo, source mock-app-group, and `isMock` true.
+- Confirm shared summary schema version remains stable.
+- Confirm shared summary score stays in the 0...100 display range.
+- Confirm shared summary encode/decode preserves all fields.
+- Confirm the shared store can save and load a mock summary.
+- Confirm missing App Group data returns nil or safe fallback behavior.
+- Confirm corrupted JSON data does not crash and falls back safely.
+- Confirm stale shared data is treated safely.
+- Confirm an unavailable App Group suite does not crash.
+- Confirm WidgetKit complications can use a shared mock summary when available.
+- Confirm WidgetKit complications fall back to the safe static mock summary when shared state is missing.
+- Confirm WidgetKit complications do not fetch HealthKit samples directly.
+- Confirm WidgetKit complications do not use WatchConnectivity.
+- Confirm WidgetKit complications do not use networking or upload paths.
+- Confirm iPhone Dashboard remains mock-backed.
+- Confirm Watch app remains mock-backed.
+- Confirm HealthKit-derived production rollout remains deferred.
+- Confirm WatchConnectivity remains deferred.
+- Confirm no HealthKit write access, AI feature, networking, live HealthKit-backed timeline, or production UI behavior change was added.
+- Confirm mock shared state, docs, and complication-facing strings avoid medical diagnosis, disease detection, clinical stress detection, treatment, warning, alert, emergency, cloud upload, AI analysis, and live HealthKit-backed complication claims.
+- Confirm `git diff --check origin/main...HEAD` passes.
+- Confirm GitHub Actions CI passes for iOS build, XCTest, watchOS app build, and WidgetKit complication build before merge.
+
 ## Phase 6.2 Watch App Visual Refresh
 
 - Confirm PR #22 is merged before starting the Watch visual refresh branch.
