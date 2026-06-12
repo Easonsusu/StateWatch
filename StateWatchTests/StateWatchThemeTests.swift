@@ -275,17 +275,17 @@ final class MockDashboardSharedStatePublisherTests: XCTestCase {
             userDefaults.removePersistentDomain(forName: suiteName)
         }
         let store = SharedReadinessStore(userDefaults: userDefaults)
-        var generatedDates = [
-            Date(timeIntervalSince1970: 12_400),
-            Date(timeIntervalSince1970: 12_500)
-        ]
-        let publisher = MockDashboardSharedStatePublisher(
+        let firstPublisher = MockDashboardSharedStatePublisher(
             userDefaults: userDefaults,
-            generatedAt: { generatedDates.removeFirst() }
+            generatedAt: { Date(timeIntervalSince1970: 12_400) }
+        )
+        let secondPublisher = MockDashboardSharedStatePublisher(
+            userDefaults: userDefaults,
+            generatedAt: { Date(timeIntervalSince1970: 12_500) }
         )
 
-        XCTAssertTrue(publisher.publish(assessment: .mock))
-        XCTAssertTrue(publisher.publish(assessment: .mock))
+        XCTAssertTrue(firstPublisher.publish(assessment: .mock))
+        XCTAssertTrue(secondPublisher.publish(assessment: .mock))
         let summary = try XCTUnwrap(store.load())
 
         XCTAssertEqual(summary.score, 76)
