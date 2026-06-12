@@ -259,3 +259,47 @@ final class WatchDashboardDisplayModelTests: XCTestCase {
         }
     }
 }
+
+final class ComplicationStateSummaryTests: XCTestCase {
+    func testMockComplicationSummaryUsesExpectedStaticValues() {
+        let summary = ComplicationStateSummary.mock
+
+        XCTAssertEqual(summary.score, 76)
+        XCTAssertEqual(summary.stateLabel, "Mixed")
+        XCTAssertEqual(summary.confidence, "Medium")
+        XCTAssertEqual(summary.shortSuggestion, "Demo data")
+        XCTAssertEqual(summary.updatedText, "Demo")
+        XCTAssertFalse(summary.isStale)
+    }
+
+    func testMockComplicationSummaryDisclosesDemoData() {
+        let searchableText = ComplicationStateSummary.mock.searchableText
+
+        XCTAssertTrue(searchableText.localizedCaseInsensitiveContains("Demo"))
+        XCTAssertFalse(searchableText.localizedCaseInsensitiveContains("HealthKit"))
+        XCTAssertFalse(searchableText.localizedCaseInsensitiveContains("Apple Health"))
+        XCTAssertFalse(searchableText.localizedCaseInsensitiveContains("live data"))
+        XCTAssertFalse(searchableText.localizedCaseInsensitiveContains("real data"))
+    }
+
+    func testMockComplicationSummaryUsesCalmNonMedicalCopy() {
+        let searchableText = ComplicationStateSummary.mock.searchableText
+
+        for forbiddenTerm in [
+            "diagnos",
+            "disease",
+            "illness",
+            "clinical stress",
+            "detect",
+            "treatment",
+            "prevention",
+            "health risk",
+            "warning"
+        ] {
+            XCTAssertFalse(
+                searchableText.localizedCaseInsensitiveContains(forbiddenTerm),
+                "Unexpected complication wording: \(forbiddenTerm)"
+            )
+        }
+    }
+}

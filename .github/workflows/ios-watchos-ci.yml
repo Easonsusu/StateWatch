@@ -19,6 +19,7 @@ jobs:
       PROJECT: StateWatch.xcodeproj
       IOS_SCHEME: StateWatch
       WATCH_SCHEME: StateWatchWatchApp
+      COMPLICATION_SCHEME: StateWatchComplications
       CODE_SIGNING_ALLOWED: "NO"
       COMPILER_INDEX_STORE_ENABLE: "NO"
 
@@ -92,6 +93,18 @@ jobs:
           xcodebuild \
             -project "$PROJECT" \
             -scheme "$WATCH_SCHEME" \
+            -sdk watchsimulator \
+            -destination "generic/platform=watchOS Simulator" \
+            CODE_SIGNING_ALLOWED="$CODE_SIGNING_ALLOWED" \
+            COMPILER_INDEX_STORE_ENABLE="$COMPILER_INDEX_STORE_ENABLE" \
+            build
+
+      - name: Build WidgetKit complications
+        run: |
+          set -euo pipefail
+          xcodebuild \
+            -project "$PROJECT" \
+            -scheme "$COMPLICATION_SCHEME" \
             -sdk watchsimulator \
             -destination "generic/platform=watchOS Simulator" \
             CODE_SIGNING_ALLOWED="$CODE_SIGNING_ALLOWED" \
