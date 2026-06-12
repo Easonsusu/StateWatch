@@ -195,6 +195,21 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Confirm `xmllint --noout StateWatch.xcodeproj/xcshareddata/xcschemes/StateWatchComplications.xcscheme` passes.
 - Confirm GitHub Actions CI passes for iOS build, XCTest, watchOS app build, and WidgetKit complication build before merge.
 
+## Phase 6.6 Shared Local State Architecture Design
+
+- Confirm `Docs/shared-local-state-architecture.md` exists.
+- Confirm the shared local state phase is documentation-only.
+- Confirm no App Group entitlement was added.
+- Confirm no WatchConnectivity code was added.
+- Confirm no local persistence was added.
+- Confirm no live WidgetKit timeline was added.
+- Confirm no HealthKit production rollout was added.
+- Confirm iPhone Dashboard remains mock-backed.
+- Confirm Watch app remains mock-backed.
+- Confirm WidgetKit complications remain static mock-backed.
+- Confirm no networking, upload path, AI feature, or HealthKit write access was added.
+- Confirm CI passes before merge.
+
 ## Phase 6.2 Watch App Visual Refresh
 
 - Confirm PR #22 is merged before starting the Watch visual refresh branch.
