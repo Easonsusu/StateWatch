@@ -1,11 +1,14 @@
 # Watch Complications
 
-This document defines future WidgetKit watch complication planning only. Do not
-add WidgetKit targets or Swift models in this phase.
+This document defines WidgetKit watch complication planning and implementation
+guardrails. Phase 6.4 adds a dedicated `StateWatchComplications` WidgetKit
+extension target with static mock data only. Shared local state, App Groups,
+WatchConnectivity, and HealthKit-derived complication timelines remain future
+work.
 
-## Documentation-Only Model
+## Data Shape
 
-Future complication planning can use this documentation-only shape:
+Complication planning uses this compact shape:
 
 ```swift
 ComplicationStateSummary:
@@ -17,7 +20,10 @@ ComplicationStateSummary:
 - isStale
 ```
 
-Do not implement this model in Swift yet.
+Phase 6.4 includes a mock-only Swift implementation for static WidgetKit
+entries. Do not connect this shape to HealthKit, production dashboard state,
+networking, App Groups, or WatchConnectivity until a later shared-state design
+is reviewed.
 
 ## Shared Rules
 
