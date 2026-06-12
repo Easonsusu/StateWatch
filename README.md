@@ -14,6 +14,7 @@ StateWatch is still pre-release. The production iPhone dashboard and watchOS app
 - Production iPhone dashboard: redesigned with StateWatch design-system components and mock `StateAssessment` data.
 - Production watch dashboard: visually refreshed and mock-backed.
 - WidgetKit complications: dedicated watch extension target with static mock data only.
+- Shared local state architecture: documented for a future summary-only handoff across iPhone, Watch, and WidgetKit surfaces.
 - HealthKit permission flow: implemented for read-only access.
 - HealthKit data fetcher: implemented locally for recent Apple Health samples.
 - Baseline and scoring engines: implemented as local rule-based wellness estimates.
@@ -37,6 +38,7 @@ StateWatch is still pre-release. The production iPhone dashboard and watchOS app
 - Production iPhone dashboard design refresh using the StateWatch design system while staying mock-backed.
 - Production watchOS dashboard visual refresh while staying mock-backed.
 - Mock WidgetKit complication extension target for accessory circular, rectangular, inline, and corner families.
+- Documentation for future shared local state architecture in `Docs/shared-local-state-architecture.md`.
 - Debug-only HealthKit Scoring Preview for inspecting snapshots, baselines, scoring output, missing-data behavior, reasons, and suggestions.
 - Debug-only Visual Dashboard Preview for validating the future visual direction.
 - Manual QA checklist, stabilization tests, and GitHub Actions CI.
@@ -48,7 +50,8 @@ StateWatch is still pre-release. The production iPhone dashboard and watchOS app
 - Local persistence for snapshots and baselines.
 - Real-device HealthKit QA.
 - Live WidgetKit complication timelines backed by local app state.
-- App Groups or WatchConnectivity-backed state sharing for complications.
+- App Group implementation for shared local state.
+- WatchConnectivity-backed state sharing.
 - App Store release assets and final onboarding polish.
 - Networking, upload paths, server sync, login, subscriptions, or backend services.
 - AI features.
@@ -80,7 +83,7 @@ StateWatchTests/              XCTest target files using mock data and pure helpe
 MANUAL_QA_CHECKLIST.md        Manual QA checklist for stabilization and release review
 ```
 
-The WidgetKit complication target intentionally uses static mock data. A future task should design local shared state before enabling app-derived or HealthKit-derived complication timelines.
+The WidgetKit complication target intentionally uses static mock data. Shared local state architecture is documented, but App Group implementation and WatchConnectivity remain deferred. HealthKit-derived scoring is not wired into production iPhone, Watch, or complication surfaces.
 
 ## How to Run
 
