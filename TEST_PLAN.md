@@ -2,7 +2,7 @@
 
 ## Current scope
 
-StateWatch now includes a runnable iOS app target, watchOS app target, and XCTest target. The current test focus is the mock dashboard, read-only HealthKit permission flow, local-only HealthKit data fetch foundation, rule-based baseline/scoring engine, and debug-only HealthKit scoring preview.
+StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit complication target, and XCTest target. The current test focus is the mock dashboard, read-only HealthKit permission flow, local-only HealthKit data fetch foundation, rule-based baseline/scoring engine, debug-only HealthKit scoring preview, and static mock complication behavior.
 
 ## Foundation checks
 
@@ -47,7 +47,7 @@ StateWatch now includes a runnable iOS app target, watchOS app target, and XCTes
 ## GitHub Actions CI
 
 - Pull requests and pushes to `main` run `.github/workflows/ios-watchos-ci.yml`.
-- CI checks diff whitespace, builds the `StateWatch` iOS scheme, runs the `StateWatch` XCTest suite, and builds the `StateWatchWatchApp` watchOS scheme.
+- CI checks diff whitespace, builds the `StateWatch` iOS scheme, runs the `StateWatch` XCTest suite, builds the `StateWatchWatchApp` watchOS scheme, and builds the `StateWatchComplications` WidgetKit scheme.
 - CI disables code signing and compiler index storage for build/test verification.
 - Local/manual testing is still required for HealthKit permission UI behavior and any real Apple Health data scenarios.
 
@@ -154,6 +154,24 @@ StateWatch now includes a runnable iOS app target, watchOS app target, and XCTes
 - Confirm `git diff --check origin/main...HEAD` passes.
 - Confirm `plutil -lint StateWatch.xcodeproj/project.pbxproj` passes.
 - Confirm GitHub Actions CI passes for iOS build, XCTest, and watchOS build before merge.
+
+## Phase 6.4 WidgetKit Complication Mock Foundation
+
+- Confirm PR #24 is merged before starting the WidgetKit complication branch.
+- Confirm `StateWatchComplications` exists as a dedicated WidgetKit extension target.
+- Confirm `StateWatchComplications` has a shared Xcode scheme.
+- Confirm supported complication families include accessory circular, rectangular, inline, and corner.
+- Confirm complication entries use static mock data only: score 76, label Mixed, confidence Medium, and demo text.
+- Confirm complication source files do not import HealthKit.
+- Confirm complication source files do not reference `HealthKitDataFetcher`, `HealthKitAuthorizationService`, `HealthKitManager`, `OverallStateEngine`, `requestAuthorization`, or `fetchRecentSnapshots`.
+- Confirm complication source files do not use networking, `URLSession`, App Groups, WatchConnectivity, or shared containers.
+- Confirm complication copy avoids diagnosis, disease, illness, clinical stress, detection, treatment, prevention, health-risk, or warning wording.
+- Confirm production iPhone `DashboardView` remains mock-backed and unchanged.
+- Confirm production Watch app remains mock-backed and unchanged.
+- Confirm `StateWatchComplications` builds for a watchOS simulator in CI.
+- Confirm `git diff --check origin/main...HEAD` passes.
+- Confirm `plutil -lint StateWatch.xcodeproj/project.pbxproj` passes.
+- Confirm GitHub Actions CI passes for iOS build, XCTest, watchOS app build, and WidgetKit complication build before merge.
 
 ## Phase 6.2 Watch App Visual Refresh
 

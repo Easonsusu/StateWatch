@@ -72,6 +72,12 @@
 		8B437F571E48E29B77FA65EA /* ModelCodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCE6065EFFA39833DBAC185 /* ModelCodableTests.swift */; };
 		E5800000000000000000000C /* StateWatchThemeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5900000000000000000000C /* StateWatchThemeTests.swift */; };
 		F5B400000000000000000004 /* StateWatchVisualPreviewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B500000000000000000005 /* StateWatchVisualPreviewTests.swift */; };
+		F64000000000000000000001 /* ComplicationStateSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64100000000000000000001 /* ComplicationStateSummary.swift */; };
+		F64000000000000000000002 /* StateWatchComplicationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64100000000000000000002 /* StateWatchComplicationProvider.swift */; };
+		F64000000000000000000003 /* StateWatchComplicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64100000000000000000003 /* StateWatchComplicationView.swift */; };
+		F64000000000000000000004 /* StateWatchComplicationsBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64100000000000000000004 /* StateWatchComplicationsBundle.swift */; };
+		F64000000000000000000005 /* ComplicationStateSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64100000000000000000001 /* ComplicationStateSummary.swift */; };
+		F64000000000000000000006 /* StateWatchComplications.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F64100000000000000000006 /* StateWatchComplications.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		654352D083481CB3F2CE4EAE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91D4105804A8108983609354 /* Assets.xcassets */; };
 		EB7EFA62BB587DF042AFB1C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C273FDA27C713F4E89B8D78 /* Assets.xcassets */; };
 		40BE8EC08D20FD2F0D580A05 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDD80F8A4F0C1686025DD75F /* HealthKit.framework */; };
@@ -85,7 +91,28 @@
 			remoteGlobalIDString = 4A7035D6BC597411FFABF132;
 			remoteInfo = StateWatch;
 		};
+		F64600000000000000000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 98F54143AB4E86B28C3AFEE0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F64400000000000000000001;
+			remoteInfo = StateWatchComplications;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F64700000000000000000001 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				F64000000000000000000006 /* StateWatchComplications.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		4DC7AE0CAEE351EAECD47668 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/App/AppCoordinator.swift; sourceTree = "<group>"; };
@@ -155,9 +182,15 @@
 		88C99B9AA3D66A5E28720FCE /* WatchSuggestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/Features/WatchSuggestionView.swift; sourceTree = "<group>"; };
 		9C273FDA27C713F4E89B8D78 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = StateWatchWatchApp/Resources/Assets.xcassets; sourceTree = "<group>"; };
 		FF0CF48A97B01E78D8BC2265 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = StateWatchWatchApp/Resources/Info.plist; sourceTree = "<group>"; };
+		F64100000000000000000001 /* ComplicationStateSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchComplications/ComplicationStateSummary.swift; sourceTree = "<group>"; };
+		F64100000000000000000002 /* StateWatchComplicationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchComplications/StateWatchComplicationProvider.swift; sourceTree = "<group>"; };
+		F64100000000000000000003 /* StateWatchComplicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchComplications/StateWatchComplicationView.swift; sourceTree = "<group>"; };
+		F64100000000000000000004 /* StateWatchComplicationsBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchComplications/StateWatchComplicationsBundle.swift; sourceTree = "<group>"; };
+		F64100000000000000000005 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = StateWatchComplications/Info.plist; sourceTree = "<group>"; };
 		57157261AC48F9302A3B476E /* StateWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StateWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABB217AE039EB9EFED5B9F29 /* StateWatchWatchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StateWatchWatchApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E02A90D9643568EA39115CFB /* StateWatchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StateWatchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F64100000000000000000006 /* StateWatchComplications.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = StateWatchComplications.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDD80F8A4F0C1686025DD75F /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -184,6 +217,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F64200000000000000000002 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -193,6 +233,7 @@
 				0AF852CB4EC02D272EC1FE9E /* StateWatchApp */,
 				CCC14EC45EB304A12306FE9E /* StateWatchTests */,
 				A7F2C127398E1711FE528CE7 /* StateWatchWatchApp */,
+				F64300000000000000000001 /* StateWatchComplications */,
 				ED2F3B048716C9DC7573911C /* Frameworks */,
 				00C45FD35CB0F9C5F764F070 /* Products */,
 			);
@@ -455,6 +496,18 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		F64300000000000000000001 /* StateWatchComplications */ = {
+			isa = PBXGroup;
+			children = (
+				F64100000000000000000001 /* ComplicationStateSummary.swift */,
+				F64100000000000000000005 /* Info.plist */,
+				F64100000000000000000002 /* StateWatchComplicationProvider.swift */,
+				F64100000000000000000003 /* StateWatchComplicationView.swift */,
+				F64100000000000000000004 /* StateWatchComplicationsBundle.swift */,
+			);
+			name = StateWatchComplications;
+			sourceTree = "<group>";
+		};
 		ED2F3B048716C9DC7573911C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -469,6 +522,7 @@
 				57157261AC48F9302A3B476E /* StateWatch.app */,
 				ABB217AE039EB9EFED5B9F29 /* StateWatchWatchApp.app */,
 				E02A90D9643568EA39115CFB /* StateWatchTests.xctest */,
+				F64100000000000000000006 /* StateWatchComplications.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -500,15 +554,34 @@
 				8CA58B3836539C87BAF378EB /* Sources */,
 				CAB57044D1B3422FDCBD4B90 /* Frameworks */,
 				DDD6FE7A96F211931B4C861E /* Resources */,
+				F64700000000000000000001 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				F64600000000000000000002 /* PBXTargetDependency */,
 			);
 			name = StateWatchWatchApp;
 			productName = StateWatchWatchApp;
 			productReference = ABB217AE039EB9EFED5B9F29 /* StateWatchWatchApp.app */;
 			productType = "com.apple.product-type.application";
+		};
+		F64400000000000000000001 /* StateWatchComplications */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F64500000000000000000003 /* Build configuration list for PBXNativeTarget "StateWatchComplications" */;
+			buildPhases = (
+				F64200000000000000000001 /* Sources */,
+				F64200000000000000000002 /* Frameworks */,
+				F64200000000000000000003 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StateWatchComplications;
+			productName = StateWatchComplications;
+			productReference = F64100000000000000000006 /* StateWatchComplications.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 		510957F267710ADD72D63A39 /* StateWatchTests */ = {
 			isa = PBXNativeTarget;
@@ -549,6 +622,9 @@
 					630F6089B0F19274BB930806 = {
 						CreatedOnToolsVersion = 16.0;
 					};
+					F64400000000000000000001 = {
+						CreatedOnToolsVersion = 16.0;
+					};
 					510957F267710ADD72D63A39 = {
 						CreatedOnToolsVersion = 16.0;
 						TestTargetID = 4A7035D6BC597411FFABF132;
@@ -571,6 +647,7 @@
 				4A7035D6BC597411FFABF132 /* StateWatch */,
 				630F6089B0F19274BB930806 /* StateWatchWatchApp */,
 				510957F267710ADD72D63A39 /* StateWatchTests */,
+				F64400000000000000000001 /* StateWatchComplications */,
 			);
 		};
 /* End PBXProject section */
@@ -593,6 +670,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2BD6B9B82414E6AB1198F133 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F64200000000000000000003 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -685,6 +769,18 @@
 				8B437F571E48E29B77FA65EA /* ModelCodableTests.swift in Sources */,
 				E5800000000000000000000C /* StateWatchThemeTests.swift in Sources */,
 				F5B400000000000000000004 /* StateWatchVisualPreviewTests.swift in Sources */,
+				F64000000000000000000005 /* ComplicationStateSummary.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F64200000000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F64000000000000000000001 /* ComplicationStateSummary.swift in Sources */,
+				F64000000000000000000002 /* StateWatchComplicationProvider.swift in Sources */,
+				F64000000000000000000003 /* StateWatchComplicationView.swift in Sources */,
+				F64000000000000000000004 /* StateWatchComplicationsBundle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -695,6 +791,11 @@
 			isa = PBXTargetDependency;
 			target = 4A7035D6BC597411FFABF132 /* StateWatch */;
 			targetProxy = 4DE24B8E6F42FFE3C336F94E /* PBXContainerItemProxy */;
+		};
+		F64600000000000000000002 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F64400000000000000000001 /* StateWatchComplications */;
+			targetProxy = F64600000000000000000001 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -928,6 +1029,64 @@
 			};
 			name = Release;
 		};
+		F64500000000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = StateWatchComplications/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.easonsusu.StateWatch.watchapp.StateWatchComplications;
+				PRODUCT_MODULE_NAME = StateWatchComplications;
+				PRODUCT_NAME = StateWatchComplications;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchos watchsimulator";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WRAPPER_EXTENSION = appex;
+			};
+			name = Debug;
+		};
+		F64500000000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = StateWatchComplications/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.easonsusu.StateWatch.watchapp.StateWatchComplications;
+				PRODUCT_MODULE_NAME = StateWatchComplications;
+				PRODUCT_NAME = StateWatchComplications;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchos watchsimulator";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WRAPPER_EXTENSION = appex;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -963,6 +1122,15 @@
 			buildConfigurations = (
 				0FDEFC4302813C22AF141CA7 /* Debug */,
 				779A6DE1C6EB04ECC0A3779E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F64500000000000000000003 /* Build configuration list for PBXNativeTarget "StateWatchComplications" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F64500000000000000000001 /* Debug */,
+				F64500000000000000000002 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
