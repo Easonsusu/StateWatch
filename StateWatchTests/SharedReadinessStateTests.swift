@@ -2,6 +2,11 @@ import Foundation
 import XCTest
 
 final class SharedReadinessSummaryTests: XCTestCase {
+    func testSchemaVersionIsStable() {
+        XCTAssertEqual(SharedReadinessSummary.currentSchemaVersion, 1)
+        XCTAssertEqual(SharedReadinessSummary.mockFallback.schemaVersion, 1)
+    }
+
     func testMockSummaryUsesExpectedStaticValues() {
         let generatedAt = Date(timeIntervalSince1970: 1_800)
         let summary = SharedReadinessSummary.mock(generatedAt: generatedAt)
@@ -17,8 +22,33 @@ final class SharedReadinessSummaryTests: XCTestCase {
         XCTAssertTrue(summary.isMock)
     }
 
+    func testMockSummaryScoreIsDisplaySafe() {
+        let summary = SharedReadinessSummary.mock(generatedAt: Date(timeIntervalSince1970: 2_100))
+
+        XCTAssertTrue((0...100).contains(summary.score))
+    }
+
+    func testMockSummaryDefaultGeneratedAtIsRecent() {
+        let before = Date().addingTimeInterval(-1)
+        let summary = SharedReadinessSummary.mock()
+        let after = Date().addingTimeInterval(1)
+
+        XCTAssertGreaterThanOrEqual(summary.generatedAt, before)
+        XCTAssertLessThanOrEqual(summary.generatedAt, after)
+    }
+
     func testSharedSummaryEncodesAndDecodes() throws {
-        let summary = SharedReadinessSummary.mock(generatedAt: Date(timeIntervalSince1970: 2_400))
+        let summary = SharedReadinessSummary(
+            schemaVersion: 1,
+            score: 52,
+            stateLabel: "Low data",
+            confidence: "Low",
+            shortSuggestion: "Demo data",
+            updatedText: "Demo",
+            generatedAt: Date(timeIntervalSince1970: 2_400),
+            source: "mock-app-group",
+            isMock: true
+        )
 
         let data = try JSONEncoder.stateWatchSharedState.encode(summary)
         let decoded = try JSONDecoder.stateWatchSharedState.decode(SharedReadinessSummary.self, from: data)
@@ -66,6 +96,11 @@ final class SharedReadinessSummaryTests: XCTestCase {
 }
 
 final class SharedReadinessStoreTests: XCTestCase {
+    func testAppGroupIdentifierAndStorageKeyRemainStable() {
+        XCTAssertEqual(SharedReadinessStore.appGroupIdentifier, "group.com.easonsusu.StateWatch")
+        XCTAssertEqual(SharedReadinessStore.storageKey, "statewatch.shared.readiness.summary.v1")
+    }
+
     func testStoreSavesAndLoadsMockSummary() {
         let suiteName = "statewatch.tests.\(UUID().uuidString)"
         let userDefaults = UserDefaults(suiteName: suiteName)!
@@ -78,6 +113,43 @@ final class SharedReadinessStoreTests: XCTestCase {
 
         XCTAssertTrue(store.save(summary))
         XCTAssertEqual(store.load(), summary)
+    }
+
+    func testStoreSaveMockSummaryWritesExpectedMockValues() throws {
+        let suiteName = "statewatch.tests.\(UUID().uuidString)"
+        let userDefaults = UserDefaults(suiteName: suiteName)!
+        userDefaults.removePersistentDomain(forName: suiteName)
+        defer {
+            userDefaults.removePersistentDomain(forName: suiteName)
+        }
+        let store = SharedReadinessStore(userDefaults: userDefaults)
+
+        XCTAssertTrue(store.saveMockSummary(generatedAt: Date(timeIntervalSince1970: 5_700)))
+        let summary = try XCTUnwrap(store.load())
+
+        XCTAssertEqual(summary.score, 76)
+        XCTAssertEqual(summary.stateLabel, "Mixed")
+        XCTAssertEqual(summary.confidence, "Medium")
+        XCTAssertEqual(summary.updatedText, "Demo")
+        XCTAssertEqual(summary.source, "mock-app-group")
+        XCTAssertTrue(summary.isMock)
+    }
+
+    func testStoreReturnsFreshSavedSummaryBeforeFallback() {
+        let suiteName = "statewatch.tests.\(UUID().uuidString)"
+        let userDefaults = UserDefaults(suiteName: suiteName)!
+        userDefaults.removePersistentDomain(forName: suiteName)
+        defer {
+            userDefaults.removePersistentDomain(forName: suiteName)
+        }
+        let store = SharedReadinessStore(userDefaults: userDefaults)
+        let summary = SharedReadinessSummary.mock(generatedAt: Date(timeIntervalSince1970: 6_100))
+
+        XCTAssertTrue(store.save(summary))
+        XCTAssertEqual(
+            store.loadOrFallback(now: Date(timeIntervalSince1970: 6_130), maxAge: 60),
+            summary
+        )
     }
 
     func testStoreReturnsNilWhenAppGroupUnavailable() {
@@ -141,5 +213,114 @@ final class SharedReadinessStoreTests: XCTestCase {
         XCTAssertEqual(complicationSummary.confidence, "Medium")
         XCTAssertEqual(complicationSummary.shortSuggestion, "Demo data")
         XCTAssertEqual(complicationSummary.updatedText, "Demo")
+    }
+}
+
+final class SharedReadinessComplicationQATests: XCTestCase {
+    func testComplicationCanUseSharedMockSummary() {
+        let sharedSummary = SharedReadinessSummary.mock(generatedAt: Date(timeIntervalSince1970: 8_400))
+        let complicationSummary = ComplicationStateSummary(sharedSummary: sharedSummary)
+
+        XCTAssertEqual(complicationSummary.score, 76)
+        XCTAssertEqual(complicationSummary.stateLabel, "Mixed")
+        XCTAssertEqual(complicationSummary.confidence, "Medium")
+        XCTAssertEqual(complicationSummary.shortSuggestion, "Demo data")
+        XCTAssertEqual(complicationSummary.updatedText, "Demo")
+        XCTAssertFalse(complicationSummary.isStale)
+    }
+
+    func testComplicationFallbackUsesSafeStaticMockSummary() {
+        let summary = ComplicationStateSummary.mock
+
+        XCTAssertEqual(summary.score, 76)
+        XCTAssertEqual(summary.stateLabel, "Mixed")
+        XCTAssertEqual(summary.confidence, "Medium")
+        XCTAssertEqual(summary.shortSuggestion, "Demo data")
+        XCTAssertEqual(summary.updatedText, "Demo")
+        XCTAssertFalse(summary.isStale)
+    }
+
+    func testComplicationProviderDoesNotUseHealthKitWatchConnectivityOrNetworking() throws {
+        let providerSource = try RepositoryFiles.contents(
+            at: "StateWatchComplications/StateWatchComplicationProvider.swift"
+        )
+        let sharedStoreSource = try RepositoryFiles.contents(at: "StateWatchShared/SharedReadinessStore.swift")
+        let searchedSource = [providerSource, sharedStoreSource].joined(separator: "\n")
+
+        for forbiddenTerm in [
+            "import HealthKit",
+            "HealthKitDataFetcher",
+            "fetchRecentSnapshots",
+            "HKSample",
+            "requestAuthorization",
+            "WatchConnectivity",
+            "WCSession",
+            "URLSession",
+            "http://",
+            "https://"
+        ] {
+            XCTAssertFalse(
+                searchedSource.localizedCaseInsensitiveContains(forbiddenTerm),
+                "Unexpected shared-state implementation reference: \(forbiddenTerm)"
+            )
+        }
+    }
+}
+
+final class SharedReadinessDocumentationQATests: XCTestCase {
+    func testReadmeAndTestPlanDescribeMockOnlyDeferredRollout() throws {
+        let readme = try RepositoryFiles.contents(at: "README.md")
+        let testPlan = try RepositoryFiles.contents(at: "TEST_PLAN.md")
+        let documentation = [readme, testPlan].joined(separator: "\n")
+
+        XCTAssertTrue(documentation.localizedCaseInsensitiveContains("mock-only"))
+        XCTAssertTrue(documentation.localizedCaseInsensitiveContains("HealthKit-derived scoring is not wired"))
+        XCTAssertTrue(documentation.localizedCaseInsensitiveContains("WatchConnectivity remains deferred"))
+    }
+
+    func testDocumentationDoesNotMakeUnsafeAffirmativeClaims() throws {
+        let readme = try RepositoryFiles.contents(at: "README.md")
+        let testPlan = try RepositoryFiles.contents(at: "TEST_PLAN.md")
+        let documentation = [readme, testPlan].joined(separator: "\n")
+
+        for forbiddenClaim in [
+            "diagnoses",
+            "detects disease",
+            "detects illness",
+            "detects clinical stress",
+            "provides treatment",
+            "emergency alert",
+            "emergency response",
+            "HealthKit write access is enabled",
+            "HealthKit write access is requested",
+            "uploads HealthKit",
+            "cloud upload is enabled",
+            "networking is enabled",
+            "AI analysis is enabled",
+            "live HealthKit-backed complications are enabled",
+            "WatchConnectivity syncing is implemented"
+        ] {
+            XCTAssertFalse(
+                documentation.localizedCaseInsensitiveContains(forbiddenClaim),
+                "Unexpected unsafe documentation claim: \(forbiddenClaim)"
+            )
+        }
+    }
+}
+
+private enum RepositoryFiles {
+    static func contents(at relativePath: String) throws -> String {
+        try String(contentsOf: rootURL.appendingPathComponent(relativePath), encoding: .utf8)
+    }
+
+    private static var rootURL: URL {
+        let sourceURL = URL(fileURLWithPath: #filePath)
+        let candidateRoot = sourceURL.deletingLastPathComponent().deletingLastPathComponent()
+
+        if FileManager.default.fileExists(atPath: candidateRoot.appendingPathComponent("README.md").path) {
+            return candidateRoot
+        }
+
+        return URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
     }
 }
