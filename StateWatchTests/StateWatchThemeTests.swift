@@ -272,6 +272,20 @@ final class ComplicationStateSummaryTests: XCTestCase {
         XCTAssertFalse(summary.isStale)
     }
 
+    func testMockComplicationSummaryProvidesExpectedFamilyText() {
+        let summary = ComplicationStateSummary.mock
+
+        XCTAssertEqual(summary.circularLabel, "MIX")
+        XCTAssertEqual(summary.rectangularTitle, "State 76 - Mixed")
+        XCTAssertEqual(summary.inlineText, "StateWatch 76 Mixed")
+    }
+
+    func testMockComplicationSummaryScoreIsDisplaySafe() {
+        let summary = ComplicationStateSummary.mock
+
+        XCTAssertTrue((0...100).contains(summary.score))
+    }
+
     func testMockComplicationSummaryDisclosesDemoData() {
         let searchableText = ComplicationStateSummary.mock.searchableText
 
@@ -280,6 +294,25 @@ final class ComplicationStateSummaryTests: XCTestCase {
         XCTAssertFalse(searchableText.localizedCaseInsensitiveContains("Apple Health"))
         XCTAssertFalse(searchableText.localizedCaseInsensitiveContains("live data"))
         XCTAssertFalse(searchableText.localizedCaseInsensitiveContains("real data"))
+    }
+
+    func testMockComplicationSummaryDoesNotImplySharedOrSyncedState() {
+        let searchableText = ComplicationStateSummary.mock.searchableText
+
+        for forbiddenSharedStateClaim in [
+            "App Group",
+            "WatchConnectivity",
+            "shared container",
+            "shared state",
+            "synced",
+            "live",
+            "fetched"
+        ] {
+            XCTAssertFalse(
+                searchableText.localizedCaseInsensitiveContains(forbiddenSharedStateClaim),
+                "Unexpected complication shared-state wording: \(forbiddenSharedStateClaim)"
+            )
+        }
     }
 
     func testMockComplicationSummaryUsesCalmNonMedicalCopy() {
