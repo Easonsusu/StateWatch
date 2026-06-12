@@ -229,6 +229,28 @@ final class SharedReadinessComplicationQATests: XCTestCase {
         XCTAssertFalse(complicationSummary.isStale)
     }
 
+    func testComplicationCanUseIphonePublishedMockDashboardSummary() {
+        let sharedSummary = SharedReadinessSummary(
+            schemaVersion: SharedReadinessSummary.currentSchemaVersion,
+            score: 76,
+            stateLabel: "Mixed",
+            confidence: "Medium",
+            shortSuggestion: "Consider a lighter day if that matches how you feel.",
+            updatedText: "Demo",
+            generatedAt: Date(timeIntervalSince1970: 8_500),
+            source: "iphone-mock-dashboard",
+            isMock: true
+        )
+        let complicationSummary = ComplicationStateSummary(sharedSummary: sharedSummary)
+
+        XCTAssertEqual(complicationSummary.score, 76)
+        XCTAssertEqual(complicationSummary.stateLabel, "Mixed")
+        XCTAssertEqual(complicationSummary.confidence, "Medium")
+        XCTAssertEqual(complicationSummary.shortSuggestion, "Consider a lighter day if that matches how you feel.")
+        XCTAssertEqual(complicationSummary.updatedText, "Demo")
+        XCTAssertFalse(complicationSummary.isStale)
+    }
+
     func testComplicationFallbackUsesSafeStaticMockSummary() {
         let summary = ComplicationStateSummary.mock
 
@@ -240,12 +262,63 @@ final class SharedReadinessComplicationQATests: XCTestCase {
         XCTAssertFalse(summary.isStale)
     }
 
+    func testComplicationFallbackStaysSafeForMissingCorruptedStaleAndUnavailableSharedState() {
+        let missingSuite = "statewatch.complication.missing.tests.\(UUID().uuidString)"
+        let missingDefaults = UserDefaults(suiteName: missingSuite)!
+        missingDefaults.removePersistentDomain(forName: missingSuite)
+        defer {
+            missingDefaults.removePersistentDomain(forName: missingSuite)
+        }
+        let missingStore = SharedReadinessStore(userDefaults: missingDefaults)
+
+        let corruptedSuite = "statewatch.complication.corrupt.tests.\(UUID().uuidString)"
+        let corruptedDefaults = UserDefaults(suiteName: corruptedSuite)!
+        corruptedDefaults.removePersistentDomain(forName: corruptedSuite)
+        defer {
+            corruptedDefaults.removePersistentDomain(forName: corruptedSuite)
+        }
+        corruptedDefaults.set(Data("not-json".utf8), forKey: SharedReadinessStore.storageKey)
+        let corruptedStore = SharedReadinessStore(userDefaults: corruptedDefaults)
+
+        let staleSuite = "statewatch.complication.stale.tests.\(UUID().uuidString)"
+        let staleDefaults = UserDefaults(suiteName: staleSuite)!
+        staleDefaults.removePersistentDomain(forName: staleSuite)
+        defer {
+            staleDefaults.removePersistentDomain(forName: staleSuite)
+        }
+        let staleStore = SharedReadinessStore(userDefaults: staleDefaults)
+        XCTAssertTrue(staleStore.save(.mock(generatedAt: Date(timeIntervalSince1970: 8_600))))
+
+        let fallbackSummaries = [
+            SharedReadinessStore(userDefaults: nil).loadOrFallback(),
+            missingStore.loadOrFallback(),
+            corruptedStore.loadOrFallback(),
+            staleStore.loadOrFallback(now: Date(timeIntervalSince1970: 12_600), maxAge: 60)
+        ]
+
+        for fallbackSummary in fallbackSummaries {
+            let complicationSummary = ComplicationStateSummary(sharedSummary: fallbackSummary)
+
+            XCTAssertEqual(complicationSummary.score, 76)
+            XCTAssertEqual(complicationSummary.stateLabel, "Mixed")
+            XCTAssertEqual(complicationSummary.confidence, "Medium")
+            XCTAssertEqual(complicationSummary.shortSuggestion, "Demo data")
+            XCTAssertEqual(complicationSummary.updatedText, "Demo")
+            XCTAssertFalse(complicationSummary.isStale)
+        }
+    }
+
     func testComplicationProviderDoesNotUseHealthKitWatchConnectivityOrNetworking() throws {
         let providerSource = try RepositoryFiles.contents(
             at: "StateWatchComplications/StateWatchComplicationProvider.swift"
         )
         let sharedStoreSource = try RepositoryFiles.contents(at: "StateWatchShared/SharedReadinessStore.swift")
         let searchedSource = [providerSource, sharedStoreSource].joined(separator: "\n")
+
+        XCTAssertTrue(providerSource.contains("SharedReadinessStore().load()"))
+        XCTAssertTrue(providerSource.contains("complicationSummary = .mock"))
+        XCTAssertFalse(providerSource.contains("HealthKitDataFetcher"))
+        XCTAssertFalse(providerSource.contains("WatchConnectivity"))
 
         for forbiddenTerm in [
             "import HealthKit",
@@ -265,6 +338,37 @@ final class SharedReadinessComplicationQATests: XCTestCase {
             )
         }
     }
+
+    func testWidgetComplicationSourcesDoNotIntroduceLiveTimelineOrProductionRollout() throws {
+        let providerSource = try RepositoryFiles.contents(
+            at: "StateWatchComplications/StateWatchComplicationProvider.swift"
+        )
+        let viewSource = try RepositoryFiles.contents(
+            at: "StateWatchComplications/StateWatchComplicationView.swift"
+        )
+        let summarySource = try RepositoryFiles.contents(
+            at: "StateWatchComplications/ComplicationStateSummary.swift"
+        )
+        let searchedSource = [providerSource, viewSource, summarySource].joined(separator: "\n")
+
+        for forbiddenClaim in [
+            "live HealthKit-backed",
+            "production HealthKit",
+            "clinical stress",
+            "emergency",
+            "alert",
+            "warning",
+            "upload",
+            "server",
+            "AI analysis",
+            "WCSession"
+        ] {
+            XCTAssertFalse(
+                searchedSource.localizedCaseInsensitiveContains(forbiddenClaim),
+                "Unexpected WidgetKit source claim: \(forbiddenClaim)"
+            )
+        }
+    }
 }
 
 final class SharedReadinessDocumentationQATests: XCTestCase {
@@ -278,10 +382,22 @@ final class SharedReadinessDocumentationQATests: XCTestCase {
         XCTAssertTrue(documentation.localizedCaseInsensitiveContains("WatchConnectivity remains deferred"))
     }
 
+    func testPhaseSevenOneDocumentationChecklistExists() throws {
+        let testPlan = try RepositoryFiles.contents(at: "TEST_PLAN.md")
+        let architecture = try RepositoryFiles.contents(at: "Docs/shared-local-state-architecture.md")
+
+        XCTAssertTrue(testPlan.localizedCaseInsensitiveContains("Phase 7.1"))
+        XCTAssertTrue(testPlan.localizedCaseInsensitiveContains("iPhone mock dashboard publisher is tested"))
+        XCTAssertTrue(testPlan.localizedCaseInsensitiveContains("WidgetKit fallback remains safe"))
+        XCTAssertTrue(architecture.localizedCaseInsensitiveContains("Phase 7.1"))
+        XCTAssertTrue(architecture.localizedCaseInsensitiveContains("QA audit"))
+    }
+
     func testDocumentationDoesNotMakeUnsafeAffirmativeClaims() throws {
         let readme = try RepositoryFiles.contents(at: "README.md")
         let testPlan = try RepositoryFiles.contents(at: "TEST_PLAN.md")
-        let documentation = [readme, testPlan].joined(separator: "\n")
+        let sharedArchitecture = try RepositoryFiles.contents(at: "Docs/shared-local-state-architecture.md")
+        let documentation = [readme, testPlan, sharedArchitecture].joined(separator: "\n")
 
         for forbiddenClaim in [
             "diagnoses",
@@ -298,7 +414,8 @@ final class SharedReadinessDocumentationQATests: XCTestCase {
             "networking is enabled",
             "AI analysis is enabled",
             "live HealthKit-backed complications are enabled",
-            "WatchConnectivity syncing is implemented"
+            "WatchConnectivity syncing is implemented",
+            "production HealthKit rollout is enabled"
         ] {
             XCTAssertFalse(
                 documentation.localizedCaseInsensitiveContains(forbiddenClaim),
