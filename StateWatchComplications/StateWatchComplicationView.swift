@@ -9,7 +9,7 @@ struct StateWatchComplication: Widget {
             StateWatchComplicationView(entry: entry)
         }
         .configurationDisplayName("StateWatch")
-        .description("Shows a static mock wellness summary.")
+        .description("Shows a static mock summary.")
         .supportedFamilies([
             .accessoryCircular,
             .accessoryRectangular,
@@ -28,46 +28,41 @@ struct StateWatchComplicationView: View {
         switch family {
         case .accessoryCircular:
             circularView
-                .containerBackground(for: .widget) {
-                    Color.stateWatchBackground
-                }
         case .accessoryRectangular:
             rectangularView
-                .containerBackground(for: .widget) {
-                    Color.stateWatchBackground
-                }
         case .accessoryInline:
             Text(entry.summary.inlineText)
         case .accessoryCorner:
             cornerView
-                .containerBackground(for: .widget) {
-                    Color.stateWatchBackground
-                }
         default:
             circularView
-                .containerBackground(for: .widget) {
-                    Color.stateWatchBackground
-                }
         }
     }
 
     private var circularView: some View {
-        Gauge(value: Double(entry.summary.score), in: 0...100) {
-            Text("SW")
-        } currentValueLabel: {
-            Text("\(entry.summary.score)")
-                .font(.system(size: 18, weight: .semibold, design: .rounded))
-                .foregroundStyle(Color.stateWatchPrimary)
-                .minimumScaleFactor(0.7)
-        } minimumValueLabel: {
-            Text(entry.summary.circularLabel)
-                .font(.system(size: 8, weight: .medium, design: .rounded))
-                .foregroundStyle(Color.stateWatchSecondary)
-        } maximumValueLabel: {
-            EmptyView()
+        ZStack {
+            Circle()
+                .stroke(Color.stateWatchSecondary.opacity(0.28), lineWidth: 4)
+
+            Circle()
+                .trim(from: 0, to: progress)
+                .stroke(Color.stateWatchAccent, lineWidth: 4)
+                .rotationEffect(.degrees(-90))
+
+            VStack(spacing: 0) {
+                Text("\(entry.summary.score)")
+                    .font(.system(size: 17, weight: .semibold, design: .rounded))
+                    .foregroundStyle(Color.stateWatchPrimary)
+                    .minimumScaleFactor(0.7)
+
+                Text(entry.summary.circularLabel)
+                    .font(.system(size: 7, weight: .medium, design: .rounded))
+                    .foregroundStyle(Color.stateWatchSecondary)
+                    .lineLimit(1)
+            }
         }
-        .gaugeStyle(.accessoryCircularCapacity)
-        .tint(Color.stateWatchAccent)
+        .padding(2)
+        .background(Color.stateWatchBackground)
     }
 
     private var rectangularView: some View {
@@ -87,18 +82,19 @@ struct StateWatchComplicationView: View {
                 .foregroundStyle(Color.stateWatchSecondary)
                 .lineLimit(1)
         }
+        .padding(.vertical, 2)
+        .background(Color.stateWatchBackground)
     }
 
     private var cornerView: some View {
-        Gauge(value: Double(entry.summary.score), in: 0...100) {
-            Text("State")
-        } currentValueLabel: {
-            Text("\(entry.summary.score)")
-                .font(.system(size: 11, weight: .semibold, design: .rounded))
-                .foregroundStyle(Color.stateWatchPrimary)
-        }
-        .gaugeStyle(.accessoryCircularCapacity)
-        .tint(Color.stateWatchAccent)
+        Text("\(entry.summary.score)")
+            .font(.system(size: 12, weight: .semibold, design: .rounded))
+            .foregroundStyle(Color.stateWatchPrimary)
+            .background(Color.stateWatchBackground)
+    }
+
+    private var progress: Double {
+        min(max(Double(entry.summary.score) / 100.0, 0), 1)
     }
 }
 
