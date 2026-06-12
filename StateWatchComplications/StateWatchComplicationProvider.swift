@@ -21,13 +21,24 @@ struct StateWatchComplicationProvider: TimelineProvider {
         in context: Context,
         completion: @escaping (Timeline<StateWatchComplicationEntry>) -> Void
     ) {
-        // TODO: Replace this static mock timeline only after a local shared-state design is approved.
+        // TODO: Replace this mock-only timeline after production shared-state rollout is approved.
         let entry = mockEntry()
         let nextRefresh = Calendar.current.date(byAdding: .hour, value: 6, to: entry.date) ?? entry.date
         completion(Timeline(entries: [entry], policy: .after(nextRefresh)))
     }
 
     private func mockEntry() -> StateWatchComplicationEntry {
-        StateWatchComplicationEntry(date: Date(), summary: .mock)
+        let sharedSummary = SharedReadinessStore().load()
+        let complicationSummary: ComplicationStateSummary
+        if let sharedSummary, !sharedSummary.isStale() {
+            complicationSummary = ComplicationStateSummary(sharedSummary: sharedSummary)
+        } else {
+            complicationSummary = .mock
+        }
+
+        return StateWatchComplicationEntry(
+            date: Date(),
+            summary: complicationSummary
+        )
     }
 }

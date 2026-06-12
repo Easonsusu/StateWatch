@@ -78,6 +78,15 @@
 		F64000000000000000000004 /* StateWatchComplicationsBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64100000000000000000004 /* StateWatchComplicationsBundle.swift */; };
 		F64000000000000000000005 /* ComplicationStateSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64100000000000000000001 /* ComplicationStateSummary.swift */; };
 		F64000000000000000000006 /* StateWatchComplications.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F64100000000000000000006 /* StateWatchComplications.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A68000000000000000000001 /* SharedReadinessSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68100000000000000000001 /* SharedReadinessSummary.swift */; };
+		A68000000000000000000002 /* SharedReadinessStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68100000000000000000002 /* SharedReadinessStore.swift */; };
+		A68000000000000000000003 /* SharedReadinessSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68100000000000000000001 /* SharedReadinessSummary.swift */; };
+		A68000000000000000000004 /* SharedReadinessStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68100000000000000000002 /* SharedReadinessStore.swift */; };
+		A68000000000000000000005 /* SharedReadinessSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68100000000000000000001 /* SharedReadinessSummary.swift */; };
+		A68000000000000000000006 /* SharedReadinessStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68100000000000000000002 /* SharedReadinessStore.swift */; };
+		A68000000000000000000007 /* SharedReadinessSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68100000000000000000001 /* SharedReadinessSummary.swift */; };
+		A68000000000000000000008 /* SharedReadinessStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68100000000000000000002 /* SharedReadinessStore.swift */; };
+		A68000000000000000000009 /* SharedReadinessStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68100000000000000000003 /* SharedReadinessStateTests.swift */; };
 		654352D083481CB3F2CE4EAE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91D4105804A8108983609354 /* Assets.xcassets */; };
 		EB7EFA62BB587DF042AFB1C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C273FDA27C713F4E89B8D78 /* Assets.xcassets */; };
 		40BE8EC08D20FD2F0D580A05 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDD80F8A4F0C1686025DD75F /* HealthKit.framework */; };
@@ -187,6 +196,11 @@
 		F64100000000000000000003 /* StateWatchComplicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchComplications/StateWatchComplicationView.swift; sourceTree = "<group>"; };
 		F64100000000000000000004 /* StateWatchComplicationsBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchComplications/StateWatchComplicationsBundle.swift; sourceTree = "<group>"; };
 		F64100000000000000000005 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = StateWatchComplications/Info.plist; sourceTree = "<group>"; };
+		A68100000000000000000001 /* SharedReadinessSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchShared/SharedReadinessSummary.swift; sourceTree = "<group>"; };
+		A68100000000000000000002 /* SharedReadinessStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchShared/SharedReadinessStore.swift; sourceTree = "<group>"; };
+		A68100000000000000000003 /* SharedReadinessStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/SharedReadinessStateTests.swift; sourceTree = "<group>"; };
+		A68100000000000000000004 /* StateWatchWatchApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StateWatchWatchApp/Resources/StateWatchWatchApp.entitlements; sourceTree = "<group>"; };
+		A68100000000000000000005 /* StateWatchComplications.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StateWatchComplications/StateWatchComplications.entitlements; sourceTree = "<group>"; };
 		57157261AC48F9302A3B476E /* StateWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StateWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABB217AE039EB9EFED5B9F29 /* StateWatchWatchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StateWatchWatchApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E02A90D9643568EA39115CFB /* StateWatchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StateWatchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -234,6 +248,7 @@
 				CCC14EC45EB304A12306FE9E /* StateWatchTests */,
 				A7F2C127398E1711FE528CE7 /* StateWatchWatchApp */,
 				F64300000000000000000001 /* StateWatchComplications */,
+				A68200000000000000000001 /* StateWatchShared */,
 				ED2F3B048716C9DC7573911C /* Frameworks */,
 				00C45FD35CB0F9C5F764F070 /* Products */,
 			);
@@ -443,6 +458,7 @@
 				A00E70CE8EC82A9CC7441A44 /* OverallStateEngineTests.swift */,
 				63FD61DF151A3052AF940D1C /* RecoveryScoreEngineTests.swift */,
 				7D7961319B0F3E33F2242038 /* SleepScoreEngineTests.swift */,
+				A68100000000000000000003 /* SharedReadinessStateTests.swift */,
 				E5900000000000000000000C /* StateWatchThemeTests.swift */,
 				F5B500000000000000000005 /* StateWatchVisualPreviewTests.swift */,
 			);
@@ -492,6 +508,7 @@
 			children = (
 				9C273FDA27C713F4E89B8D78 /* Assets.xcassets */,
 				FF0CF48A97B01E78D8BC2265 /* Info.plist */,
+				A68100000000000000000004 /* StateWatchWatchApp.entitlements */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -501,11 +518,21 @@
 			children = (
 				F64100000000000000000001 /* ComplicationStateSummary.swift */,
 				F64100000000000000000005 /* Info.plist */,
+				A68100000000000000000005 /* StateWatchComplications.entitlements */,
 				F64100000000000000000002 /* StateWatchComplicationProvider.swift */,
 				F64100000000000000000003 /* StateWatchComplicationView.swift */,
 				F64100000000000000000004 /* StateWatchComplicationsBundle.swift */,
 			);
 			name = StateWatchComplications;
+			sourceTree = "<group>";
+		};
+		A68200000000000000000001 /* StateWatchShared */ = {
+			isa = PBXGroup;
+			children = (
+				A68100000000000000000002 /* SharedReadinessStore.swift */,
+				A68100000000000000000001 /* SharedReadinessSummary.swift */,
+			);
+			name = StateWatchShared;
 			sourceTree = "<group>";
 		};
 		ED2F3B048716C9DC7573911C /* Frameworks */ = {
@@ -698,6 +725,8 @@
 				88EACA03513945BA11B16D42 /* HealthMetricType.swift in Sources */,
 				6BFAE487968ECF8D6D282007 /* UserCheckIn.swift in Sources */,
 				869E719C1BCF39EC5D3AA05E /* MockSampleData.swift in Sources */,
+				A68000000000000000000001 /* SharedReadinessSummary.swift in Sources */,
+				A68000000000000000000002 /* SharedReadinessStore.swift in Sources */,
 				676AED9DA772D17547F0D54B /* HealthKitManager.swift in Sources */,
 				4013B86B4825BBA82B03E2AF /* HealthKitAuthorizationService.swift in Sources */,
 				A11A11A11A11A11A11A11A11 /* HealthKitTypes.swift in Sources */,
@@ -749,6 +778,8 @@
 				8B8B8A5E574880D54805B37E /* HealthMetricType.swift in Sources */,
 				E4ACF6624B70733A25F403B8 /* UserCheckIn.swift in Sources */,
 				0246927AC5F4D9507B292DCF /* MockSampleData.swift in Sources */,
+				A68000000000000000000003 /* SharedReadinessSummary.swift in Sources */,
+				A68000000000000000000004 /* SharedReadinessStore.swift in Sources */,
 				2320930913CB8693BF55CAD0 /* StateWatchWatchApp.swift in Sources */,
 				9B161F9D95FA2B2197EADE04 /* WatchDashboardView.swift in Sources */,
 				020AD294E232EEAA418E9B15 /* WatchScoreView.swift in Sources */,
@@ -770,6 +801,9 @@
 				E5800000000000000000000C /* StateWatchThemeTests.swift in Sources */,
 				F5B400000000000000000004 /* StateWatchVisualPreviewTests.swift in Sources */,
 				F64000000000000000000005 /* ComplicationStateSummary.swift in Sources */,
+				A68000000000000000000007 /* SharedReadinessSummary.swift in Sources */,
+				A68000000000000000000008 /* SharedReadinessStore.swift in Sources */,
+				A68000000000000000000009 /* SharedReadinessStateTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -778,6 +812,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F64000000000000000000001 /* ComplicationStateSummary.swift in Sources */,
+				A68000000000000000000005 /* SharedReadinessSummary.swift in Sources */,
+				A68000000000000000000006 /* SharedReadinessStore.swift in Sources */,
 				F64000000000000000000002 /* StateWatchComplicationProvider.swift in Sources */,
 				F64000000000000000000003 /* StateWatchComplicationView.swift in Sources */,
 				F64000000000000000000004 /* StateWatchComplicationsBundle.swift in Sources */,
@@ -921,6 +957,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = StateWatchWatchApp/Resources/StateWatchWatchApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
@@ -951,6 +988,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = StateWatchWatchApp/Resources/StateWatchWatchApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
@@ -1033,6 +1071,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = StateWatchComplications/StateWatchComplications.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
@@ -1062,6 +1101,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = StateWatchComplications/StateWatchComplications.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
