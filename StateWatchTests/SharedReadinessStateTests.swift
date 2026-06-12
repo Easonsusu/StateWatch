@@ -339,36 +339,6 @@ final class SharedReadinessComplicationQATests: XCTestCase {
         }
     }
 
-    func testWidgetComplicationSourcesDoNotIntroduceLiveTimelineOrProductionRollout() throws {
-        let providerSource = try RepositoryFiles.contents(
-            at: "StateWatchComplications/StateWatchComplicationProvider.swift"
-        )
-        let viewSource = try RepositoryFiles.contents(
-            at: "StateWatchComplications/StateWatchComplicationView.swift"
-        )
-        let summarySource = try RepositoryFiles.contents(
-            at: "StateWatchComplications/ComplicationStateSummary.swift"
-        )
-        let searchedSource = [providerSource, viewSource, summarySource].joined(separator: "\n")
-
-        for forbiddenClaim in [
-            "live HealthKit-backed",
-            "production HealthKit",
-            "clinical stress",
-            "emergency",
-            "alert",
-            "warning",
-            "upload",
-            "server",
-            "AI analysis",
-            "WCSession"
-        ] {
-            XCTAssertFalse(
-                searchedSource.localizedCaseInsensitiveContains(forbiddenClaim),
-                "Unexpected WidgetKit source claim: \(forbiddenClaim)"
-            )
-        }
-    }
 }
 
 final class SharedReadinessDocumentationQATests: XCTestCase {

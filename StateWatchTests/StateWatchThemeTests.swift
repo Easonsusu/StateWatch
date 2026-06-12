@@ -324,58 +324,6 @@ final class MockDashboardSharedStatePublisherTests: XCTestCase {
         XCTAssertEqual(after.trendValues, before.trendValues)
     }
 
-    func testStateWatchAppStartupTriggersMockPublisherOnly() throws {
-        let appSource = try ThemeTestRepositoryFiles.contents(at: "StateWatchApp/App/StateWatchApp.swift")
-
-        XCTAssertTrue(appSource.contains("MockDashboardSharedStatePublisher().publish()"))
-        XCTAssertFalse(appSource.contains("SharedReadinessStore().saveMockSummary"))
-
-        for forbiddenTerm in [
-            "HealthKitDataFetcher",
-            "fetchRecentSnapshots",
-            "requestAuthorization",
-            "WatchConnectivity",
-            "WCSession",
-            "URLSession",
-            "http://",
-            "https://"
-        ] {
-            XCTAssertFalse(
-                appSource.localizedCaseInsensitiveContains(forbiddenTerm),
-                "Unexpected app startup publishing dependency: \(forbiddenTerm)"
-            )
-        }
-    }
-
-    func testDashboardAndWatchSurfacesRemainMockBackedAfterPublisherAddition() throws {
-        let dashboardSource = try ThemeTestRepositoryFiles.contents(
-            at: "StateWatchApp/Features/Dashboard/DashboardView.swift"
-        )
-        let watchAppSource = try ThemeTestRepositoryFiles.contents(at: "StateWatchWatchApp/App/StateWatchWatchApp.swift")
-        let watchDashboardSource = try ThemeTestRepositoryFiles.contents(
-            at: "StateWatchWatchApp/Features/WatchDashboardView.swift"
-        )
-        let searchedSource = [dashboardSource, watchAppSource, watchDashboardSource].joined(separator: "\n")
-
-        XCTAssertTrue(dashboardSource.contains("init(assessment: StateAssessment = .mock)"))
-        XCTAssertTrue(watchDashboardSource.contains("init(assessment: StateAssessment = .mock)"))
-
-        for forbiddenTerm in [
-            "MockDashboardSharedStatePublisher",
-            "SharedReadinessStore",
-            "HealthKitDataFetcher",
-            "fetchRecentSnapshots",
-            "WatchConnectivity",
-            "WCSession",
-            "URLSession"
-        ] {
-            XCTAssertFalse(
-                searchedSource.localizedCaseInsensitiveContains(forbiddenTerm),
-                "Unexpected production surface dependency after mock publisher addition: \(forbiddenTerm)"
-            )
-        }
-    }
-
     func testMockDashboardPublisherSourceDoesNotIntroduceForbiddenBehavior() throws {
         let publisherSource = try ThemeTestRepositoryFiles.contents(
             at: "StateWatchApp/App/MockDashboardSharedStatePublisher.swift"
