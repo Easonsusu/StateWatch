@@ -2,7 +2,7 @@
 
 StateWatch is an early-stage, local-first SwiftUI iOS + watchOS wellness app for reviewing recent recovery, sleep, fatigue context, and activity load signals from Apple Watch and Apple Health data.
 
-The repository includes a runnable Xcode project, HealthKit read-permission handling, a local-only HealthKit data fetcher, baseline calculation, rule-based scoring engines, XCTest coverage, CI, a SwiftUI design-system foundation, a debug-only HealthKit Scoring Preview, a debug-only Visual Dashboard Preview, a WidgetKit complication foundation, and a mock-only App Group shared state foundation.
+The repository includes a runnable Xcode project, HealthKit read-permission handling, a local-only HealthKit data fetcher, baseline calculation, rule-based scoring engines, XCTest coverage, CI, a SwiftUI design-system foundation, a debug-only HealthKit Scoring Preview, a debug-only Visual Dashboard Preview, a WidgetKit complication foundation, and a mock-only App Group shared state foundation for iPhone, WidgetKit, and Watch surfaces.
 
 StateWatch is still pre-release. The production iPhone dashboard and watchOS app now use the StateWatch dark technology-style visual direction, but both remain mock-backed. HealthKit-derived scoring is still validated through debug previews and should only reach production dashboard surfaces through a future gated rollout.
 
@@ -12,10 +12,11 @@ StateWatch is still pre-release. The production iPhone dashboard and watchOS app
 - Runnable watchOS app target: `StateWatchWatchApp`.
 - XCTest target: `StateWatchTests`.
 - Production iPhone dashboard: redesigned with StateWatch design-system components and mock `StateAssessment` data.
-- Production watch dashboard: visually refreshed and mock-backed.
+- Production watch dashboard: visually refreshed and mock-backed; it can read a mock App Group readiness summary when available.
 - WidgetKit complications: dedicated watch extension target that can read the iPhone-published mock dashboard summary and falls back to static mock data.
 - Mock App Group shared state: implemented for a summary-only demo handoff using `group.com.easonsusu.StateWatch`.
 - iPhone mock dashboard publishing: app launch publishes the current mock `StateAssessment` summary into App Group shared state.
+- Watch mock shared-state reading: the Watch app reads the mock shared summary when available and uses static mock fallback otherwise.
 - Shared local state architecture: documented for future production-ready summary sharing across iPhone, Watch, and WidgetKit surfaces.
 - HealthKit permission flow: implemented for read-only access.
 - HealthKit data fetcher: implemented locally for recent Apple Health samples.
@@ -42,6 +43,7 @@ StateWatch is still pre-release. The production iPhone dashboard and watchOS app
 - Mock WidgetKit complication extension target for accessory circular, rectangular, inline, and corner families.
 - Mock App Group shared readiness summary model and `UserDefaults(suiteName:)` store.
 - iPhone-side mock dashboard publisher that saves the production mock dashboard summary into shared state.
+- Watch-side mock shared-state reader that maps the App Group summary into the Watch display model with static mock fallback.
 - WidgetKit fallback behavior when iPhone-published mock shared summary data is unavailable, stale, or cannot be decoded.
 - Documentation for future shared local state architecture in `Docs/shared-local-state-architecture.md`.
 - Debug-only HealthKit Scoring Preview for inspecting snapshots, baselines, scoring output, missing-data behavior, reasons, and suggestions.
@@ -89,7 +91,7 @@ StateWatchTests/              XCTest target files using mock data and pure helpe
 MANUAL_QA_CHECKLIST.md        Manual QA checklist for stabilization and release review
 ```
 
-The WidgetKit complication target intentionally uses mock-only shared state and static fallback data. The iOS app publishes the current mock dashboard readiness summary through the App Group, but HealthKit-derived scoring is not wired into production iPhone, Watch, or complication surfaces. WatchConnectivity and production-ready shared local state remain deferred.
+The WidgetKit complication target and Watch app intentionally use mock-only shared state and static fallback data. The iOS app publishes the current mock dashboard readiness summary through the App Group; WidgetKit and the Watch app can read that mock summary when available. HealthKit-derived scoring is not wired into production iPhone, Watch, or complication surfaces. WatchConnectivity and production-ready shared local state remain deferred.
 
 ## How to Run
 
@@ -113,7 +115,7 @@ xcodebuild -project StateWatch.xcodeproj -scheme StateWatch -sdk iphonesimulator
 1. Open `StateWatch.xcodeproj` in Xcode.
 2. Select the `StateWatchWatchApp` scheme.
 3. Select an Apple Watch simulator.
-4. Build and run. The watch app should launch to the refreshed mock-backed watch dashboard.
+4. Build and run. The watch app should launch to the refreshed mock-backed watch dashboard. If a mock App Group summary is available, the Watch display model can use it; otherwise it falls back to static mock data.
 
 Command-line build:
 

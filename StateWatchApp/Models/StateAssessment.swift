@@ -92,33 +92,93 @@ extension StateAssessment {
 struct WatchDashboardDisplayModel: Equatable {
     let score: Int
     let stateLabel: String
+    let confidence: ScoreConfidence
     let confidenceText: String
     let updatedText: String
     let metrics: [WatchMetricSummary]
     let suggestion: String
     let dataSourceText: String
+    let source: String
+    let isMock: Bool
 
     init(assessment: StateAssessment = .mock) {
         score = min(100, max(0, assessment.overallScore))
         stateLabel = assessment.level.rawValue
+        confidence = assessment.confidence
         confidenceText = Self.confidenceText(for: assessment.confidence)
-        updatedText = "Demo data"
-        metrics = [
-            WatchMetricSummary(id: "recovery", title: "Recovery", score: 68),
-            WatchMetricSummary(id: "sleep", title: "Sleep", score: 81),
-            WatchMetricSummary(id: "stressFatigue", title: "Fatigue Context", score: 64),
-            WatchMetricSummary(id: "activityLoad", title: "Activity Load", score: 75)
-        ]
+        updatedText = "Demo"
+        metrics = Self.staticMockMetrics
         suggestion = "Consider a lighter day if that matches how you feel."
         dataSourceText = "Mock data only"
+        source = "static-watch-mock"
+        isMock = true
+    }
+
+    init(sharedSummary: SharedReadinessSummary) {
+        score = min(100, max(0, sharedSummary.score))
+        stateLabel = sharedSummary.stateLabel
+        confidence = Self.confidenceValue(for: sharedSummary.confidence)
+        confidenceText = sharedSummary.confidence
+        updatedText = sharedSummary.updatedText
+        metrics = Self.staticMockMetrics
+        suggestion = sharedSummary.shortSuggestion
+        dataSourceText = "Mock data only"
+        source = sharedSummary.source
+        isMock = sharedSummary.isMock
+    }
+
+    static func sharedMockOrStaticFallback(
+        store: SharedReadinessStore = SharedReadinessStore(),
+        now: Date = Date(),
+        maxAge: TimeInterval = 12 * 60 * 60
+    ) -> WatchDashboardDisplayModel {
+        sharedMockOrStaticFallback(
+            summary: store.load(),
+            now: now,
+            maxAge: maxAge
+        )
+    }
+
+    static func sharedMockOrStaticFallback(
+        userDefaults: UserDefaults?,
+        now: Date = Date(),
+        maxAge: TimeInterval = 12 * 60 * 60
+    ) -> WatchDashboardDisplayModel {
+        sharedMockOrStaticFallback(
+            store: SharedReadinessStore(userDefaults: userDefaults),
+            now: now,
+            maxAge: maxAge
+        )
+    }
+
+    static func sharedMockOrStaticFallback(
+        summary: SharedReadinessSummary?,
+        now: Date = Date(),
+        maxAge: TimeInterval = 12 * 60 * 60
+    ) -> WatchDashboardDisplayModel {
+        guard let summary,
+              summary.isMock,
+              !summary.isStale(relativeTo: now, maxAge: maxAge)
+        else {
+            return WatchDashboardDisplayModel(assessment: .mock)
+        }
+
+        return WatchDashboardDisplayModel(sharedSummary: summary)
     }
 
     var searchableText: String {
         (
-            [stateLabel, confidenceText, updatedText, suggestion, dataSourceText]
+            [stateLabel, confidenceText, updatedText, suggestion, dataSourceText, source, isMock ? "mock" : "summary"]
                 + metrics.flatMap { [$0.title, "\($0.score)"] }
         ).joined(separator: " ")
     }
+
+    private static let staticMockMetrics = [
+        WatchMetricSummary(id: "recovery", title: "Recovery", score: 68),
+        WatchMetricSummary(id: "sleep", title: "Sleep", score: 81),
+        WatchMetricSummary(id: "stressFatigue", title: "Fatigue Context", score: 64),
+        WatchMetricSummary(id: "activityLoad", title: "Activity Load", score: 75)
+    ]
 
     private static func confidenceText(for confidence: ScoreConfidence) -> String {
         switch confidence {
@@ -130,6 +190,19 @@ struct WatchDashboardDisplayModel: Equatable {
             return "Low data"
         case .unavailable:
             return "Unavailable"
+        }
+    }
+
+    private static func confidenceValue(for text: String) -> ScoreConfidence {
+        switch text.lowercased() {
+        case "high":
+            return .high
+        case "medium":
+            return .medium
+        case "low", "low data":
+            return .low
+        default:
+            return .unavailable
         }
     }
 }

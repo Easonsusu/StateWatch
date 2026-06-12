@@ -55,5 +55,5 @@ struct WatchScoreView: View {
 }
 
 #Preview {
-    WatchScoreView(score: 76, level: "Mixed", confidence: "Medium", updatedText: "Demo data")
+    WatchScoreView(score: 76, level: "Mixed", confidence: "Medium", updatedText: "Demo")
 }
