@@ -1,10 +1,14 @@
 import SwiftUI
 
 struct WatchDashboardView: View {
-    let assessment: StateAssessment
+    let content: WatchDashboardDisplayModel
 
     init(assessment: StateAssessment = .mock) {
-        self.assessment = assessment
+        self.content = WatchDashboardDisplayModel(assessment: assessment)
+    }
+
+    init(displayModel: WatchDashboardDisplayModel) {
+        self.content = displayModel
     }
 
     var body: some View {
@@ -24,11 +28,7 @@ struct WatchDashboardView: View {
         }
         .background(WatchStyle.backgroundGradient)
         .preferredColorScheme(.dark)
-        // TODO: Replace mock assessment with locally synced iPhone assessment after watch connectivity is planned.
-    }
-
-    private var content: WatchDashboardDisplayModel {
-        WatchDashboardDisplayModel(assessment: assessment)
+        // TODO: Keep this mock-only until a future local production data phase is explicitly approved.
     }
 
     private var componentSummary: some View {
@@ -60,7 +60,7 @@ struct WatchDashboardView: View {
                     .foregroundStyle(WatchStyle.textPrimary)
 
                 VStack(alignment: .leading, spacing: 8) {
-                    WatchStatusPill(text: "Confidence: \(content.confidenceText)", color: WatchStyle.confidenceColor(for: assessment.confidence))
+                    WatchStatusPill(text: "Confidence: \(content.confidenceText)", color: WatchStyle.confidenceColor(for: content.confidence))
                     WatchStatusPill(text: "Updated: \(content.updatedText)", color: WatchStyle.accentCyan)
                 }
 
@@ -71,7 +71,7 @@ struct WatchDashboardView: View {
                     .minimumScaleFactor(0.82)
             }
         }
-        .accessibilityLabel("Confidence \(content.confidenceText). Updated with demo data. Mock data only.")
+        .accessibilityLabel("Confidence \(content.confidenceText). Updated \(content.updatedText). Mock data only.")
     }
 }
 

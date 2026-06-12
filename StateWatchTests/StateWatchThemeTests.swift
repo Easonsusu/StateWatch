@@ -332,8 +332,10 @@ final class WatchDashboardDisplayModelTests: XCTestCase {
         XCTAssertEqual(model.score, 76)
         XCTAssertEqual(model.stateLabel, "Mixed")
         XCTAssertEqual(model.confidenceText, "Medium")
-        XCTAssertEqual(model.updatedText, "Demo data")
+        XCTAssertEqual(model.updatedText, "Demo")
         XCTAssertEqual(model.dataSourceText, "Mock data only")
+        XCTAssertEqual(model.source, "static-watch-mock")
+        XCTAssertTrue(model.isMock)
     }
 
     func testWatchDisplayModelMapsExpectedMetricSummaries() {
@@ -354,10 +356,172 @@ final class WatchDashboardDisplayModelTests: XCTestCase {
     func testWatchDisplayModelDisclosesMockDataSource() {
         let model = WatchDashboardDisplayModel(assessment: .mock)
 
-        XCTAssertTrue(model.updatedText.localizedCaseInsensitiveContains("Demo data"))
+        XCTAssertTrue(model.updatedText.localizedCaseInsensitiveContains("Demo"))
         XCTAssertTrue(model.dataSourceText.localizedCaseInsensitiveContains("Mock data"))
-        XCTAssertTrue(model.searchableText.localizedCaseInsensitiveContains("Demo data"))
+        XCTAssertTrue(model.searchableText.localizedCaseInsensitiveContains("Demo"))
         XCTAssertTrue(model.searchableText.localizedCaseInsensitiveContains("Mock data"))
+    }
+
+    func testWatchDisplayModelMapsIphonePublishedSharedMockSummary() {
+        let sharedSummary = MockDashboardSharedStatePublisher.summary(
+            from: .mock,
+            generatedAt: Date(timeIntervalSince1970: 14_000)
+        )
+        let model = WatchDashboardDisplayModel(sharedSummary: sharedSummary)
+
+        XCTAssertEqual(model.score, 76)
+        XCTAssertEqual(model.stateLabel, "Mixed")
+        XCTAssertEqual(model.confidenceText, "Medium")
+        XCTAssertEqual(model.updatedText, "Demo")
+        XCTAssertEqual(model.suggestion, StateAssessment.mock.primarySuggestion)
+        XCTAssertEqual(model.dataSourceText, "Mock data only")
+        XCTAssertEqual(model.source, "iphone-mock-dashboard")
+        XCTAssertTrue(model.isMock)
+    }
+
+    func testWatchDisplayModelLoadsSharedMockSummaryWhenAvailable() throws {
+        let suiteName = "statewatch.watch.shared.tests.\(UUID().uuidString)"
+        let userDefaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        userDefaults.removePersistentDomain(forName: suiteName)
+        defer {
+            userDefaults.removePersistentDomain(forName: suiteName)
+        }
+        let publisher = MockDashboardSharedStatePublisher(
+            userDefaults: userDefaults,
+            generatedAt: { Date(timeIntervalSince1970: 14_400) }
+        )
+
+        XCTAssertTrue(publisher.publish(assessment: .mock))
+        let model = WatchDashboardDisplayModel.sharedMockOrStaticFallback(
+            userDefaults: userDefaults,
+            now: Date(timeIntervalSince1970: 14_430),
+            maxAge: 60
+        )
+
+        XCTAssertEqual(model.score, 76)
+        XCTAssertEqual(model.stateLabel, "Mixed")
+        XCTAssertEqual(model.confidenceText, "Medium")
+        XCTAssertEqual(model.updatedText, "Demo")
+        XCTAssertEqual(model.source, "iphone-mock-dashboard")
+        XCTAssertTrue(model.isMock)
+    }
+
+    func testWatchDisplayModelFallsBackSafelyWhenSharedStateIsMissingCorruptedStaleOrUnavailable() throws {
+        let missingSuite = "statewatch.watch.missing.tests.\(UUID().uuidString)"
+        let missingDefaults = try XCTUnwrap(UserDefaults(suiteName: missingSuite))
+        missingDefaults.removePersistentDomain(forName: missingSuite)
+        defer {
+            missingDefaults.removePersistentDomain(forName: missingSuite)
+        }
+
+        let corruptedSuite = "statewatch.watch.corrupt.tests.\(UUID().uuidString)"
+        let corruptedDefaults = try XCTUnwrap(UserDefaults(suiteName: corruptedSuite))
+        corruptedDefaults.removePersistentDomain(forName: corruptedSuite)
+        defer {
+            corruptedDefaults.removePersistentDomain(forName: corruptedSuite)
+        }
+        corruptedDefaults.set(Data("not-json".utf8), forKey: SharedReadinessStore.storageKey)
+
+        let staleSuite = "statewatch.watch.stale.tests.\(UUID().uuidString)"
+        let staleDefaults = try XCTUnwrap(UserDefaults(suiteName: staleSuite))
+        staleDefaults.removePersistentDomain(forName: staleSuite)
+        defer {
+            staleDefaults.removePersistentDomain(forName: staleSuite)
+        }
+        let stalePublisher = MockDashboardSharedStatePublisher(
+            userDefaults: staleDefaults,
+            generatedAt: { Date(timeIntervalSince1970: 14_700) }
+        )
+        XCTAssertTrue(stalePublisher.publish(assessment: .mock))
+
+        let fallbackModels = [
+            WatchDashboardDisplayModel.sharedMockOrStaticFallback(userDefaults: nil),
+            WatchDashboardDisplayModel.sharedMockOrStaticFallback(userDefaults: missingDefaults),
+            WatchDashboardDisplayModel.sharedMockOrStaticFallback(userDefaults: corruptedDefaults),
+            WatchDashboardDisplayModel.sharedMockOrStaticFallback(
+                userDefaults: staleDefaults,
+                now: Date(timeIntervalSince1970: 15_000),
+                maxAge: 60
+            )
+        ]
+
+        for model in fallbackModels {
+            XCTAssertEqual(model.score, 76)
+            XCTAssertEqual(model.stateLabel, "Mixed")
+            XCTAssertEqual(model.confidenceText, "Medium")
+            XCTAssertEqual(model.updatedText, "Demo")
+            XCTAssertEqual(model.dataSourceText, "Mock data only")
+            XCTAssertEqual(model.source, "static-watch-mock")
+            XCTAssertTrue(model.isMock)
+        }
+    }
+
+    func testWatchDisplayModelFallsBackWhenSharedSummaryIsNotMock() throws {
+        let suiteName = "statewatch.watch.nonmock.tests.\(UUID().uuidString)"
+        let userDefaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        userDefaults.removePersistentDomain(forName: suiteName)
+        defer {
+            userDefaults.removePersistentDomain(forName: suiteName)
+        }
+        let sharedSummary = SharedReadinessSummary(
+            schemaVersion: SharedReadinessSummary.currentSchemaVersion,
+            score: 88,
+            stateLabel: "Steady",
+            confidence: "High",
+            shortSuggestion: "Demo data",
+            updatedText: "Demo",
+            generatedAt: Date(timeIntervalSince1970: 15_200),
+            source: "unexpected-production-source",
+            isMock: false
+        )
+        let encodedSummary = try JSONEncoder.stateWatchSharedState.encode(sharedSummary)
+        userDefaults.set(encodedSummary, forKey: SharedReadinessStore.storageKey)
+        let model = WatchDashboardDisplayModel.sharedMockOrStaticFallback(
+            userDefaults: userDefaults,
+            now: Date(timeIntervalSince1970: 15_230),
+            maxAge: 60
+        )
+
+        XCTAssertEqual(model.score, 76)
+        XCTAssertEqual(model.stateLabel, "Mixed")
+        XCTAssertEqual(model.confidenceText, "Medium")
+        XCTAssertEqual(model.source, "static-watch-mock")
+        XCTAssertTrue(model.isMock)
+    }
+
+    func testWatchSharedStateStringsAvoidForbiddenClaims() {
+        let sharedSummary = MockDashboardSharedStatePublisher.summary(
+            from: .mock,
+            generatedAt: Date(timeIntervalSince1970: 15_400)
+        )
+        let searchableText = [
+            WatchDashboardDisplayModel(sharedSummary: sharedSummary).searchableText,
+            WatchDashboardDisplayModel(assessment: .mock).searchableText
+        ].joined(separator: " ")
+
+        for forbiddenTerm in [
+            "HealthKit",
+            "Apple Health",
+            "diagnos",
+            "disease",
+            "clinical stress",
+            "treatment",
+            "warning",
+            "alert",
+            "emergency",
+            "upload",
+            "network",
+            "AI",
+            "write access",
+            "live data",
+            "real data",
+            "WatchConnectivity"
+        ] {
+            XCTAssertFalse(
+                searchableText.localizedCaseInsensitiveContains(forbiddenTerm),
+                "Unexpected Watch shared-state wording: \(forbiddenTerm)"
+            )
+        }
     }
 
     func testWatchDisplayModelDoesNotImplyLiveHealthKitData() {
