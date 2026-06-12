@@ -2,7 +2,7 @@
 
 ## Current scope
 
-StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit complication target, and XCTest target. The current test focus is the mock dashboard, read-only HealthKit permission flow, local-only HealthKit data fetch foundation, rule-based baseline/scoring engine, debug-only HealthKit scoring preview, and static mock complication behavior.
+StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit complication target, and XCTest target. The current test focus is the mock dashboard, read-only HealthKit permission flow, local-only HealthKit data fetch foundation, rule-based baseline/scoring engine, debug-only HealthKit scoring preview, and mock-only WidgetKit/App Group shared-state behavior.
 
 ## Foundation checks
 
@@ -209,6 +209,30 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Confirm WidgetKit complications remain static mock-backed.
 - Confirm no networking, upload path, AI feature, or HealthKit write access was added.
 - Confirm CI passes before merge.
+
+## Phase 6.8 Mock App Group Shared State
+
+- Confirm App Group entitlement `group.com.easonsusu.StateWatch` is present only for the iOS app, watchOS app, and WidgetKit complication targets.
+- Confirm `SharedReadinessSummary` includes schema version, score, state label, confidence, short suggestion, updated text, generated date, source, and mock marker fields.
+- Confirm the static mock summary uses score 76, label Mixed, confidence Medium, suggestion Demo data, updated text Demo, source mock-app-group, and `isMock` true.
+- Confirm `SharedReadinessStore` uses `UserDefaults(suiteName:)` with key `statewatch.shared.readiness.summary.v1`.
+- Confirm the shared store encodes and decodes JSON safely.
+- Confirm the shared store returns a safe mock fallback when the App Group suite is unavailable.
+- Confirm the shared store returns a safe mock fallback when data is missing, stale, or cannot be decoded.
+- Confirm the iOS app seeds only the static mock summary.
+- Confirm WidgetKit complications try the mock shared summary first and fall back to the existing static mock summary.
+- Confirm WidgetKit complications do not fetch HealthKit samples directly.
+- Confirm WidgetKit complications do not use live HealthKit-backed timelines.
+- Confirm production `DashboardView` remains mock-backed and is not connected to HealthKit-derived scoring.
+- Confirm production `WatchDashboardView` remains mock-backed and is not connected to HealthKit-derived scoring.
+- Confirm no WatchConnectivity code was added.
+- Confirm no local persistence beyond mock App Group `UserDefaults` summary storage was added.
+- Confirm no networking, upload path, AI feature, or HealthKit write access was added.
+- Confirm shared-state copy does not imply HealthKit, Apple Health, diagnosis, disease detection, clinical stress detection, treatment, warning, networking, AI, or HealthKit write access.
+- Confirm `git diff --check origin/main...HEAD` passes.
+- Confirm `plutil -lint StateWatch.xcodeproj/project.pbxproj` passes.
+- Confirm changed plist and entitlement files pass `plutil -lint`.
+- Confirm GitHub Actions CI passes for iOS build, XCTest, watchOS app build, and WidgetKit complication build before merge.
 
 ## Phase 6.2 Watch App Visual Refresh
 

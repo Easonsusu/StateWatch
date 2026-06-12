@@ -1,8 +1,8 @@
 # Shared Local State Architecture
 
-Phase 6.6 defines how StateWatch should eventually share local wellness summary state across the iPhone app, watchOS app, and WidgetKit complications.
+Phase 6.6 defined how StateWatch should eventually share local wellness summary state across the iPhone app, watchOS app, and WidgetKit complications.
 
-This is an architecture-only phase. It does not enable App Groups, WatchConnectivity, local persistence, live WidgetKit timelines, or production HealthKit-backed dashboards.
+Phase 6.8 adds a mock-only App Group shared state foundation for WidgetKit complications. It does not enable WatchConnectivity, live HealthKit-backed timelines, production HealthKit-backed dashboards, or raw HealthKit sample sharing.
 
 ## Current State
 
@@ -10,7 +10,7 @@ StateWatch currently has three production-facing surfaces:
 
 - iPhone Dashboard: visually refreshed and mock-backed.
 - Watch app: visually refreshed and mock-backed.
-- WidgetKit complications: implemented as a dedicated extension using static mock data only.
+- WidgetKit complications: implemented as a dedicated extension that can read a mock shared readiness summary and falls back to static mock data.
 
 HealthKit permission handling, local HealthKit fetching, baseline calculation, and rule-based scoring already exist. HealthKit-derived scoring remains limited to debug-only preview flows until a later gated rollout.
 
@@ -25,9 +25,9 @@ The future shared state layer should:
 - Preserve mock and demo fallbacks for development, previews, and tests.
 - Keep UI copy calm, wellness-oriented, and confidence-aware.
 
-## Non-Goals
+## Phase 6.6 Non-Goals
 
-This phase must not:
+The original architecture phase did not:
 
 - Add an App Group entitlement.
 - Add WatchConnectivity.
@@ -36,6 +36,25 @@ This phase must not:
 - Wire production dashboards or complications to HealthKit-derived scoring.
 - Add networking, server sync, upload paths, AI features, login, subscriptions, or HealthKit write access.
 - Add medical or alarming product claims.
+
+## Phase 6.8 Mock Foundation
+
+The current mock foundation adds:
+
+- App Group entitlement `group.com.easonsusu.StateWatch` for iOS, watchOS, and WidgetKit complication targets.
+- A compact mock readiness summary model.
+- A `UserDefaults(suiteName:)` store keyed by `statewatch.shared.readiness.summary.v1`.
+- iOS app seeding for a static mock summary.
+- WidgetKit complication fallback behavior when shared data is missing, unavailable, stale, or cannot be decoded.
+
+The mock foundation still does not:
+
+- Store raw Apple Health samples.
+- Store HealthKit-derived production scoring output.
+- Fetch HealthKit data from WidgetKit.
+- Add WatchConnectivity.
+- Add networking, upload paths, AI features, or HealthKit write access.
+- Replace the mock-backed iPhone Dashboard or Watch app data source.
 
 ## Proposed Shared Summary
 
@@ -93,7 +112,7 @@ Rules:
 
 ## Storage Boundary
 
-A later phase may use an App Group container so the iPhone app and WidgetKit extension can read the same summary file.
+Phase 6.8 uses an App Group container so the iPhone app and WidgetKit extension can share a mock readiness summary. Production HealthKit-derived summary sharing remains deferred.
 
 Proposed future file:
 
@@ -122,7 +141,7 @@ Disallowed contents:
 
 ## Data Flow Plan
 
-### Phase 7 mock-only shared state
+### Phase 6.8 mock-only shared state
 
 1. iPhone app writes a mock `SharedReadinessState` to local shared storage.
 2. WidgetKit extension reads that mock summary.
@@ -161,7 +180,7 @@ Avoid alarming wording. Missing data should reduce confidence or show a fallback
 
 WidgetKit complications should:
 
-- Read compact summary state only after a future App Group phase.
+- Read compact mock summary state from the App Group foundation.
 - Fall back to static mock or unavailable content when no shared state exists.
 - Never request HealthKit permissions.
 - Never fetch HealthKit samples.
@@ -188,9 +207,8 @@ Shared state must preserve existing StateWatch rules:
 - No networking, upload path, AI feature, profiling, marketing, advertising, or data-mining use.
 - StateWatch remains a wellness tool and must not be framed as a clinical product.
 
-## Open Questions Before Implementation
+## Open Questions Before Production Rollout
 
-- Exact App Group identifier.
 - Whether WidgetKit should refresh on a fixed schedule or only when the app writes state.
 - Whether Watch app should read shared state in the same phase as WidgetKit.
 - How long summaries should remain fresh before showing a stale state.
@@ -198,4 +216,4 @@ Shared state must preserve existing StateWatch rules:
 
 ## Recommended Next Phase
 
-Phase 6.7 should audit this architecture before implementation. Phase 7.0 can then add mock-only App Group shared state if the architecture is accepted.
+Phase 6.9 should audit the mock App Group shared state foundation before any production HealthKit-derived shared-state rollout.

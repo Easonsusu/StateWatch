@@ -9,7 +9,7 @@ struct StateWatchComplication: Widget {
             StateWatchComplicationView(entry: entry)
         }
         .configurationDisplayName("StateWatch")
-        .description("Shows a static mock summary.")
+        .description("Shows a mock readiness summary.")
         .supportedFamilies([
             .accessoryCircular,
             .accessoryRectangular,
