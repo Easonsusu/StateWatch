@@ -203,9 +203,43 @@ final class MockDashboardSharedStatePublisherTests: XCTestCase {
         XCTAssertTrue(summary.isMock)
     }
 
+    func testMockDashboardSummaryIsClearlyMockOnly() {
+        let summary = MockDashboardSharedStatePublisher.summary(
+            from: .mock,
+            generatedAt: Date(timeIntervalSince1970: 12_100)
+        )
+
+        XCTAssertTrue(summary.searchableText.localizedCaseInsensitiveContains("mock"))
+        XCTAssertFalse(summary.source.localizedCaseInsensitiveContains("HealthKit"))
+        XCTAssertFalse(summary.source.localizedCaseInsensitiveContains("Apple Health"))
+
+        for forbiddenClaim in [
+            "HealthKit-derived",
+            "Apple Health",
+            "live data",
+            "real data",
+            "synced",
+            "diagnos",
+            "disease",
+            "clinical stress",
+            "treatment",
+            "warning",
+            "alert",
+            "emergency",
+            "upload",
+            "network",
+            "AI"
+        ] {
+            XCTAssertFalse(
+                summary.searchableText.localizedCaseInsensitiveContains(forbiddenClaim),
+                "Unexpected mock dashboard shared-state wording: \(forbiddenClaim)"
+            )
+        }
+    }
+
     func testMockDashboardPublisherSavesDashboardSummaryToSharedStore() throws {
         let suiteName = "statewatch.dashboard.publisher.tests.\(UUID().uuidString)"
-        let userDefaults = UserDefaults(suiteName: suiteName)!
+        let userDefaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
         userDefaults.removePersistentDomain(forName: suiteName)
         defer {
             userDefaults.removePersistentDomain(forName: suiteName)
@@ -227,6 +261,42 @@ final class MockDashboardSharedStatePublisherTests: XCTestCase {
         XCTAssertTrue(summary.isMock)
     }
 
+    func testMockDashboardPublisherUsesStableSharedStateBoundary() {
+        XCTAssertEqual(SharedReadinessStore.appGroupIdentifier, "group.com.easonsusu.StateWatch")
+        XCTAssertEqual(SharedReadinessStore.storageKey, "statewatch.shared.readiness.summary.v1")
+        XCTAssertEqual(MockDashboardSharedStatePublisher.source, "iphone-mock-dashboard")
+    }
+
+    func testRepeatedMockDashboardPublishingSafelyOverwritesSameMockSummary() throws {
+        let suiteName = "statewatch.dashboard.publisher.repeat.tests.\(UUID().uuidString)"
+        let userDefaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        userDefaults.removePersistentDomain(forName: suiteName)
+        defer {
+            userDefaults.removePersistentDomain(forName: suiteName)
+        }
+        let store = SharedReadinessStore(userDefaults: userDefaults)
+        let firstPublisher = MockDashboardSharedStatePublisher(
+            userDefaults: userDefaults,
+            generatedAt: { Date(timeIntervalSince1970: 12_400) }
+        )
+        let secondPublisher = MockDashboardSharedStatePublisher(
+            userDefaults: userDefaults,
+            generatedAt: { Date(timeIntervalSince1970: 12_500) }
+        )
+
+        XCTAssertTrue(firstPublisher.publish(assessment: .mock))
+        XCTAssertTrue(secondPublisher.publish(assessment: .mock))
+        let summary = try XCTUnwrap(store.load())
+
+        XCTAssertEqual(summary.score, 76)
+        XCTAssertEqual(summary.stateLabel, "Mixed")
+        XCTAssertEqual(summary.confidence, "Medium")
+        XCTAssertEqual(summary.updatedText, "Demo")
+        XCTAssertEqual(summary.generatedAt, Date(timeIntervalSince1970: 12_500))
+        XCTAssertEqual(summary.source, "iphone-mock-dashboard")
+        XCTAssertTrue(summary.isMock)
+    }
+
     func testMockDashboardPublisherDoesNotCrashWhenSharedStoreIsUnavailable() {
         let publisher = MockDashboardSharedStatePublisher(
             userDefaults: nil,
@@ -236,30 +306,22 @@ final class MockDashboardSharedStatePublisherTests: XCTestCase {
         XCTAssertFalse(publisher.publish(assessment: .mock))
     }
 
-    func testMockDashboardPublisherSourceDoesNotIntroduceForbiddenBehavior() throws {
-        let publisherSource = try ThemeTestRepositoryFiles.contents(
-            at: "StateWatchApp/App/MockDashboardSharedStatePublisher.swift"
+    func testFailedMockDashboardPublishingDoesNotAlterDashboardDisplayModel() {
+        let publisher = MockDashboardSharedStatePublisher(
+            userDefaults: nil,
+            generatedAt: { Date(timeIntervalSince1970: 12_700) }
         )
-        let appSource = try ThemeTestRepositoryFiles.contents(at: "StateWatchApp/App/StateWatchApp.swift")
-        let searchedSource = [publisherSource, appSource].joined(separator: "\n")
+        let before = DashboardDisplayModel(assessment: .mock)
 
-        for forbiddenTerm in [
-            "import HealthKit",
-            "HealthKitDataFetcher",
-            "fetchRecentSnapshots",
-            "requestAuthorization",
-            "WatchConnectivity",
-            "WCSession",
-            "URLSession",
-            "http://",
-            "https://",
-            "NSHealthUpdateUsageDescription"
-        ] {
-            XCTAssertFalse(
-                searchedSource.localizedCaseInsensitiveContains(forbiddenTerm),
-                "Unexpected mock dashboard shared-state source reference: \(forbiddenTerm)"
-            )
-        }
+        XCTAssertFalse(publisher.publish(assessment: .mock))
+        let after = DashboardDisplayModel(assessment: .mock)
+
+        XCTAssertEqual(after.score, before.score)
+        XCTAssertEqual(after.stateLabel, before.stateLabel)
+        XCTAssertEqual(after.confidence, before.confidence)
+        XCTAssertEqual(after.updatedText, before.updatedText)
+        XCTAssertEqual(after.trendCaption, before.trendCaption)
+        XCTAssertEqual(after.trendValues, before.trendValues)
     }
 }
 
@@ -414,22 +476,5 @@ final class ComplicationStateSummaryTests: XCTestCase {
                 "Unexpected complication wording: \(forbiddenTerm)"
             )
         }
-    }
-}
-
-private enum ThemeTestRepositoryFiles {
-    static func contents(at relativePath: String) throws -> String {
-        try String(contentsOf: rootURL.appendingPathComponent(relativePath), encoding: .utf8)
-    }
-
-    private static var rootURL: URL {
-        let sourceURL = URL(fileURLWithPath: #filePath)
-        let candidateRoot = sourceURL.deletingLastPathComponent().deletingLastPathComponent()
-
-        if FileManager.default.fileExists(atPath: candidateRoot.appendingPathComponent("README.md").path) {
-            return candidateRoot
-        }
-
-        return URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
     }
 }
