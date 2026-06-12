@@ -173,6 +173,28 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Confirm `plutil -lint StateWatch.xcodeproj/project.pbxproj` passes.
 - Confirm GitHub Actions CI passes for iOS build, XCTest, watchOS app build, and WidgetKit complication build before merge.
 
+## Phase 6.5 WidgetKit Mock Complication QA Audit
+
+- Confirm PR #25 is merged before starting the WidgetKit complication QA branch.
+- Confirm `StateWatchComplications` remains a dedicated WidgetKit extension target.
+- Confirm `StateWatchComplications` shared scheme still builds in CI.
+- Confirm supported complication families still include accessory circular, rectangular, inline, and corner.
+- Confirm mock complication summary still uses score 76, label Mixed, confidence Medium, and demo text.
+- Confirm family display strings remain short and glanceable.
+- Confirm complication source files do not import HealthKit.
+- Confirm complication source files do not reference `HealthKitDataFetcher`, `HealthKitAuthorizationService`, `HealthKitManager`, `OverallStateEngine`, `requestAuthorization`, or `fetchRecentSnapshots`.
+- Confirm complication source files do not use networking, `URLSession`, App Groups, WatchConnectivity, shared containers, or local persistence.
+- Confirm no App Group entitlement was added.
+- Confirm no WatchConnectivity code was added.
+- Confirm no HealthKit-backed complication timeline was added.
+- Confirm production iPhone `DashboardView` remains mock-backed and unchanged.
+- Confirm production Watch app remains mock-backed and unchanged.
+- Confirm complication copy avoids diagnosis, disease, illness, clinical stress, detection, treatment, prevention, health-risk, or warning wording.
+- Confirm `git diff --check origin/main...HEAD` passes.
+- Confirm `plutil -lint StateWatch.xcodeproj/project.pbxproj StateWatchComplications/Info.plist` passes.
+- Confirm `xmllint --noout StateWatch.xcodeproj/xcshareddata/xcschemes/StateWatchComplications.xcscheme` passes.
+- Confirm GitHub Actions CI passes for iOS build, XCTest, watchOS app build, and WidgetKit complication build before merge.
+
 ## Phase 6.2 Watch App Visual Refresh
 
 - Confirm PR #22 is merged before starting the Watch visual refresh branch.
