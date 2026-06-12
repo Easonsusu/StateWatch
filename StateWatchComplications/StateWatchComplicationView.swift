@@ -108,27 +108,3 @@ private extension Color {
     static let stateWatchSecondary = Color(red: 0.67, green: 0.72, blue: 0.80)
     static let stateWatchAccent = Color(red: 0.21, green: 0.91, blue: 1.0)
 }
-
-#Preview(as: .accessoryCircular) {
-    StateWatchComplication()
-} timeline: {
-    StateWatchComplicationEntry(date: .now, summary: .mock)
-}
-
-#Preview(as: .accessoryRectangular) {
-    StateWatchComplication()
-} timeline: {
-    StateWatchComplicationEntry(date: .now, summary: .mock)
-}
-
-#Preview(as: .accessoryInline) {
-    StateWatchComplication()
-} timeline: {
-    StateWatchComplicationEntry(date: .now, summary: .mock)
-}
-
-#Preview(as: .accessoryCorner) {
-    StateWatchComplication()
-} timeline: {
-    StateWatchComplicationEntry(date: .now, summary: .mock)
-}
