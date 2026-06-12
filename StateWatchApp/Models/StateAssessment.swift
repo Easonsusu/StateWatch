@@ -88,3 +88,54 @@ extension StateAssessment {
     static let mock = MockSampleData.todayAssessment
     static let mockLow = MockSampleData.lowEnergyAssessment
 }
+
+struct WatchDashboardDisplayModel: Equatable {
+    let score: Int
+    let stateLabel: String
+    let confidenceText: String
+    let updatedText: String
+    let metrics: [WatchMetricSummary]
+    let suggestion: String
+    let dataSourceText: String
+
+    init(assessment: StateAssessment = .mock) {
+        score = min(100, max(0, assessment.overallScore))
+        stateLabel = assessment.level.rawValue
+        confidenceText = Self.confidenceText(for: assessment.confidence)
+        updatedText = "Demo data"
+        metrics = [
+            WatchMetricSummary(id: "recovery", title: "Recovery", score: 68),
+            WatchMetricSummary(id: "sleep", title: "Sleep", score: 81),
+            WatchMetricSummary(id: "stressFatigue", title: "Fatigue Context", score: 64),
+            WatchMetricSummary(id: "activityLoad", title: "Activity Load", score: 75)
+        ]
+        suggestion = "Consider a lighter day if that matches how you feel."
+        dataSourceText = "Mock data only"
+    }
+
+    var searchableText: String {
+        (
+            [stateLabel, confidenceText, updatedText, suggestion, dataSourceText]
+                + metrics.flatMap { [$0.title, "\($0.score)"] }
+        ).joined(separator: " ")
+    }
+
+    private static func confidenceText(for confidence: ScoreConfidence) -> String {
+        switch confidence {
+        case .high:
+            return "High"
+        case .medium:
+            return "Medium"
+        case .low:
+            return "Low data"
+        case .unavailable:
+            return "Unavailable"
+        }
+    }
+}
+
+struct WatchMetricSummary: Identifiable, Equatable {
+    let id: String
+    let title: String
+    let score: Int
+}

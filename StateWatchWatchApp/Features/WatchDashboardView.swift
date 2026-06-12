@@ -10,15 +10,15 @@ struct WatchDashboardView: View {
     var body: some View {
         TabView {
             WatchScoreView(
-                score: score,
-                level: assessment.level.rawValue,
-                confidence: confidenceText,
-                updatedText: "Demo data"
+                score: content.score,
+                level: content.stateLabel,
+                confidence: content.confidenceText,
+                updatedText: content.updatedText
             )
 
             componentSummary
 
-            WatchSuggestionView(text: "Consider a lighter day if that matches how you feel.")
+            WatchSuggestionView(text: content.suggestion)
 
             confidenceSummary
         }
@@ -27,21 +27,8 @@ struct WatchDashboardView: View {
         // TODO: Replace mock assessment with locally synced iPhone assessment after watch connectivity is planned.
     }
 
-    private var score: Int {
-        min(100, max(0, assessment.overallScore))
-    }
-
-    private var confidenceText: String {
-        switch assessment.confidence {
-        case .high:
-            return "High"
-        case .medium:
-            return "Medium"
-        case .low:
-            return "Low data"
-        case .unavailable:
-            return "Unavailable"
-        }
+    private var content: WatchDashboardDisplayModel {
+        WatchDashboardDisplayModel(assessment: assessment)
     }
 
     private var componentSummary: some View {
@@ -52,10 +39,13 @@ struct WatchDashboardView: View {
                     .foregroundStyle(WatchStyle.textPrimary)
 
                 VStack(spacing: 7) {
-                    WatchMetricRow(title: "Recovery", score: 68, color: WatchStyle.recoveryGreen)
-                    WatchMetricRow(title: "Sleep", score: 81, color: WatchStyle.accentCyan)
-                    WatchMetricRow(title: "Fatigue Context", score: 64, color: WatchStyle.cautionAmber)
-                    WatchMetricRow(title: "Activity Load", score: 75, color: WatchStyle.accentBlue)
+                    ForEach(content.metrics) { metric in
+                        WatchMetricRow(
+                            title: metric.title,
+                            score: metric.score,
+                            color: WatchStyle.metricColor(for: metric.id)
+                        )
+                    }
                 }
             }
         }
@@ -70,18 +60,18 @@ struct WatchDashboardView: View {
                     .foregroundStyle(WatchStyle.textPrimary)
 
                 VStack(alignment: .leading, spacing: 8) {
-                    WatchStatusPill(text: "Confidence: \(confidenceText)", color: WatchStyle.confidenceColor(for: assessment.confidence))
-                    WatchStatusPill(text: "Updated: Demo data", color: WatchStyle.accentCyan)
+                    WatchStatusPill(text: "Confidence: \(content.confidenceText)", color: WatchStyle.confidenceColor(for: assessment.confidence))
+                    WatchStatusPill(text: "Updated: \(content.updatedText)", color: WatchStyle.accentCyan)
                 }
 
-                Text("Mock data only")
+                Text(content.dataSourceText)
                     .font(.system(size: 12, weight: .medium, design: .rounded))
                     .foregroundStyle(WatchStyle.textMuted)
                     .lineLimit(1)
                     .minimumScaleFactor(0.82)
             }
         }
-        .accessibilityLabel("Confidence \(confidenceText). Updated with demo data. Mock data only.")
+        .accessibilityLabel("Confidence \(content.confidenceText). Updated with demo data. Mock data only.")
     }
 }
 
@@ -207,6 +197,21 @@ enum WatchStyle {
         case .low:
             return cautionAmber
         case .unavailable:
+            return textMuted
+        }
+    }
+
+    static func metricColor(for id: String) -> Color {
+        switch id {
+        case "recovery":
+            return recoveryGreen
+        case "sleep":
+            return accentCyan
+        case "stressFatigue":
+            return cautionAmber
+        case "activityLoad":
+            return accentBlue
+        default:
             return textMuted
         }
     }

@@ -182,3 +182,80 @@ final class DashboardDisplayModelTests: XCTestCase {
         }
     }
 }
+
+final class WatchDashboardDisplayModelTests: XCTestCase {
+    func testWatchDisplayModelUsesMockAssessmentValues() {
+        let model = WatchDashboardDisplayModel(assessment: .mock)
+
+        XCTAssertEqual(model.score, 76)
+        XCTAssertEqual(model.stateLabel, "Mixed")
+        XCTAssertEqual(model.confidenceText, "Medium")
+        XCTAssertEqual(model.updatedText, "Demo data")
+        XCTAssertEqual(model.dataSourceText, "Mock data only")
+    }
+
+    func testWatchDisplayModelMapsExpectedMetricSummaries() {
+        let model = WatchDashboardDisplayModel(assessment: .mock)
+
+        XCTAssertEqual(model.metrics.count, 4)
+        XCTAssertEqual(model.metrics.map(\.title), ["Recovery", "Sleep", "Fatigue Context", "Activity Load"])
+        XCTAssertEqual(model.metrics.map(\.score), [68, 81, 64, 75])
+    }
+
+    func testWatchDisplayModelUsesCalmSuggestionCopy() {
+        let model = WatchDashboardDisplayModel(assessment: .mock)
+
+        XCTAssertEqual(model.suggestion, "Consider a lighter day if that matches how you feel.")
+        XCTAssertFalse(model.suggestion.isEmpty)
+    }
+
+    func testWatchDisplayModelDisclosesMockDataSource() {
+        let model = WatchDashboardDisplayModel(assessment: .mock)
+
+        XCTAssertTrue(model.updatedText.localizedCaseInsensitiveContains("Demo data"))
+        XCTAssertTrue(model.dataSourceText.localizedCaseInsensitiveContains("Mock data"))
+        XCTAssertTrue(model.searchableText.localizedCaseInsensitiveContains("Demo data"))
+        XCTAssertTrue(model.searchableText.localizedCaseInsensitiveContains("Mock data"))
+    }
+
+    func testWatchDisplayModelDoesNotImplyLiveHealthKitData() {
+        let model = WatchDashboardDisplayModel(assessment: .mock)
+        let searchableText = model.searchableText
+
+        for forbiddenSourceClaim in [
+            "HealthKit",
+            "Apple Health",
+            "live data",
+            "real data",
+            "fetched",
+            "synced"
+        ] {
+            XCTAssertFalse(
+                searchableText.localizedCaseInsensitiveContains(forbiddenSourceClaim),
+                "Unexpected Watch data-source wording: \(forbiddenSourceClaim)"
+            )
+        }
+    }
+
+    func testWatchDisplayModelUsesCalmNonMedicalCopy() {
+        let model = WatchDashboardDisplayModel(assessment: .mock)
+        let searchableText = model.searchableText
+
+        for forbiddenTerm in [
+            "diagnos",
+            "disease",
+            "illness",
+            "clinical stress",
+            "detect",
+            "treatment",
+            "prevention",
+            "health risk",
+            "warning"
+        ] {
+            XCTAssertFalse(
+                searchableText.localizedCaseInsensitiveContains(forbiddenTerm),
+                "Unexpected Watch wording: \(forbiddenTerm)"
+            )
+        }
+    }
+}

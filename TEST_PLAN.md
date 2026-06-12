@@ -174,6 +174,27 @@ StateWatch now includes a runnable iOS app target, watchOS app target, and XCTes
 - Confirm `plutil -lint StateWatch.xcodeproj/project.pbxproj` passes.
 - Confirm GitHub Actions CI passes for iOS build, XCTest, and watchOS build before merge.
 
+## Phase 6.3 Watch App Visual Refresh QA Audit
+
+- Confirm PR #23 is merged before starting the Watch visual refresh QA branch.
+- Confirm Watch app builds.
+- Confirm Watch app launches to refreshed mock-backed UI.
+- Confirm score screen is readable on a small Apple Watch simulator.
+- Confirm component summary is readable and includes Recovery, Sleep, Fatigue Context, and Activity Load.
+- Confirm suggestion screen uses calm non-medical wording.
+- Confirm confidence and demo data screen is visible.
+- Confirm Watch app does not request HealthKit permission.
+- Confirm Watch app does not fetch HealthKit data.
+- Confirm Watch app does not use WidgetKit.
+- Confirm no WidgetKit target was added.
+- Confirm no App Groups were added.
+- Confirm iPhone `DashboardView` still builds and remains mock-backed.
+- Confirm HealthKit Scoring Preview still opens in DEBUG.
+- Confirm Visual Dashboard Preview still opens in DEBUG.
+- Confirm `git diff --check origin/main...HEAD` passes.
+- Confirm `plutil -lint StateWatch.xcodeproj/project.pbxproj` passes.
+- Confirm GitHub Actions CI passes for iOS build, XCTest, and watchOS build before merge.
+
 ## Manual QA for MVP
 
 - First launch shows disclaimer before HealthKit permission request.
@@ -181,7 +202,7 @@ StateWatch now includes a runnable iOS app target, watchOS app target, and XCTes
 - Dashboard remains usable if permission is denied.
 - Mock previews render without real HealthKit data.
 - Settings privacy view clearly states data handling.
-- Watch placeholders display mock score without needing HealthKit on watch.
+- Watch app displays the refreshed mock score flow without needing HealthKit on watch.
 
 ## Manual HealthKit Data Fetch Checks
 
