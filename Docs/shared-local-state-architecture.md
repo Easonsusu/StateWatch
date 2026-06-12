@@ -4,6 +4,8 @@ Phase 6.6 defined how StateWatch should eventually share local wellness summary 
 
 Phase 6.8 adds a mock-only App Group shared state foundation for WidgetKit complications. It does not enable WatchConnectivity, live HealthKit-backed timelines, production HealthKit-backed dashboards, or raw HealthKit sample sharing.
 
+Phase 7.0 connects the production iPhone mock dashboard summary to that shared state. The publisher still writes mock summary data only and does not use HealthKit-derived scoring.
+
 ## Current State
 
 StateWatch currently has three production-facing surfaces:
@@ -44,7 +46,7 @@ The current mock foundation adds:
 - App Group entitlement `group.com.easonsusu.StateWatch` for iOS, watchOS, and WidgetKit complication targets.
 - A compact mock readiness summary model.
 - A `UserDefaults(suiteName:)` store keyed by `statewatch.shared.readiness.summary.v1`.
-- iOS app seeding for a static mock summary.
+- iOS app seeding for a static mock summary, later refined in Phase 7.0 to publish the current mock dashboard summary.
 - WidgetKit complication fallback behavior when shared data is missing, unavailable, stale, or cannot be decoded.
 
 The mock foundation still does not:
@@ -148,6 +150,14 @@ Disallowed contents:
 3. Complications render the summary or a calm fallback.
 4. Watch app remains mock-backed unless a later phase explicitly changes it.
 
+### Phase 7.0 iPhone mock dashboard publishing
+
+1. iPhone app maps `StateAssessment.mock` into `SharedReadinessSummary`.
+2. iPhone app writes that mock dashboard summary to App Group `UserDefaults`.
+3. WidgetKit extension reads the iPhone-published mock summary when available.
+4. WidgetKit keeps the static mock fallback for missing, stale, unavailable, or corrupted shared state.
+5. Watch app remains mock-backed.
+
 ### Later HealthKit-derived rollout
 
 1. iPhone app requests read-only HealthKit access.
@@ -216,4 +226,4 @@ Shared state must preserve existing StateWatch rules:
 
 ## Recommended Next Phase
 
-Phase 6.9 should audit the mock App Group shared state foundation before any production HealthKit-derived shared-state rollout.
+Phase 7.1 should audit iPhone mock dashboard shared-state publishing before any production HealthKit-derived shared-state rollout.

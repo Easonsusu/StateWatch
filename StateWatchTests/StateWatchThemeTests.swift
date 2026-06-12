@@ -1,3 +1,4 @@
+import Foundation
 import XCTest
 @testable import StateWatchApp
 
@@ -183,6 +184,85 @@ final class DashboardDisplayModelTests: XCTestCase {
     }
 }
 
+final class MockDashboardSharedStatePublisherTests: XCTestCase {
+    func testMockDashboardSummaryMapsCurrentDashboardAssessment() {
+        let generatedAt = Date(timeIntervalSince1970: 12_000)
+        let summary = MockDashboardSharedStatePublisher.summary(
+            from: .mock,
+            generatedAt: generatedAt
+        )
+
+        XCTAssertEqual(summary.schemaVersion, SharedReadinessSummary.currentSchemaVersion)
+        XCTAssertEqual(summary.score, 76)
+        XCTAssertEqual(summary.stateLabel, "Mixed")
+        XCTAssertEqual(summary.confidence, "Medium")
+        XCTAssertEqual(summary.shortSuggestion, StateAssessment.mock.primarySuggestion)
+        XCTAssertEqual(summary.updatedText, "Demo")
+        XCTAssertEqual(summary.generatedAt, generatedAt)
+        XCTAssertEqual(summary.source, "iphone-mock-dashboard")
+        XCTAssertTrue(summary.isMock)
+    }
+
+    func testMockDashboardPublisherSavesDashboardSummaryToSharedStore() throws {
+        let suiteName = "statewatch.dashboard.publisher.tests.\(UUID().uuidString)"
+        let userDefaults = UserDefaults(suiteName: suiteName)!
+        userDefaults.removePersistentDomain(forName: suiteName)
+        defer {
+            userDefaults.removePersistentDomain(forName: suiteName)
+        }
+        let store = SharedReadinessStore(userDefaults: userDefaults)
+        let publisher = MockDashboardSharedStatePublisher(
+            userDefaults: userDefaults,
+            generatedAt: { Date(timeIntervalSince1970: 12_300) }
+        )
+
+        XCTAssertTrue(publisher.publish(assessment: .mock))
+        let summary = try XCTUnwrap(store.load())
+
+        XCTAssertEqual(summary.score, 76)
+        XCTAssertEqual(summary.stateLabel, "Mixed")
+        XCTAssertEqual(summary.confidence, "Medium")
+        XCTAssertEqual(summary.updatedText, "Demo")
+        XCTAssertEqual(summary.source, "iphone-mock-dashboard")
+        XCTAssertTrue(summary.isMock)
+    }
+
+    func testMockDashboardPublisherDoesNotCrashWhenSharedStoreIsUnavailable() {
+        let publisher = MockDashboardSharedStatePublisher(
+            userDefaults: nil,
+            generatedAt: { Date(timeIntervalSince1970: 12_600) }
+        )
+
+        XCTAssertFalse(publisher.publish(assessment: .mock))
+    }
+
+    func testMockDashboardPublisherSourceDoesNotIntroduceForbiddenBehavior() throws {
+        let publisherSource = try ThemeTestRepositoryFiles.contents(
+            at: "StateWatchApp/App/MockDashboardSharedStatePublisher.swift"
+        )
+        let appSource = try ThemeTestRepositoryFiles.contents(at: "StateWatchApp/App/StateWatchApp.swift")
+        let searchedSource = [publisherSource, appSource].joined(separator: "\n")
+
+        for forbiddenTerm in [
+            "import HealthKit",
+            "HealthKitDataFetcher",
+            "fetchRecentSnapshots",
+            "requestAuthorization",
+            "WatchConnectivity",
+            "WCSession",
+            "URLSession",
+            "http://",
+            "https://",
+            "NSHealthUpdateUsageDescription"
+        ] {
+            XCTAssertFalse(
+                searchedSource.localizedCaseInsensitiveContains(forbiddenTerm),
+                "Unexpected mock dashboard shared-state source reference: \(forbiddenTerm)"
+            )
+        }
+    }
+}
+
 final class WatchDashboardDisplayModelTests: XCTestCase {
     func testWatchDisplayModelUsesMockAssessmentValues() {
         let model = WatchDashboardDisplayModel(assessment: .mock)
@@ -334,5 +414,22 @@ final class ComplicationStateSummaryTests: XCTestCase {
                 "Unexpected complication wording: \(forbiddenTerm)"
             )
         }
+    }
+}
+
+private enum ThemeTestRepositoryFiles {
+    static func contents(at relativePath: String) throws -> String {
+        try String(contentsOf: rootURL.appendingPathComponent(relativePath), encoding: .utf8)
+    }
+
+    private static var rootURL: URL {
+        let sourceURL = URL(fileURLWithPath: #filePath)
+        let candidateRoot = sourceURL.deletingLastPathComponent().deletingLastPathComponent()
+
+        if FileManager.default.fileExists(atPath: candidateRoot.appendingPathComponent("README.md").path) {
+            return candidateRoot
+        }
+
+        return URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
     }
 }

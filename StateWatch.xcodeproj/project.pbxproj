@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0BEC138EA3EA229A1B84DD4B /* StateWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA96331AEAE8DDC6AE343CF8 /* StateWatchApp.swift */; };
 		9CEED23D3BB6E3C2EF6B76B6 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC7AE0CAEE351EAECD47668 /* AppCoordinator.swift */; };
+		A69000000000000000000001 /* MockDashboardSharedStatePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A69100000000000000000001 /* MockDashboardSharedStatePublisher.swift */; };
 		53FFE876097319951743F30D /* DailyHealthSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A57ED9AFD7DDB1725B8E7F /* DailyHealthSnapshot.swift */; };
 		6765537052C7181AB3E947F6 /* HealthBaseline.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8F5BD50E4760680B43F867 /* HealthBaseline.swift */; };
 		8CBC479BB9CC9B2BCDF0F394 /* StateAssessment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0BB8F8130B13AAC0B9896B /* StateAssessment.swift */; };
@@ -126,6 +127,7 @@
 /* Begin PBXFileReference section */
 		4DC7AE0CAEE351EAECD47668 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/App/AppCoordinator.swift; sourceTree = "<group>"; };
 		AA96331AEAE8DDC6AE343CF8 /* StateWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/App/StateWatchApp.swift; sourceTree = "<group>"; };
+		A69100000000000000000001 /* MockDashboardSharedStatePublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/App/MockDashboardSharedStatePublisher.swift; sourceTree = "<group>"; };
 		A1F4627276151E5D357A595C /* CheckInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/CheckIn/CheckInView.swift; sourceTree = "<group>"; };
 		0A13807477DE67A97BCCF9CC /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Dashboard/DashboardView.swift; sourceTree = "<group>"; };
 		60A94081BAF63A296A8F2EA5 /* ReasonCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Dashboard/ReasonCardView.swift; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 			isa = PBXGroup;
 			children = (
 				4DC7AE0CAEE351EAECD47668 /* AppCoordinator.swift */,
+				A69100000000000000000001 /* MockDashboardSharedStatePublisher.swift */,
 				AA96331AEAE8DDC6AE343CF8 /* StateWatchApp.swift */,
 			);
 			name = App;
@@ -719,6 +722,7 @@
 			files = (
 				0BEC138EA3EA229A1B84DD4B /* StateWatchApp.swift in Sources */,
 				9CEED23D3BB6E3C2EF6B76B6 /* AppCoordinator.swift in Sources */,
+				A69000000000000000000001 /* MockDashboardSharedStatePublisher.swift in Sources */,
 				53FFE876097319951743F30D /* DailyHealthSnapshot.swift in Sources */,
 				6765537052C7181AB3E947F6 /* HealthBaseline.swift in Sources */,
 				8CBC479BB9CC9B2BCDF0F394 /* StateAssessment.swift in Sources */,
