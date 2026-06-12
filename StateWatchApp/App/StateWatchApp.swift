@@ -5,7 +5,7 @@ struct StateWatchApp: App {
     @StateObject private var coordinator = AppCoordinator()
 
     init() {
-        SharedReadinessStore().saveMockSummary()
+        MockDashboardSharedStatePublisher().publish()
     }
 
     var body: some Scene {

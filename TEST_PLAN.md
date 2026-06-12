@@ -263,6 +263,29 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Confirm `git diff --check origin/main...HEAD` passes.
 - Confirm GitHub Actions CI passes for iOS build, XCTest, watchOS app build, and WidgetKit complication build before merge.
 
+## Phase 7.0 iPhone Mock Dashboard Shared-State Publishing
+
+- Confirm the iPhone app publishes the production mock dashboard summary into App Group shared state on app launch.
+- Confirm the published summary maps from `StateAssessment.mock`.
+- Confirm published mock values remain score 76, label Mixed, confidence Medium, updated text Demo, source iphone-mock-dashboard, and `isMock` true.
+- Confirm the published short suggestion comes from the mock dashboard assessment.
+- Confirm `SharedReadinessStore.appGroupIdentifier` remains `group.com.easonsusu.StateWatch`.
+- Confirm `SharedReadinessStore.storageKey` remains `statewatch.shared.readiness.summary.v1`.
+- Confirm App Group save failure is safe and does not block the dashboard.
+- Confirm unavailable App Group storage does not crash the publisher.
+- Confirm WidgetKit reads the shared mock summary when available.
+- Confirm WidgetKit falls back to the static mock summary when shared state is missing, stale, corrupted, or unavailable.
+- Confirm iPhone Dashboard remains visually and behaviorally mock-backed.
+- Confirm Watch app remains visually and behaviorally mock-backed.
+- Confirm HealthKit-derived production rollout remains deferred.
+- Confirm WidgetKit complications do not fetch HealthKit samples directly.
+- Confirm no WatchConnectivity code was added.
+- Confirm no networking, upload path, AI feature, live HealthKit-backed timeline, HealthKit write access, or production UI behavior change was added.
+- Confirm changed production-facing strings and docs avoid medical diagnosis, disease detection, clinical stress detection, treatment, warning, alert, emergency, cloud upload, AI analysis, live HealthKit-backed complication, or WatchConnectivity syncing claims.
+- Confirm `git diff --check origin/main...HEAD` passes.
+- Confirm `plutil -lint StateWatch.xcodeproj/project.pbxproj` passes.
+- Confirm GitHub Actions CI passes for iOS build, XCTest, watchOS app build, and WidgetKit complication build before merge.
+
 ## Phase 6.2 Watch App Visual Refresh
 
 - Confirm PR #22 is merged before starting the Watch visual refresh branch.
