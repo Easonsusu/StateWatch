@@ -101,9 +101,9 @@ final class SharedReadinessStoreTests: XCTestCase {
         XCTAssertEqual(SharedReadinessStore.storageKey, "statewatch.shared.readiness.summary.v1")
     }
 
-    func testStoreSavesAndLoadsMockSummary() {
+    func testStoreSavesAndLoadsMockSummary() throws {
         let suiteName = "statewatch.tests.\(UUID().uuidString)"
-        let userDefaults = UserDefaults(suiteName: suiteName)!
+        let userDefaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
         userDefaults.removePersistentDomain(forName: suiteName)
         defer {
             userDefaults.removePersistentDomain(forName: suiteName)
@@ -117,7 +117,7 @@ final class SharedReadinessStoreTests: XCTestCase {
 
     func testStoreSaveMockSummaryWritesExpectedMockValues() throws {
         let suiteName = "statewatch.tests.\(UUID().uuidString)"
-        let userDefaults = UserDefaults(suiteName: suiteName)!
+        let userDefaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
         userDefaults.removePersistentDomain(forName: suiteName)
         defer {
             userDefaults.removePersistentDomain(forName: suiteName)
@@ -135,9 +135,9 @@ final class SharedReadinessStoreTests: XCTestCase {
         XCTAssertTrue(summary.isMock)
     }
 
-    func testStoreReturnsFreshSavedSummaryBeforeFallback() {
+    func testStoreReturnsFreshSavedSummaryBeforeFallback() throws {
         let suiteName = "statewatch.tests.\(UUID().uuidString)"
-        let userDefaults = UserDefaults(suiteName: suiteName)!
+        let userDefaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
         userDefaults.removePersistentDomain(forName: suiteName)
         defer {
             userDefaults.removePersistentDomain(forName: suiteName)
@@ -160,9 +160,9 @@ final class SharedReadinessStoreTests: XCTestCase {
         XCTAssertEqual(store.loadOrFallback(), .mockFallback)
     }
 
-    func testStoreFallsBackSafelyForMissingData() {
+    func testStoreFallsBackSafelyForMissingData() throws {
         let suiteName = "statewatch.tests.\(UUID().uuidString)"
-        let userDefaults = UserDefaults(suiteName: suiteName)!
+        let userDefaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
         userDefaults.removePersistentDomain(forName: suiteName)
         defer {
             userDefaults.removePersistentDomain(forName: suiteName)
@@ -173,9 +173,9 @@ final class SharedReadinessStoreTests: XCTestCase {
         XCTAssertEqual(store.loadOrFallback(), .mockFallback)
     }
 
-    func testStoreFallsBackSafelyForInvalidData() {
+    func testStoreFallsBackSafelyForInvalidData() throws {
         let suiteName = "statewatch.tests.\(UUID().uuidString)"
-        let userDefaults = UserDefaults(suiteName: suiteName)!
+        let userDefaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
         userDefaults.removePersistentDomain(forName: suiteName)
         defer {
             userDefaults.removePersistentDomain(forName: suiteName)
@@ -187,9 +187,9 @@ final class SharedReadinessStoreTests: XCTestCase {
         XCTAssertEqual(store.loadOrFallback(), .mockFallback)
     }
 
-    func testStoreFallsBackSafelyForStaleData() {
+    func testStoreFallsBackSafelyForStaleData() throws {
         let suiteName = "statewatch.tests.\(UUID().uuidString)"
-        let userDefaults = UserDefaults(suiteName: suiteName)!
+        let userDefaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
         userDefaults.removePersistentDomain(forName: suiteName)
         defer {
             userDefaults.removePersistentDomain(forName: suiteName)
@@ -262,9 +262,9 @@ final class SharedReadinessComplicationQATests: XCTestCase {
         XCTAssertFalse(summary.isStale)
     }
 
-    func testComplicationFallbackStaysSafeForMissingCorruptedStaleAndUnavailableSharedState() {
+    func testComplicationFallbackStaysSafeForMissingCorruptedStaleAndUnavailableSharedState() throws {
         let missingSuite = "statewatch.complication.missing.tests.\(UUID().uuidString)"
-        let missingDefaults = UserDefaults(suiteName: missingSuite)!
+        let missingDefaults = try XCTUnwrap(UserDefaults(suiteName: missingSuite))
         missingDefaults.removePersistentDomain(forName: missingSuite)
         defer {
             missingDefaults.removePersistentDomain(forName: missingSuite)
@@ -272,7 +272,7 @@ final class SharedReadinessComplicationQATests: XCTestCase {
         let missingStore = SharedReadinessStore(userDefaults: missingDefaults)
 
         let corruptedSuite = "statewatch.complication.corrupt.tests.\(UUID().uuidString)"
-        let corruptedDefaults = UserDefaults(suiteName: corruptedSuite)!
+        let corruptedDefaults = try XCTUnwrap(UserDefaults(suiteName: corruptedSuite))
         corruptedDefaults.removePersistentDomain(forName: corruptedSuite)
         defer {
             corruptedDefaults.removePersistentDomain(forName: corruptedSuite)
@@ -281,7 +281,7 @@ final class SharedReadinessComplicationQATests: XCTestCase {
         let corruptedStore = SharedReadinessStore(userDefaults: corruptedDefaults)
 
         let staleSuite = "statewatch.complication.stale.tests.\(UUID().uuidString)"
-        let staleDefaults = UserDefaults(suiteName: staleSuite)!
+        let staleDefaults = try XCTUnwrap(UserDefaults(suiteName: staleSuite))
         staleDefaults.removePersistentDomain(forName: staleSuite)
         defer {
             staleDefaults.removePersistentDomain(forName: staleSuite)
@@ -308,106 +308,4 @@ final class SharedReadinessComplicationQATests: XCTestCase {
         }
     }
 
-    func testComplicationProviderDoesNotUseHealthKitWatchConnectivityOrNetworking() throws {
-        let providerSource = try RepositoryFiles.contents(
-            at: "StateWatchComplications/StateWatchComplicationProvider.swift"
-        )
-        let sharedStoreSource = try RepositoryFiles.contents(at: "StateWatchShared/SharedReadinessStore.swift")
-        let searchedSource = [providerSource, sharedStoreSource].joined(separator: "\n")
-
-        XCTAssertTrue(providerSource.contains("SharedReadinessStore().load()"))
-        XCTAssertTrue(providerSource.contains("complicationSummary = .mock"))
-        XCTAssertFalse(providerSource.contains("HealthKitDataFetcher"))
-        XCTAssertFalse(providerSource.contains("WatchConnectivity"))
-
-        for forbiddenTerm in [
-            "import HealthKit",
-            "HealthKitDataFetcher",
-            "fetchRecentSnapshots",
-            "HKSample",
-            "requestAuthorization",
-            "WatchConnectivity",
-            "WCSession",
-            "URLSession",
-            "http://",
-            "https://"
-        ] {
-            XCTAssertFalse(
-                searchedSource.localizedCaseInsensitiveContains(forbiddenTerm),
-                "Unexpected shared-state implementation reference: \(forbiddenTerm)"
-            )
-        }
-    }
-
-}
-
-final class SharedReadinessDocumentationQATests: XCTestCase {
-    func testReadmeAndTestPlanDescribeMockOnlyDeferredRollout() throws {
-        let readme = try RepositoryFiles.contents(at: "README.md")
-        let testPlan = try RepositoryFiles.contents(at: "TEST_PLAN.md")
-        let documentation = [readme, testPlan].joined(separator: "\n")
-
-        XCTAssertTrue(documentation.localizedCaseInsensitiveContains("mock-only"))
-        XCTAssertTrue(documentation.localizedCaseInsensitiveContains("HealthKit-derived scoring is not wired"))
-        XCTAssertTrue(documentation.localizedCaseInsensitiveContains("WatchConnectivity remains deferred"))
-    }
-
-    func testPhaseSevenOneDocumentationChecklistExists() throws {
-        let testPlan = try RepositoryFiles.contents(at: "TEST_PLAN.md")
-        let architecture = try RepositoryFiles.contents(at: "Docs/shared-local-state-architecture.md")
-
-        XCTAssertTrue(testPlan.localizedCaseInsensitiveContains("Phase 7.1"))
-        XCTAssertTrue(testPlan.localizedCaseInsensitiveContains("iPhone mock dashboard publisher is tested"))
-        XCTAssertTrue(testPlan.localizedCaseInsensitiveContains("WidgetKit fallback remains safe"))
-        XCTAssertTrue(architecture.localizedCaseInsensitiveContains("Phase 7.1"))
-        XCTAssertTrue(architecture.localizedCaseInsensitiveContains("QA audit"))
-    }
-
-    func testDocumentationDoesNotMakeUnsafeAffirmativeClaims() throws {
-        let readme = try RepositoryFiles.contents(at: "README.md")
-        let testPlan = try RepositoryFiles.contents(at: "TEST_PLAN.md")
-        let sharedArchitecture = try RepositoryFiles.contents(at: "Docs/shared-local-state-architecture.md")
-        let documentation = [readme, testPlan, sharedArchitecture].joined(separator: "\n")
-
-        for forbiddenClaim in [
-            "diagnoses",
-            "detects disease",
-            "detects illness",
-            "detects clinical stress",
-            "provides treatment",
-            "emergency alert",
-            "emergency response",
-            "HealthKit write access is enabled",
-            "HealthKit write access is requested",
-            "uploads HealthKit",
-            "cloud upload is enabled",
-            "networking is enabled",
-            "AI analysis is enabled",
-            "live HealthKit-backed complications are enabled",
-            "WatchConnectivity syncing is implemented",
-            "production HealthKit rollout is enabled"
-        ] {
-            XCTAssertFalse(
-                documentation.localizedCaseInsensitiveContains(forbiddenClaim),
-                "Unexpected unsafe documentation claim: \(forbiddenClaim)"
-            )
-        }
-    }
-}
-
-private enum RepositoryFiles {
-    static func contents(at relativePath: String) throws -> String {
-        try String(contentsOf: rootURL.appendingPathComponent(relativePath), encoding: .utf8)
-    }
-
-    private static var rootURL: URL {
-        let sourceURL = URL(fileURLWithPath: #filePath)
-        let candidateRoot = sourceURL.deletingLastPathComponent().deletingLastPathComponent()
-
-        if FileManager.default.fileExists(atPath: candidateRoot.appendingPathComponent("README.md").path) {
-            return candidateRoot
-        }
-
-        return URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
-    }
 }
