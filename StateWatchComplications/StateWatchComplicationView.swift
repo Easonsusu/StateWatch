@@ -57,12 +57,12 @@ struct StateWatchComplicationView: View {
         } currentValueLabel: {
             Text("\(entry.summary.score)")
                 .font(.system(size: 18, weight: .semibold, design: .rounded))
-                .foregroundStyle(.stateWatchPrimary)
+                .foregroundStyle(Color.stateWatchPrimary)
                 .minimumScaleFactor(0.7)
         } minimumValueLabel: {
             Text(entry.summary.circularLabel)
                 .font(.system(size: 8, weight: .medium, design: .rounded))
-                .foregroundStyle(.stateWatchSecondary)
+                .foregroundStyle(Color.stateWatchSecondary)
         } maximumValueLabel: {
             EmptyView()
         }
@@ -74,17 +74,17 @@ struct StateWatchComplicationView: View {
         VStack(alignment: .leading, spacing: 2) {
             Text("StateWatch")
                 .font(.system(size: 10, weight: .medium, design: .rounded))
-                .foregroundStyle(.stateWatchSecondary)
+                .foregroundStyle(Color.stateWatchSecondary)
 
             Text(entry.summary.rectangularTitle)
                 .font(.system(size: 15, weight: .semibold, design: .rounded))
-                .foregroundStyle(.stateWatchPrimary)
+                .foregroundStyle(Color.stateWatchPrimary)
                 .lineLimit(1)
                 .minimumScaleFactor(0.8)
 
             Text(entry.summary.shortSuggestion)
                 .font(.system(size: 10, weight: .regular, design: .rounded))
-                .foregroundStyle(.stateWatchSecondary)
+                .foregroundStyle(Color.stateWatchSecondary)
                 .lineLimit(1)
         }
     }
@@ -95,7 +95,7 @@ struct StateWatchComplicationView: View {
         } currentValueLabel: {
             Text("\(entry.summary.score)")
                 .font(.system(size: 11, weight: .semibold, design: .rounded))
-                .foregroundStyle(.stateWatchPrimary)
+                .foregroundStyle(Color.stateWatchPrimary)
         }
         .gaugeStyle(.accessoryCircularCapacity)
         .tint(.stateWatchAccent)
