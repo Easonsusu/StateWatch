@@ -67,7 +67,7 @@ struct StateWatchComplicationView: View {
             EmptyView()
         }
         .gaugeStyle(.accessoryCircularCapacity)
-        .tint(.stateWatchAccent)
+        .tint(Color.stateWatchAccent)
     }
 
     private var rectangularView: some View {
@@ -98,7 +98,7 @@ struct StateWatchComplicationView: View {
                 .foregroundStyle(Color.stateWatchPrimary)
         }
         .gaugeStyle(.accessoryCircularCapacity)
-        .tint(.stateWatchAccent)
+        .tint(Color.stateWatchAccent)
     }
 }
 
