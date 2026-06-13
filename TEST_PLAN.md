@@ -47,9 +47,27 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 ## GitHub Actions CI
 
 - Pull requests and pushes to `main` run `.github/workflows/ios-watchos-ci.yml`.
-- CI checks diff whitespace, builds the `StateWatch` iOS scheme, runs the `StateWatch` XCTest suite, builds the `StateWatchWatchApp` watchOS scheme, and builds the `StateWatchComplications` WidgetKit scheme.
+- Draft pull requests run lightweight Ubuntu validation only: diff whitespace and expected project directory checks.
+- Ready-for-review pull requests, pushes to `main`, and manual `workflow_dispatch` runs execute the full macOS Xcode validation job.
+- Full CI checks diff whitespace, builds the `StateWatch` iOS scheme, runs the `StateWatch` XCTest suite, builds the `StateWatchWatchApp` watchOS scheme, and builds the `StateWatchComplications` WidgetKit scheme.
 - CI disables code signing and compiler index storage for build/test verification.
+- Local simulator validation should be used as the normal development/debugging loop before spending GitHub Actions macOS minutes.
 - Local/manual testing is still required for HealthKit permission UI behavior and any real Apple Health data scenarios.
+
+## Phase CI-1: Local Xcode Validation and Actions Cost Control
+
+- Confirm `Docs/local-xcode-validation.md` exists and includes local iOS, watchOS, WidgetKit, and XCTest commands.
+- Confirm local validation uses full Xcode, not Command Line Tools alone.
+- Confirm an iPhone simulator is available locally.
+- Confirm an Apple Watch simulator is available locally.
+- Confirm `git diff --check origin/main...HEAD` passes locally.
+- Confirm the `StateWatch` iOS scheme builds locally.
+- Confirm the `StateWatch` XCTest suite runs locally.
+- Confirm the `StateWatchWatchApp` watchOS scheme builds locally.
+- Confirm the `StateWatchComplications` WidgetKit scheme builds locally.
+- Confirm draft pull requests skip the full macOS Xcode job.
+- Confirm ready-for-review pull requests, pushes to `main`, and manual workflow dispatch still run full macOS Xcode validation.
+- Confirm no app behavior, HealthKit logic, networking, AI, HealthKit write access, or production data source changes were added.
 
 ## Design and UI QA
 

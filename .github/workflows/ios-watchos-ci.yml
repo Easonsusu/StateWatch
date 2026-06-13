@@ -5,13 +5,53 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
+  lightweight-validation:
+    name: Lightweight Validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check diff whitespace
+        run: |
+          set -euo pipefail
+          git diff --check
+
+          if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
+            git fetch --no-tags --depth=1 origin "${GITHUB_BASE_REF}"
+            git diff --check "origin/${GITHUB_BASE_REF}...HEAD"
+          elif [ -n "${{ github.event.before }}" ] && git rev-parse --verify "${{ github.event.before }}" >/dev/null 2>&1; then
+            git diff --check "${{ github.event.before }}..HEAD"
+          elif git rev-parse --verify HEAD~1 >/dev/null 2>&1; then
+            git diff --check HEAD~1..HEAD
+          fi
+
+      - name: Check expected project files
+        run: |
+          set -euo pipefail
+          test -d StateWatch.xcodeproj
+          test -d StateWatchApp
+          test -d StateWatchWatchApp
+          test -d StateWatchComplications
+          test -d StateWatchTests
+
   build-and-test:
     name: Build and Test
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     runs-on: macos-15
     timeout-minutes: 45
 
@@ -40,10 +80,11 @@ jobs:
           git diff --check
 
           if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
+            git fetch --no-tags --depth=1 origin "${GITHUB_BASE_REF}"
             git diff --check "origin/${GITHUB_BASE_REF}...HEAD"
-          elif git rev-parse --verify "${{ github.event.before }}" >/dev/null 2>&1; then
+          elif [ -n "${{ github.event.before }}" ] && git rev-parse --verify "${{ github.event.before }}" >/dev/null 2>&1; then
             git diff --check "${{ github.event.before }}..HEAD"
-          else
+          elif git rev-parse --verify HEAD~1 >/dev/null 2>&1; then
             git diff --check HEAD~1..HEAD
           fi
 
