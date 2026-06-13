@@ -389,6 +389,33 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Confirm local watchOS app build passes on an installed Apple Watch simulator.
 - Confirm local WidgetKit complication build passes on an installed Apple Watch simulator.
 
+
+## Phase 8.0 Feature-Flagged HealthKit Dashboard Rollout Planning
+
+- Confirm `Docs/healthkit-dashboard-rollout-plan.md` exists.
+- Confirm this phase is planning and documentation only.
+- Confirm production iPhone Dashboard remains mock-backed.
+- Confirm Watch app remains mock-backed or shared-mock-backed only.
+- Confirm WidgetKit complications remain shared-mock-backed with static fallback.
+- Confirm no HealthKit production rollout was implemented.
+- Confirm no HealthKit write access was added.
+- Confirm no networking, upload path, cloud sync, login, subscriptions, or backend service was added.
+- Confirm no AI feature or AI health profiling was added.
+- Confirm no WatchConnectivity was added.
+- Confirm no UI behavior change was added.
+- Confirm no visual-first UI, icon assets, check-in UI, bilingual UI, localization files, or WidgetKit layout changes were added.
+- Confirm future HealthKit-backed Dashboard rollout is described as feature-flagged, local-only, and disabled by default.
+- Confirm missing, denied, unavailable, empty, partial, sparse, or stale data falls back to low-data, setup-needed, unavailable, mock, or safe fallback behavior.
+- Confirm missing data lowers confidence and does not create negative wellness conclusions.
+- Confirm WidgetKit and Watch are documented as later rollout surfaces, not direct HealthKit fetchers.
+- Confirm App Group shared state is documented as compact-summary-only, not raw HealthKit samples.
+- Confirm future State Check-in states are documented with safe English and Traditional Chinese labels.
+- Confirm future UI, icon, complication, and localization work must review the Figma design system before SwiftUI implementation.
+- Confirm changed docs avoid claiming diagnosis, disease detection, clinical stress detection, treatment, emergency handling, health alerts, live monitoring, cloud upload, networking, AI analysis, WatchConnectivity syncing, or HealthKit write access.
+- Confirm local validation is used and GitHub Actions is not triggered for this planning PR.
+- Confirm `git diff --check origin/main...HEAD` passes.
+- Confirm the diff is limited to docs, README, and TEST_PLAN updates.
+
 ## Phase 6.2 Watch App Visual Refresh
 
 - Confirm PR #22 is merged before starting the Watch visual refresh branch.
