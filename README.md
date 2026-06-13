@@ -18,6 +18,7 @@ StateWatch is still pre-release. The production iPhone dashboard and watchOS app
 - iPhone mock dashboard publishing: app launch publishes the current mock `StateAssessment` summary into App Group shared state.
 - Watch mock shared-state reading: the Watch app reads the mock shared summary when available and uses static mock fallback otherwise.
 - Shared local state architecture: documented for future production-ready summary sharing across iPhone, Watch, and WidgetKit surfaces.
+- HealthKit-backed dashboard rollout: planned in `Docs/healthkit-dashboard-rollout-plan.md`, but production implementation remains deferred.
 - HealthKit permission flow: implemented for read-only access.
 - HealthKit data fetcher: implemented locally for recent Apple Health samples.
 - Baseline and scoring engines: implemented as local rule-based wellness estimates.
@@ -46,6 +47,7 @@ StateWatch is still pre-release. The production iPhone dashboard and watchOS app
 - Watch-side mock shared-state reader that maps the App Group summary into the Watch display model with static mock fallback.
 - WidgetKit fallback behavior when iPhone-published mock shared summary data is unavailable, stale, or cannot be decoded.
 - Documentation for future shared local state architecture in `Docs/shared-local-state-architecture.md`.
+- Documentation for a future feature-flagged, local-only HealthKit-backed iPhone Dashboard rollout in `Docs/healthkit-dashboard-rollout-plan.md`.
 - Debug-only HealthKit Scoring Preview for inspecting snapshots, baselines, scoring output, missing-data behavior, reasons, and suggestions.
 - Debug-only Visual Dashboard Preview for validating the future visual direction.
 - Manual QA checklist, stabilization tests, and GitHub Actions CI.
@@ -63,6 +65,14 @@ StateWatch is still pre-release. The production iPhone dashboard and watchOS app
 - Networking, upload paths, server sync, login, subscriptions, or backend services.
 - AI features.
 - HealthKit write access.
+
+## Roadmap Notes
+
+- HealthKit-backed production dashboard work is planned as a feature-flagged, local-only rollout and remains deferred until additional QA.
+- HealthKit-derived scoring should not replace the mock production Dashboard until the explicit internal feature flag phase.
+- Developers should not have cloud or backend access to user HealthKit data.
+- App Group shared state currently carries mock summary data only; production HealthKit-derived shared summaries remain deferred.
+- Future State Check-in, visual-first UI, and bilingual Traditional Chinese / English support are roadmap directions and should start from the existing Figma design system before SwiftUI implementation.
 
 ## Privacy and Medical Safety Stance
 
