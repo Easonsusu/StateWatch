@@ -566,6 +566,244 @@ final class WatchDashboardDisplayModelTests: XCTestCase {
     }
 }
 
+
+final class WatchSharedMockStateQATests: XCTestCase {
+    func testSharedSummaryInitializerPreservesWatchMockValuesAndSource() {
+        let sharedSummary = MockDashboardSharedStatePublisher.summary(
+            from: .mock,
+            generatedAt: Date(timeIntervalSince1970: 16_000)
+        )
+        let model = WatchDashboardDisplayModel(sharedSummary: sharedSummary)
+
+        XCTAssertEqual(sharedSummary.score, 76)
+        XCTAssertEqual(sharedSummary.stateLabel, "Mixed")
+        XCTAssertEqual(sharedSummary.confidence, "Medium")
+        XCTAssertEqual(sharedSummary.updatedText, "Demo")
+        XCTAssertEqual(sharedSummary.source, "iphone-mock-dashboard")
+        XCTAssertTrue(sharedSummary.isMock)
+        assertIphonePublishedMockModel(model)
+    }
+
+    func testSummaryBasedFallbacksStayStaticAndSafe() {
+        let staleSummary = MockDashboardSharedStatePublisher.summary(
+            from: .mock,
+            generatedAt: Date(timeIntervalSince1970: 16_200)
+        )
+
+        let fallbackModels = [
+            WatchDashboardDisplayModel.sharedMockOrStaticFallback(summary: nil),
+            WatchDashboardDisplayModel.sharedMockOrStaticFallback(
+                summary: staleSummary,
+                now: Date(timeIntervalSince1970: 16_500),
+                maxAge: 60
+            )
+        ]
+
+        for model in fallbackModels {
+            assertStaticWatchFallbackModel(model)
+        }
+    }
+
+    func testStoreBasedFallbacksStayStaticAndSafeForMissingCorruptedAndUnavailableState() throws {
+        let missingStore = try makeUserDefaults(label: "missing")
+        defer {
+            missingStore.userDefaults.removePersistentDomain(forName: missingStore.suiteName)
+        }
+
+        let corruptedStore = try makeUserDefaults(label: "corrupted")
+        defer {
+            corruptedStore.userDefaults.removePersistentDomain(forName: corruptedStore.suiteName)
+        }
+        corruptedStore.userDefaults.set(Data("not-json".utf8), forKey: SharedReadinessStore.storageKey)
+
+        let fallbackModels = [
+            WatchDashboardDisplayModel.sharedMockOrStaticFallback(userDefaults: missingStore.userDefaults),
+            WatchDashboardDisplayModel.sharedMockOrStaticFallback(userDefaults: corruptedStore.userDefaults),
+            WatchDashboardDisplayModel.sharedMockOrStaticFallback(userDefaults: nil)
+        ]
+
+        for model in fallbackModels {
+            assertStaticWatchFallbackModel(model)
+        }
+    }
+
+    func testIphonePublishedSummaryMapsConsistentlyToWatchAndWidgetKit() {
+        let sharedSummary = MockDashboardSharedStatePublisher.summary(
+            from: .mock,
+            generatedAt: Date(timeIntervalSince1970: 16_800)
+        )
+        let watchModel = WatchDashboardDisplayModel(sharedSummary: sharedSummary)
+        let complicationSharedSummary = SharedReadinessSummary(
+            schemaVersion: SharedReadinessSummary.currentSchemaVersion,
+            score: sharedSummary.score,
+            stateLabel: sharedSummary.stateLabel,
+            confidence: sharedSummary.confidence,
+            shortSuggestion: sharedSummary.shortSuggestion,
+            updatedText: sharedSummary.updatedText,
+            generatedAt: sharedSummary.generatedAt,
+            source: sharedSummary.source,
+            isMock: sharedSummary.isMock
+        )
+        let complicationSummary = ComplicationStateSummary(sharedSummary: complicationSharedSummary)
+
+        XCTAssertEqual(watchModel.score, complicationSummary.score)
+        XCTAssertEqual(watchModel.stateLabel, complicationSummary.stateLabel)
+        XCTAssertEqual(watchModel.confidenceText, complicationSummary.confidence)
+        XCTAssertEqual(watchModel.updatedText, complicationSummary.updatedText)
+        XCTAssertEqual(watchModel.suggestion, complicationSummary.shortSuggestion)
+        XCTAssertEqual(watchModel.source, "iphone-mock-dashboard")
+        XCTAssertTrue(watchModel.isMock)
+        XCTAssertFalse(complicationSummary.isStale)
+    }
+
+    func testSharedStateBoundaryConstantsRemainStableForWatchQA() {
+        XCTAssertEqual(SharedReadinessStore.appGroupIdentifier, "group.com.easonsusu.StateWatch")
+        XCTAssertEqual(SharedReadinessStore.storageKey, "statewatch.shared.readiness.summary.v1")
+        XCTAssertEqual(SharedReadinessSummary.currentSchemaVersion, 1)
+    }
+
+    func testWatchSharedStateStringsRemainMockOnlyAndNonMedical() {
+        let sharedSummary = MockDashboardSharedStatePublisher.summary(
+            from: .mock,
+            generatedAt: Date(timeIntervalSince1970: 17_000)
+        )
+        let complicationSharedSummary = SharedReadinessSummary(
+            schemaVersion: SharedReadinessSummary.currentSchemaVersion,
+            score: sharedSummary.score,
+            stateLabel: sharedSummary.stateLabel,
+            confidence: sharedSummary.confidence,
+            shortSuggestion: sharedSummary.shortSuggestion,
+            updatedText: sharedSummary.updatedText,
+            generatedAt: sharedSummary.generatedAt,
+            source: sharedSummary.source,
+            isMock: sharedSummary.isMock
+        )
+        let searchableText = [
+            sharedSummary.searchableText,
+            WatchDashboardDisplayModel(sharedSummary: sharedSummary).searchableText,
+            WatchDashboardDisplayModel(assessment: .mock).searchableText,
+            ComplicationStateSummary(sharedSummary: complicationSharedSummary).searchableText,
+            ComplicationStateSummary.mock.searchableText
+        ].joined(separator: " ")
+
+        XCTAssertTrue(searchableText.localizedCaseInsensitiveContains("mock"))
+        XCTAssertTrue(searchableText.localizedCaseInsensitiveContains("Demo"))
+
+        for forbiddenTerm in [
+            "HealthKit",
+            "Apple Health",
+            "diagnos",
+            "disease",
+            "clinical stress",
+            "treatment",
+            "warning",
+            "alert",
+            "emergency",
+            "cloud upload",
+            "networking",
+            "AI analysis",
+            "live HealthKit",
+            "HealthKit-backed",
+            "WatchConnectivity",
+            "production rollout",
+            "write access"
+        ] {
+            XCTAssertFalse(
+                searchableText.localizedCaseInsensitiveContains(forbiddenTerm),
+                "Unexpected Watch shared mock-state wording: \(forbiddenTerm)"
+            )
+        }
+    }
+
+    func testWatchAppSourceDoesNotUseDisallowedProductionStateMechanisms() throws {
+        let watchFiles = try swiftFiles(in: repositoryRoot().appendingPathComponent("StateWatchWatchApp"))
+        XCTAssertFalse(watchFiles.isEmpty)
+
+        for fileURL in watchFiles {
+            let source = try String(contentsOf: fileURL, encoding: .utf8)
+            for forbiddenSnippet in [
+                "import HealthKit",
+                "import WatchConnectivity",
+                "WCSession",
+                "URLSession",
+                "requestAuthorization(toShare",
+                "NSHealthUpdateUsageDescription",
+                "HealthKitDataFetcher",
+                "HealthKitManager",
+                "fetchRecentSnapshots"
+            ] {
+                XCTAssertFalse(
+                    source.localizedCaseInsensitiveContains(forbiddenSnippet),
+                    "Unexpected disallowed Watch app mechanism in \(fileURL.lastPathComponent): \(forbiddenSnippet)"
+                )
+            }
+        }
+    }
+
+    private func assertIphonePublishedMockModel(
+        _ model: WatchDashboardDisplayModel,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        XCTAssertEqual(model.score, 76, file: file, line: line)
+        XCTAssertEqual(model.stateLabel, "Mixed", file: file, line: line)
+        XCTAssertEqual(model.confidenceText, "Medium", file: file, line: line)
+        XCTAssertEqual(model.updatedText, "Demo", file: file, line: line)
+        XCTAssertEqual(model.dataSourceText, "Mock data only", file: file, line: line)
+        XCTAssertEqual(model.source, "iphone-mock-dashboard", file: file, line: line)
+        XCTAssertTrue(model.isMock, file: file, line: line)
+    }
+
+    private func assertStaticWatchFallbackModel(
+        _ model: WatchDashboardDisplayModel,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        XCTAssertEqual(model.score, 76, file: file, line: line)
+        XCTAssertEqual(model.stateLabel, "Mixed", file: file, line: line)
+        XCTAssertEqual(model.confidenceText, "Medium", file: file, line: line)
+        XCTAssertEqual(model.updatedText, "Demo", file: file, line: line)
+        XCTAssertEqual(model.dataSourceText, "Mock data only", file: file, line: line)
+        XCTAssertEqual(model.source, "static-watch-mock", file: file, line: line)
+        XCTAssertTrue(model.isMock, file: file, line: line)
+        XCTAssertEqual(model.metrics.map(\.title), ["Recovery", "Sleep", "Fatigue Context", "Activity Load"], file: file, line: line)
+        XCTAssertEqual(model.metrics.map(\.score), [68, 81, 64, 75], file: file, line: line)
+    }
+
+    private func makeUserDefaults(label: String) throws -> (suiteName: String, userDefaults: UserDefaults) {
+        let suiteName = "statewatch.watch.phase73.\(label).\(UUID().uuidString)"
+        let userDefaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        userDefaults.removePersistentDomain(forName: suiteName)
+        return (suiteName, userDefaults)
+    }
+
+    private func repositoryRoot(filePath: String = #filePath) -> URL {
+        URL(fileURLWithPath: filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+    }
+
+    private func swiftFiles(in directory: URL) throws -> [URL] {
+        guard let enumerator = FileManager.default.enumerator(
+            at: directory,
+            includingPropertiesForKeys: [.isRegularFileKey],
+            options: [.skipsHiddenFiles]
+        ) else {
+            return []
+        }
+
+        return try enumerator.compactMap { item in
+            guard let fileURL = item as? URL, fileURL.pathExtension == "swift" else {
+                return nil
+            }
+
+            let values = try fileURL.resourceValues(forKeys: [.isRegularFileKey])
+            return values.isRegularFile == true ? fileURL : nil
+        }
+    }
+}
+
+
 final class ComplicationStateSummaryTests: XCTestCase {
     func testMockComplicationSummaryUsesExpectedStaticValues() {
         let summary = ComplicationStateSummary.mock
