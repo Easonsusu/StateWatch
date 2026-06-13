@@ -1,6 +1,6 @@
 # HealthKit Dashboard Rollout Plan
 
-Phase 8.0 defines the safe rollout path for connecting the production iPhone Dashboard to local HealthKit-derived scoring behind a feature flag. This is a planning-only phase. It does not change app behavior, data sources, HealthKit behavior, Watch behavior, WidgetKit behavior, entitlements, or UI implementation.
+Phase 8.0 defines the safe rollout path for connecting the production iPhone Dashboard to local HealthKit-derived scoring behind a feature flag. Phase 8.1 audits and strengthens that plan before implementation begins. These phases are planning and QA only. They do not change app behavior, data sources, HealthKit behavior, Watch behavior, WidgetKit behavior, entitlements, or UI implementation.
 
 ## Current State
 
@@ -91,6 +91,122 @@ Review all production-facing copy, Info.plist privacy descriptions, onboarding, 
 
 Only after the iPhone HealthKit-backed dashboard is stable, evaluate whether to publish a compact HealthKit-derived summary to App Group shared state for WidgetKit and Watch. WidgetKit and Watch should continue using safe mock or fallback behavior until that phase is explicitly approved.
 
+## Rollout Gate Checklist
+
+Phase 8.3 implementation should not begin until these gates are true:
+
+- Phase 8.2 internal feature flag foundation is complete.
+- Feature flag default is off.
+- Debug or internal-only control path exists.
+- The control path is local-only and does not depend on remote config, login, cloud sync, networking, subscriptions, or AI.
+- HealthKit read-only permissions are confirmed.
+- No HealthKit write permission is requested.
+- HealthKit authorization missing, denied, unavailable, empty, partial, and revoked states have defined user-facing behavior.
+- Scoring fallback behavior is defined for unavailable, sparse, nil-heavy, stale, and cannot-score histories.
+- Low-data and unavailable copy has been reviewed for calm wellness wording.
+- Missing data is documented to lower confidence or show a low-data state, not create a negative health status.
+- No production Watch or WidgetKit HealthKit propagation is included in Phase 8.3.
+- WidgetKit and Watch are documented as summary readers for later phases, not direct HealthKit fetchers.
+- App Group storage is limited to compact summary data.
+- Raw HealthKit samples are explicitly excluded from App Group storage.
+- Local-only privacy promise remains accurate in README, privacy docs, onboarding, and settings copy.
+
+## Risk Register
+
+| Risk | Mitigation |
+| --- | --- |
+| HealthKit authorization is denied, revoked, or incomplete. | Keep the dashboard mock-backed by default, show setup-needed or unavailable state behind the feature flag, and avoid blocking app launch. |
+| Sleep, HRV, or resting heart rate data is incomplete. | Treat metrics as optional, lower confidence, and avoid negative conclusions from missing values. |
+| Weak data produces a misleading score. | Require confidence display, low-data copy, and fallback behavior before Phase 8.3 ships. |
+| HealthKit samples are stale. | Show last-updated context, avoid implying live monitoring, and fall back when freshness rules fail. |
+| User misunderstands score as diagnosis. | Use wellness wording, show confidence, and avoid diagnosis, disease, clinical stress, treatment, warning, emergency, or alert language. |
+| WidgetKit displays outdated state. | Keep WidgetKit on mock/shared fallback until later QA and require stale-state handling before production summary propagation. |
+| Watch shows inconsistent state compared with iPhone. | Keep Watch mock-backed/shared-mock-backed until iPhone HealthKit rollout is stable, then define freshness and source labels before propagation. |
+| Privacy concerns around health data. | Keep HealthKit processing local-only, avoid developer access, avoid uploads, and store only compact summaries in App Group. |
+| App Store review questions wellness claims or privacy copy. | Review wording, Info.plist strings, onboarding, privacy policy, and App Store checklist before broader release readiness. |
+
+## Privacy Audit
+
+The HealthKit-backed Dashboard rollout must preserve this privacy promise:
+
+- Health data stays on device.
+- No account is required for MVP HealthKit processing.
+- No cloud health database is introduced.
+- Developers do not have access to user HealthKit data.
+- Health data is not uploaded, sold, used for advertising, profiling, marketing, or data mining.
+- No AI cloud health profiling is introduced.
+- App Group storage contains only compact summary data.
+- Raw HealthKit samples stay out of App Group storage.
+- WidgetKit and Watch should receive only summary-level data in later phases, and only after the iPhone rollout is stable.
+
+## Language and Wording Audit
+
+Approved wording should stay calm, contextual, and wellness-oriented. Examples:
+
+- "state"
+- "readiness"
+- "confidence"
+- "low data"
+- "not enough data"
+- "recent signals"
+- "wellness estimate"
+- "生活管理參考"
+- "非醫療用途"
+
+Forbidden wording and claims:
+
+- diagnosis
+- detect disease
+- detect illness
+- clinical stress
+- treatment
+- warning
+- emergency
+- alert
+- abnormal health alert
+- medical recommendation
+- mental health diagnosis
+- health risk prediction
+- monitoring for disease
+
+Review rule: if a phrase sounds like the app is detecting a condition, predicting medical risk, providing treatment guidance, or escalating an emergency, it should be removed or rewritten as cautious wellness context.
+
+## Visual and Figma Gate
+
+Future UI-facing HealthKit Dashboard work must use the existing Figma design system as source of truth before SwiftUI implementation when it affects:
+
+- Dashboard layout.
+- State imagery.
+- Visual-first UI.
+- Icon assets.
+- Check-in UI.
+- Complication layout.
+- Bilingual UI.
+- Traditional Chinese and English copy layout.
+
+Phase 8.1 does not implement visual UI, icon assets, check-in UI, bilingual UI, localization files, or WidgetKit layout changes. It only documents the gate for later design-driven implementation.
+
+## State Check-In and Personalization Safety Note
+
+Future State Check-in and personal pattern analysis should remain local-only. User self-report should be treated as subjective feedback, not a medical signal.
+
+Safe labels remain:
+
+| English | Traditional Chinese |
+| --- | --- |
+| Energized | 有活力 |
+| Stable | 穩定 |
+| Tired | 疲累 |
+| Low | 低狀態 |
+
+Safety requirements:
+
+- Do not diagnose mood, stress, anxiety, depression, disease, or illness.
+- Start with local statistics and personal baseline comparisons.
+- Do not require cloud AI.
+- Do not use self-report data for advertising, profiling, marketing, or data mining.
+- Use self-report only to help the user understand patterns in their own local wellness context.
+
 ## Safety Rules
 
 The rollout must preserve these boundaries:
@@ -100,6 +216,7 @@ The rollout must preserve these boundaries:
 - No cloud upload.
 - No AI feature or cloud AI processing.
 - No developer access to user health data.
+- No remote config, login, cloud sync, or server-side flag dependency for the first HealthKit Dashboard flag.
 - No WatchConnectivity in this rollout.
 - WidgetKit must not fetch HealthKit samples directly.
 - Watch app must not be connected directly to HealthKit in this rollout.
@@ -107,6 +224,8 @@ The rollout must preserve these boundaries:
 - No disease, illness, clinical stress, treatment, emergency, or health alert claims.
 - No scary language for missing or partial data.
 - Missing data should lower confidence or show a low-data state, not produce negative health conclusions.
+- The production iPhone Dashboard remains mock-backed by default until the feature flag is explicitly enabled.
+- The feature flag must be easy to disable without data migration or backend changes.
 
 ## Low-Data and Fallback Behavior
 
