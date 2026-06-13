@@ -357,6 +357,38 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Confirm `plutil -lint` passes for changed plist or entitlement files if any are touched.
 - Confirm GitHub Actions CI passes for iOS build, XCTest, watchOS app build, and WidgetKit complication build before merge.
 
+## Phase 7.3 Watch Shared Mock State QA Audit
+
+- Confirm this phase is tests and documentation only.
+- Confirm the Watch app reads a mock App Group readiness summary when available.
+- Confirm the Watch display model can be created from `SharedReadinessSummary`.
+- Confirm shared mock values remain score 76, label Mixed, confidence Medium, updated text Demo, source iphone-mock-dashboard or static-watch-mock, and `isMock` true.
+- Confirm missing shared state falls back to static Watch mock values.
+- Confirm stale shared state falls back safely.
+- Confirm corrupted shared state falls back safely.
+- Confirm unavailable shared state storage does not crash.
+- Confirm non-mock shared state does not replace safe mock Watch display values.
+- Confirm fallback values remain score 76, label Mixed, confidence Medium, updated text Demo, source static-watch-mock, and `isMock` true.
+- Confirm Watch shared-state mapping does not imply real HealthKit-derived data.
+- Confirm Watch app source does not use WatchConnectivity, `WCSession`, HealthKit fetching, HealthKit write access, networking, or upload paths.
+- Confirm WidgetKit and Watch fallback expectations remain consistent.
+- Confirm `SharedReadinessStore.appGroupIdentifier` remains `group.com.easonsusu.StateWatch`.
+- Confirm `SharedReadinessStore.storageKey` remains `statewatch.shared.readiness.summary.v1`.
+- Confirm App Group shared state remains mock-only.
+- Confirm Watch UI layout and visual behavior remain unchanged.
+- Confirm WidgetKit fallback remains safe.
+- Confirm iPhone Dashboard remains mock-backed.
+- Confirm HealthKit-derived production rollout remains deferred.
+- Confirm no visual-first UI, icon assets, check-in UI, bilingual UI, localization, networking, AI, WatchConnectivity, HealthKit write access, or production data-source change was added.
+- Confirm changed Watch-facing strings, README, TEST_PLAN, and shared-state docs avoid medical diagnosis, disease detection, clinical stress detection, treatment, warning, alert, emergency, cloud upload, AI analysis, live HealthKit-backed Watch state, WatchConnectivity syncing, or production HealthKit rollout claims.
+- Confirm local Xcode validation is used before relying on GitHub Actions.
+- Confirm the PR stays draft until final CI is intentionally needed.
+- Confirm `git diff --check origin/main...HEAD` passes.
+- Confirm `plutil -lint StateWatch.xcodeproj/project.pbxproj` passes.
+- Confirm local iOS build and XCTest pass on an installed iPhone simulator.
+- Confirm local watchOS app build passes on an installed Apple Watch simulator.
+- Confirm local WidgetKit complication build passes on an installed Apple Watch simulator.
+
 ## Phase 6.2 Watch App Visual Refresh
 
 - Confirm PR #22 is merged before starting the Watch visual refresh branch.
