@@ -23,7 +23,7 @@ StateWatch is still pre-release. The production iPhone dashboard and watchOS app
 - Baseline and scoring engines: implemented as local rule-based wellness estimates.
 - Debug HealthKit Scoring Preview: available from Settings in debug builds.
 - Debug Visual Dashboard Preview: available from Settings in debug builds.
-- CI: GitHub Actions runs whitespace checks, iOS build, iOS tests, watchOS build, and WidgetKit complication build.
+- CI: GitHub Actions runs lightweight checks on draft PRs and full Xcode validation on ready PRs, pushes to `main`, or manual dispatch.
 
 ## Implemented
 
@@ -147,12 +147,18 @@ xcodebuild -project StateWatch.xcodeproj -scheme StateWatch -sdk iphonesimulator
 
 ## CI
 
-GitHub Actions runs on pull requests and pushes to `main`. The workflow checks:
+GitHub Actions runs on pull requests, pushes to `main`, and manual `workflow_dispatch` runs. Draft pull requests run lightweight Ubuntu validation only, while ready-for-review pull requests, pushes to `main`, and manual dispatch run the full macOS Xcode validation job.
+
+Lightweight validation checks:
 
 - `git diff --check`.
+- Expected project directories are present.
+
+Full Xcode validation checks:
+
 - iOS build for the `StateWatch` scheme.
 - iOS XCTest for the `StateWatch` scheme.
 - watchOS build for the `StateWatchWatchApp` scheme.
 - WidgetKit complication build for the `StateWatchComplications` scheme.
 
-Manual testing is still required for real-device HealthKit permission behavior, Apple Health data availability, complication gallery presentation, and visual QA in Xcode previews or simulators.
+For day-to-day development, prefer the local simulator commands in `Docs/local-xcode-validation.md` before spending GitHub Actions macOS minutes. Manual testing is still required for real-device HealthKit permission behavior, Apple Health data availability, complication gallery presentation, and visual QA in Xcode previews or simulators.
