@@ -880,3 +880,107 @@ final class ComplicationStateSummaryTests: XCTestCase {
         }
     }
 }
+
+
+final class HealthKitDashboardFeatureFlagTests: XCTestCase {
+    func testFeatureFlagDefaultsOffWhenNoLocalValueExists() throws {
+        let context = try makeUserDefaults(label: "default-off")
+        defer { context.userDefaults.removePersistentDomain(forName: context.suiteName) }
+        let flag = HealthKitDashboardFeatureFlag(userDefaults: context.userDefaults)
+
+        XCTAssertFalse(flag.isEnabled)
+    }
+
+    func testFeatureFlagCanBeEnabledLocally() throws {
+        let context = try makeUserDefaults(label: "enable")
+        defer { context.userDefaults.removePersistentDomain(forName: context.suiteName) }
+        let flag = HealthKitDashboardFeatureFlag(userDefaults: context.userDefaults)
+
+        flag.setEnabled(true)
+
+        XCTAssertTrue(flag.isEnabled)
+    }
+
+    func testFeatureFlagCanBeDisabledLocally() throws {
+        let context = try makeUserDefaults(label: "disable")
+        defer { context.userDefaults.removePersistentDomain(forName: context.suiteName) }
+        let flag = HealthKitDashboardFeatureFlag(userDefaults: context.userDefaults)
+
+        flag.setEnabled(true)
+        flag.setEnabled(false)
+
+        XCTAssertFalse(flag.isEnabled)
+    }
+
+    func testFeatureFlagResetReturnsToDefaultOff() throws {
+        let context = try makeUserDefaults(label: "reset")
+        defer { context.userDefaults.removePersistentDomain(forName: context.suiteName) }
+        let flag = HealthKitDashboardFeatureFlag(userDefaults: context.userDefaults)
+
+        flag.setEnabled(true)
+        flag.reset()
+
+        XCTAssertFalse(flag.isEnabled)
+        XCTAssertNil(context.userDefaults.object(forKey: HealthKitDashboardFeatureFlag.storageKey))
+    }
+
+    func testFeatureFlagStorageKeyRemainsStable() {
+        XCTAssertEqual(HealthKitDashboardFeatureFlag.storageKey, "statewatch.feature.healthkitDashboard.enabled")
+    }
+
+    func testDefaultOffStatePreservesMockDashboardSummaryBehavior() throws {
+        let context = try makeUserDefaults(label: "mock-dashboard")
+        defer { context.userDefaults.removePersistentDomain(forName: context.suiteName) }
+        let flag = HealthKitDashboardFeatureFlag(userDefaults: context.userDefaults)
+        let summary = MockDashboardSharedStatePublisher.summary(
+            from: .mock,
+            generatedAt: Date(timeIntervalSince1970: 18_000)
+        )
+
+        XCTAssertFalse(flag.isEnabled)
+        XCTAssertEqual(summary.score, 76)
+        XCTAssertEqual(summary.stateLabel, "Mixed")
+        XCTAssertEqual(summary.confidence, "Medium")
+        XCTAssertEqual(summary.updatedText, "Demo")
+        XCTAssertEqual(summary.source, "iphone-mock-dashboard")
+        XCTAssertTrue(summary.isMock)
+    }
+
+    func testFeatureFlagSourceDoesNotUseDisallowedRolloutMechanisms() throws {
+        let sourceURL = repositoryRoot()
+            .appendingPathComponent("StateWatchApp")
+            .appendingPathComponent("App")
+            .appendingPathComponent("HealthKitDashboardFeatureFlag.swift")
+        let source = try String(contentsOf: sourceURL, encoding: .utf8)
+
+        for forbiddenToken in [
+            "URLSession",
+            "WatchConnectivity",
+            "WCSession",
+            "remoteConfig",
+            "analytics rollout",
+            "cloud sync",
+            "HealthKit write",
+            "HKQuantitySample",
+            "diagnosis"
+        ] {
+            XCTAssertFalse(
+                source.localizedCaseInsensitiveContains(forbiddenToken),
+                "Unexpected feature flag rollout mechanism: \(forbiddenToken)"
+            )
+        }
+    }
+
+    private func makeUserDefaults(label: String) throws -> (suiteName: String, userDefaults: UserDefaults) {
+        let suiteName = "statewatch.featureflag.phase82.\(label).\(UUID().uuidString)"
+        let userDefaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        userDefaults.removePersistentDomain(forName: suiteName)
+        return (suiteName, userDefaults)
+    }
+
+    private func repositoryRoot(filePath: String = #filePath) -> URL {
+        URL(fileURLWithPath: filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+    }
+}

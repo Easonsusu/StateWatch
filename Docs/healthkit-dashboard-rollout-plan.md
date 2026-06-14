@@ -69,7 +69,7 @@ Review the rollout plan for safety, privacy, wording, testability, and implement
 
 ### Phase 8.2: Internal Feature Flag Foundation
 
-Add a local-only feature flag surface for internal testing. The flag should default off and must not fetch HealthKit data unless explicitly enabled in a debug or internal path.
+Add a local-only feature flag surface for internal testing. The flag defaults off, uses stable local storage, can be reset locally, and does not fetch HealthKit data. Production Dashboard behavior remains mock-backed in this phase; actual HealthKit-backed Dashboard implementation is deferred to Phase 8.3. The flag foundation must not add remote config, networking, AI, WidgetKit HealthKit propagation, Watch HealthKit propagation, or HealthKit write access.
 
 ### Phase 8.3: Feature-Flagged HealthKit-Backed iPhone Dashboard
 
@@ -206,6 +206,19 @@ Safety requirements:
 - Do not require cloud AI.
 - Do not use self-report data for advertising, profiling, marketing, or data mining.
 - Use self-report only to help the user understand patterns in their own local wellness context.
+
+## Phase 8.2 Foundation Status
+
+Phase 8.2 adds only the local feature flag foundation:
+
+- `HealthKitDashboardFeatureFlag` stores a local boolean value.
+- Storage key: `statewatch.feature.healthkitDashboard.enabled`.
+- Default state is off.
+- The flag can be enabled, disabled, or reset locally.
+- Production iPhone Dashboard remains mock-backed.
+- HealthKit-backed Dashboard implementation remains deferred to Phase 8.3.
+- No remote config, networking, cloud sync, account requirement, analytics rollout, or AI is introduced.
+- No WidgetKit or Watch HealthKit propagation is introduced.
 
 ## Safety Rules
 
