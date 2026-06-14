@@ -416,6 +416,37 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Confirm `git diff --check origin/main...HEAD` passes.
 - Confirm the diff is limited to docs, README, and TEST_PLAN updates.
 
+
+## Phase 8.1 HealthKit Dashboard Rollout Plan QA Audit
+
+- Confirm `Docs/healthkit-dashboard-rollout-plan.md` was audited and strengthened.
+- Confirm this phase remains documentation-only.
+- Confirm production iPhone Dashboard remains mock-backed.
+- Confirm the HealthKit-backed Dashboard feature flag default-off requirement is documented.
+- Confirm the feature flag must be local-only and easy to disable.
+- Confirm HealthKit authorization denied, missing, unavailable, empty, partial, sparse, revoked, and stale states are documented.
+- Confirm low-data behavior is documented.
+- Confirm missing data lowers confidence or shows a low-data state instead of creating negative wellness conclusions.
+- Confirm privacy promise is documented: local-only HealthKit processing, no account required, no cloud health database, no developer access, no ad profile, and no AI cloud profiling.
+- Confirm raw HealthKit samples are excluded from App Group storage.
+- Confirm App Group storage is documented as compact-summary-only.
+- Confirm Watch and WidgetKit direct HealthKit access is forbidden.
+- Confirm no production HealthKit rollout was implemented.
+- Confirm no Swift implementation changed.
+- Confirm no Xcode project changed.
+- Confirm no entitlements changed.
+- Confirm no CI workflow changed.
+- Confirm no networking, upload path, AI, WatchConnectivity, or HealthKit write access was added.
+- Confirm no WidgetKit, Watch app, iPhone Dashboard, HealthKit, or App Group behavior changed.
+- Confirm language audit documents approved wording and forbidden medical, diagnosis, disease detection, clinical stress detection, treatment, warning, emergency, alert, abnormal health alert, medical recommendation, and mental-health diagnosis wording.
+- Confirm State Check-in and personalization are documented as future, local-only, subjective-feedback features.
+- Confirm safe State Check-in labels are documented in English and Traditional Chinese.
+- Confirm the Figma gate for future UI, icon, check-in, complication layout, localization, and bilingual copy work is documented.
+- Confirm local validation is used.
+- Confirm GitHub Actions is not manually triggered or used as the debugging loop.
+- Confirm `git diff --check origin/main...HEAD` passes.
+- Confirm the diff is limited to Docs, README, and TEST_PLAN updates.
+
 ## Phase 6.2 Watch App Visual Refresh
 
 - Confirm PR #22 is merged before starting the Watch visual refresh branch.

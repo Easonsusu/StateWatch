@@ -18,7 +18,7 @@ StateWatch is still pre-release. The production iPhone dashboard and watchOS app
 - iPhone mock dashboard publishing: app launch publishes the current mock `StateAssessment` summary into App Group shared state.
 - Watch mock shared-state reading: the Watch app reads the mock shared summary when available and uses static mock fallback otherwise.
 - Shared local state architecture: documented for future production-ready summary sharing across iPhone, Watch, and WidgetKit surfaces.
-- HealthKit-backed dashboard rollout: planned in `Docs/healthkit-dashboard-rollout-plan.md`, but production implementation remains deferred.
+- HealthKit-backed dashboard rollout: planned and QA-audited in `Docs/healthkit-dashboard-rollout-plan.md`, but production implementation remains deferred.
 - HealthKit permission flow: implemented for read-only access.
 - HealthKit data fetcher: implemented locally for recent Apple Health samples.
 - Baseline and scoring engines: implemented as local rule-based wellness estimates.
@@ -68,11 +68,12 @@ StateWatch is still pre-release. The production iPhone dashboard and watchOS app
 
 ## Roadmap Notes
 
-- HealthKit-backed production dashboard work is planned as a feature-flagged, local-only rollout and remains deferred until additional QA.
+- HealthKit-backed production dashboard work is planned as a feature-flagged, local-only rollout and remains deferred until the local feature flag and QA gates are complete.
 - HealthKit-derived scoring should not replace the mock production Dashboard until the explicit internal feature flag phase.
 - Developers should not have cloud or backend access to user HealthKit data.
 - App Group shared state currently carries mock summary data only; production HealthKit-derived shared summaries remain deferred.
 - Future State Check-in, visual-first UI, and bilingual Traditional Chinese / English support are roadmap directions and should start from the existing Figma design system before SwiftUI implementation.
+- Future visual-first UI, icon assets, check-in UI, and bilingual Traditional Chinese / English layout should go through Figma design review before SwiftUI implementation.
 
 ## Privacy and Medical Safety Stance
 
