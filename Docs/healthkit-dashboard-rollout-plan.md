@@ -1,19 +1,19 @@
 # HealthKit Dashboard Rollout Plan
 
-Phase 8.0 defines the safe rollout path for connecting the production iPhone Dashboard to local HealthKit-derived scoring behind a feature flag. Phase 8.1 audits and strengthens that plan before implementation begins. These phases are planning and QA only. They do not change app behavior, data sources, HealthKit behavior, Watch behavior, WidgetKit behavior, entitlements, or UI implementation.
+Phase 8.0 defines the safe rollout path for connecting the production iPhone Dashboard to local HealthKit-derived scoring behind a feature flag. Phase 8.1 audits and strengthens that plan before implementation begins. Phase 8.2 adds the local default-off feature flag foundation. Phase 8.3 adds the feature-flagged iPhone Dashboard loading path while preserving the mock-backed default behavior.
 
 ## Current State
 
 StateWatch currently has a complete mock-backed production surface chain:
 
-- iPhone Dashboard is the production UI and remains backed by mock `StateAssessment` data.
+- iPhone Dashboard is the production UI and remains backed by mock `StateAssessment` data by default.
 - The iPhone app publishes the current mock dashboard summary into App Group shared state.
 - The Watch app can read the shared mock App Group summary and falls back to static mock Watch values.
 - WidgetKit complications can read the shared mock App Group summary and fall back to static mock complication values.
 - HealthKit permission handling, local HealthKit fetching, baseline calculation, and rule-based scoring already exist.
-- HealthKit-derived scoring is available only in debug or preview paths, including the HealthKit Scoring Preview.
+- HealthKit-derived scoring is available in debug/previews and in the iPhone Dashboard only when the local default-off feature flag is enabled.
 - App Group shared state is currently mock-only.
-- No production iPhone, Watch, or WidgetKit surface is connected to real HealthKit-derived scoring.
+- No Watch or WidgetKit surface is connected to real HealthKit-derived scoring, and no HealthKit-derived output is written to App Group shared state.
 
 ## Future Data Flow
 
@@ -25,7 +25,7 @@ Read-only HealthKit data
   -> baseline and scoring engine
   -> HealthKit-derived StateAssessment
   -> feature-flagged iPhone Dashboard
-  -> optional App Group shared summary
+  -> App Group summary propagation only in a later phase
   -> WidgetKit and Watch only after additional QA
 ```
 
@@ -55,7 +55,7 @@ Suggested early flag names:
 - `useHealthKitDashboardPreview`
 - `enableLocalHealthKitDashboard`
 
-The exact implementation should be decided in Phase 8.2. This document is not an implementation decision.
+Phase 8.2 chose `HealthKitDashboardFeatureFlag` with the local storage key `statewatch.feature.healthkitDashboard.enabled`. Phase 8.3 uses that default-off flag to gate the iPhone Dashboard HealthKit-backed path.
 
 ## Rollout Phases
 
@@ -73,7 +73,7 @@ Add a local-only feature flag surface for internal testing. The flag defaults of
 
 ### Phase 8.3: Feature-Flagged HealthKit-Backed iPhone Dashboard
 
-Connect the iPhone Dashboard to local HealthKit-derived `StateAssessment` only when the local feature flag is enabled. Keep mock fallback behavior available.
+Implemented: the iPhone Dashboard loads through a small provider that returns mock `StateAssessment` while the local flag is off. When the flag is enabled, it attempts local HealthKit snapshot loading and rule-based scoring, then falls back to mock data for unavailable, empty, sparse, low-confidence, or failed loads. The default user experience remains mock-backed.
 
 ### Phase 8.4: HealthKit Dashboard QA Audit
 
@@ -220,6 +220,19 @@ Phase 8.2 adds only the local feature flag foundation:
 - No remote config, networking, cloud sync, account requirement, analytics rollout, or AI is introduced.
 - No WidgetKit or Watch HealthKit propagation is introduced.
 
+## Phase 8.3 Implementation Status
+
+Phase 8.3 adds the feature-flagged iPhone Dashboard HealthKit path:
+
+- `DashboardAssessmentProvider` keeps the default-off path mock-backed.
+- When the local flag is enabled, the provider attempts to fetch recent local HealthKit snapshots and build a `StateAssessment` with the existing rule-based scoring engine.
+- Empty HealthKit data, unavailable data, sparse histories, low-confidence output, and loading failures fall back to mock `StateAssessment` data.
+- The iPhone Dashboard does not publish HealthKit-derived summaries into App Group shared state in this phase.
+- The Watch app remains mock/shared-mock-backed.
+- WidgetKit complications remain mock/shared-mock-backed with static fallback.
+- Raw HealthKit samples remain out of App Group storage.
+- No WatchConnectivity, networking, AI, remote config, HealthKit write access, or live WidgetKit HealthKit timelines are added.
+
 ## Safety Rules
 
 The rollout must preserve these boundaries:
@@ -237,7 +250,7 @@ The rollout must preserve these boundaries:
 - No disease, illness, clinical stress, treatment, emergency, or health alert claims.
 - No scary language for missing or partial data.
 - Missing data should lower confidence or show a low-data state, not produce negative health conclusions.
-- The production iPhone Dashboard remains mock-backed by default until the feature flag is explicitly enabled.
+- The production iPhone Dashboard remains mock-backed by default until the feature flag is explicitly enabled for internal validation.
 - The feature flag must be easy to disable without data migration or backend changes.
 
 ## Low-Data and Fallback Behavior
@@ -249,7 +262,7 @@ Expected state handling:
 - Empty HealthKit results: show calm low-data copy.
 - Partial data: compute only from available optional values and lower confidence.
 - Sparse history: avoid confident scoring and show a cautious estimate if possible.
-- Cannot score: fall back to mock, low-data, or unavailable state depending on the feature flag stage.
+- Cannot score: fall back to mock data in Phase 8.3, with low-data or unavailable state design deferred to later QA.
 - Stale App Group summary: WidgetKit and Watch should use safe fallback behavior until a later production sharing phase.
 
 Safe copy examples:

@@ -1,12 +1,147 @@
 import Foundation
 import SwiftUI
 
-struct DashboardView: View {
+struct DashboardAssessmentResult: Equatable {
     let assessment: StateAssessment
+    let source: DashboardAssessmentSource
+    let notice: String?
+
+    var usesHealthKitDerivedData: Bool {
+        source == .healthKitDerived
+    }
+}
+
+enum DashboardAssessmentSource: Equatable {
+    case mock
+    case healthKitDerived
+    case lowDataFallback
+    case fallback
+}
+
+struct DashboardAssessmentProvider {
+    typealias SnapshotLoader = (Int) async throws -> [DailyHealthSnapshot]
+
+    static let lookbackDays = 30
+
+    private let isFeatureEnabled: () -> Bool
+    private let snapshotLoader: SnapshotLoader
+    private let fallbackAssessment: StateAssessment
+
+    init(
+        featureFlag: HealthKitDashboardFeatureFlag = HealthKitDashboardFeatureFlag(),
+        snapshotLoader: @escaping SnapshotLoader = DashboardAssessmentProvider.defaultSnapshotLoader,
+        fallbackAssessment: StateAssessment = .mock
+    ) {
+        self.init(
+            isFeatureEnabled: { featureFlag.isEnabled },
+            snapshotLoader: snapshotLoader,
+            fallbackAssessment: fallbackAssessment
+        )
+    }
+
+    init(
+        isFeatureEnabled: @escaping () -> Bool,
+        snapshotLoader: @escaping SnapshotLoader = DashboardAssessmentProvider.defaultSnapshotLoader,
+        fallbackAssessment: StateAssessment = .mock
+    ) {
+        self.isFeatureEnabled = isFeatureEnabled
+        self.snapshotLoader = snapshotLoader
+        self.fallbackAssessment = fallbackAssessment
+    }
+
+    func loadAssessment() async -> DashboardAssessmentResult {
+        guard isFeatureEnabled() else {
+            return DashboardAssessmentResult(
+                assessment: fallbackAssessment,
+                source: .mock,
+                notice: nil
+            )
+        }
+
+        do {
+            let snapshots = try await snapshotLoader(Self.lookbackDays)
+            guard snapshots.contains(where: { !$0.availableMetrics.isEmpty }) else {
+                let source: DashboardAssessmentSource = snapshots.isEmpty ? .fallback : .lowDataFallback
+                let notice = snapshots.isEmpty
+                    ? "HealthKit data was unavailable, so the dashboard is showing mock data."
+                    : "Recent data is limited, so the dashboard is showing mock data."
+                return DashboardAssessmentResult(
+                    assessment: fallbackAssessment,
+                    source: source,
+                    notice: notice
+                )
+            }
+
+            guard let assessment = Self.makeHealthKitAssessment(from: snapshots),
+                  assessment.confidence != .low,
+                  assessment.confidence != .unavailable
+            else {
+                return DashboardAssessmentResult(
+                    assessment: fallbackAssessment,
+                    source: .lowDataFallback,
+                    notice: "Recent data is limited, so the dashboard is showing mock data."
+                )
+            }
+
+            return DashboardAssessmentResult(
+                assessment: assessment,
+                source: .healthKitDerived,
+                notice: nil
+            )
+        } catch {
+            return DashboardAssessmentResult(
+                assessment: fallbackAssessment,
+                source: .fallback,
+                notice: "HealthKit data was unavailable, so the dashboard is showing mock data."
+            )
+        }
+    }
+
+    static func makeHealthKitAssessment(from snapshots: [DailyHealthSnapshot]) -> StateAssessment? {
+        let sortedSnapshots = snapshots.sorted { $0.date < $1.date }
+        guard sortedSnapshots.contains(where: { !$0.availableMetrics.isEmpty }) else {
+            return nil
+        }
+
+        return OverallStateEngine().assess(history: sortedSnapshots, window: .thirtyDays)
+    }
+
+    private static func defaultSnapshotLoader(days: Int) async throws -> [DailyHealthSnapshot] {
+        await HealthKitDataFetcher().fetchRecentSnapshots(days: days)
+    }
+}
+
+struct DashboardView: View {
+    @State var assessment: StateAssessment
     @State private var isShowingSettings = false
 
-    init(assessment: StateAssessment = .mock) {
-        self.assessment = assessment
+    private let assessmentProvider: DashboardAssessmentProvider
+    private let loadsAssessmentProvider: Bool
+
+    init() {
+        self.init(
+            assessment: .mock,
+            assessmentProvider: DashboardAssessmentProvider(),
+            loadsAssessmentProvider: true
+        )
+    }
+
+    init(assessment: StateAssessment) {
+        self.init(
+            assessment: assessment,
+            assessmentProvider: DashboardAssessmentProvider(fallbackAssessment: assessment),
+            loadsAssessmentProvider: false
+        )
+    }
+
+    init(
+        assessment: StateAssessment = .mock,
+        assessmentProvider: DashboardAssessmentProvider,
+        loadsAssessmentProvider: Bool = true
+    ) {
+        _assessment = State(initialValue: assessment)
+        self.assessmentProvider = assessmentProvider
+        self.loadsAssessmentProvider = loadsAssessmentProvider
     }
 
     var body: some View {
@@ -40,7 +175,17 @@ struct DashboardView: View {
             }
             .preferredColorScheme(.dark)
         }
-        // TODO: Keep production mock-backed until the HealthKit-backed dashboard feature flag is approved.
+        .task {
+            await loadAssessmentIfNeeded()
+        }
+        // TODO: Keep HealthKit-derived dashboard output behind the local feature flag until real-device QA is complete.
+    }
+
+    @MainActor
+    private func loadAssessmentIfNeeded() async {
+        guard loadsAssessmentProvider else { return }
+        let result = await assessmentProvider.loadAssessment()
+        assessment = result.assessment
     }
 
     private var content: DashboardDisplayModel {
