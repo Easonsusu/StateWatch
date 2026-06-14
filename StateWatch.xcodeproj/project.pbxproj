@@ -10,6 +10,8 @@
 		0BEC138EA3EA229A1B84DD4B /* StateWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA96331AEAE8DDC6AE343CF8 /* StateWatchApp.swift */; };
 		9CEED23D3BB6E3C2EF6B76B6 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC7AE0CAEE351EAECD47668 /* AppCoordinator.swift */; };
 		A69000000000000000000001 /* MockDashboardSharedStatePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A69100000000000000000001 /* MockDashboardSharedStatePublisher.swift */; };
+		F82000000000000000000002 /* HealthKitDashboardFeatureFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82000000000000000000001 /* HealthKitDashboardFeatureFlag.swift */; };
+		F82000000000000000000003 /* HealthKitDashboardFeatureFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82000000000000000000001 /* HealthKitDashboardFeatureFlag.swift */; };
 		53FFE876097319951743F30D /* DailyHealthSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A57ED9AFD7DDB1725B8E7F /* DailyHealthSnapshot.swift */; };
 		6765537052C7181AB3E947F6 /* HealthBaseline.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8F5BD50E4760680B43F867 /* HealthBaseline.swift */; };
 		8CBC479BB9CC9B2BCDF0F394 /* StateAssessment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0BB8F8130B13AAC0B9896B /* StateAssessment.swift */; };
@@ -128,6 +130,7 @@
 		4DC7AE0CAEE351EAECD47668 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/App/AppCoordinator.swift; sourceTree = "<group>"; };
 		AA96331AEAE8DDC6AE343CF8 /* StateWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/App/StateWatchApp.swift; sourceTree = "<group>"; };
 		A69100000000000000000001 /* MockDashboardSharedStatePublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/App/MockDashboardSharedStatePublisher.swift; sourceTree = "<group>"; };
+		F82000000000000000000001 /* HealthKitDashboardFeatureFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/App/HealthKitDashboardFeatureFlag.swift; sourceTree = "<group>"; };
 		A1F4627276151E5D357A595C /* CheckInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/CheckIn/CheckInView.swift; sourceTree = "<group>"; };
 		0A13807477DE67A97BCCF9CC /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Dashboard/DashboardView.swift; sourceTree = "<group>"; };
 		60A94081BAF63A296A8F2EA5 /* ReasonCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Dashboard/ReasonCardView.swift; sourceTree = "<group>"; };
@@ -274,6 +277,7 @@
 			isa = PBXGroup;
 			children = (
 				4DC7AE0CAEE351EAECD47668 /* AppCoordinator.swift */,
+				F82000000000000000000001 /* HealthKitDashboardFeatureFlag.swift */,
 				A69100000000000000000001 /* MockDashboardSharedStatePublisher.swift */,
 				AA96331AEAE8DDC6AE343CF8 /* StateWatchApp.swift */,
 			);
@@ -722,6 +726,7 @@
 			files = (
 				0BEC138EA3EA229A1B84DD4B /* StateWatchApp.swift in Sources */,
 				9CEED23D3BB6E3C2EF6B76B6 /* AppCoordinator.swift in Sources */,
+				F82000000000000000000002 /* HealthKitDashboardFeatureFlag.swift in Sources */,
 				A69000000000000000000001 /* MockDashboardSharedStatePublisher.swift in Sources */,
 				53FFE876097319951743F30D /* DailyHealthSnapshot.swift in Sources */,
 				6765537052C7181AB3E947F6 /* HealthBaseline.swift in Sources */,
@@ -804,6 +809,7 @@
 				8B437F571E48E29B77FA65EA /* ModelCodableTests.swift in Sources */,
 				E5800000000000000000000C /* StateWatchThemeTests.swift in Sources */,
 				F5B400000000000000000004 /* StateWatchVisualPreviewTests.swift in Sources */,
+				F82000000000000000000003 /* HealthKitDashboardFeatureFlag.swift in Sources */,
 				F64000000000000000000005 /* ComplicationStateSummary.swift in Sources */,
 				A68000000000000000000007 /* SharedReadinessSummary.swift in Sources */,
 				A68000000000000000000008 /* SharedReadinessStore.swift in Sources */,
