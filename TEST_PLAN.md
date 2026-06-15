@@ -531,6 +531,34 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Confirm local Xcode validation was used.
 - Confirm GitHub Actions was not manually triggered.
 
+## Phase 8.5 Low-Data / Missing-Data Safety Audit for HealthKit Dashboard
+
+- Confirm missing HealthKit authorization is safe.
+- Confirm empty HealthKit snapshots are safe.
+- Confirm empty sleep, HRV, resting heart rate, and activity/load inputs are safe.
+- Confirm sparse or partial data is safe.
+- Confirm stale data is safe and does not produce strong current-state claims.
+- Confirm scoring failure does not crash.
+- Confirm impossible finite inputs do not crash and any produced score remains within `0...100`.
+- Confirm missing data is not treated as negative health status.
+- Confirm low confidence does not produce strong advice.
+- Confirm unavailable data is not described as bad health.
+- Confirm Dashboard remains mock-backed when the feature flag is off.
+- Confirm the HealthKit path only runs when the feature flag is on.
+- Confirm Watch app behavior remains unchanged.
+- Confirm WidgetKit behavior remains unchanged.
+- Confirm App Group behavior remains mock-only.
+- Confirm no HealthKit-derived summary is propagated to App Group.
+- Confirm no raw HealthKit samples are stored in App Group.
+- Confirm WidgetKit complications do not fetch HealthKit directly.
+- Confirm the Watch app does not fetch HealthKit directly.
+- Confirm no HealthKit write access was added.
+- Confirm no networking, upload path, remote config, cloud sync, WatchConnectivity, login, server call, or AI was added.
+- Confirm no visual-first UI, icon assets, check-in UI, bilingual UI, localization, or Dashboard layout changes were added.
+- Confirm future UI, icon, state imagery, check-in, complication, or bilingual work still uses the existing Figma design system as the source of truth first.
+- Confirm local Xcode validation was used.
+- Confirm GitHub Actions was not manually triggered.
+
 ## Phase 6.2 Watch App Visual Refresh
 
 - Confirm PR #22 is merged before starting the Watch visual refresh branch.
