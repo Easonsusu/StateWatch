@@ -58,7 +58,7 @@ struct RecoveryScoreEngine {
         case .high, .medium:
             summary = "Recovery reflects HRV, resting heart rate, and recent load compared with your baseline."
         case .low:
-            summary = "Recovery uses limited baseline data, so treat this as a softer wellness estimate."
+            summary = "Recovery uses limited baseline data, so this remains a softer wellness estimate."
         case .unavailable:
             summary = "Recovery data is limited today, so this score stays cautious."
         }

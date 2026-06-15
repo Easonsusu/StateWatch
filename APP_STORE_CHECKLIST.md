@@ -12,6 +12,8 @@
 
 - StateWatch must be positioned as wellness reflection, not medical diagnosis.
 - Avoid disease, illness, detection, diagnosis, treatment, and prevention claims.
+- Use the disclaimer: StateWatch is not a medical device and does not diagnose, treat, cure, or prevent any disease.
+- Avoid causal wording such as "you feel tired because you slept less"; prefer pattern language such as "on days with lower sleep, you more often reported feeling tired."
 - Include a clear disclaimer during onboarding.
 - Include guidance to seek professional medical advice for medical concerns.
 

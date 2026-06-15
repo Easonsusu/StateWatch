@@ -79,7 +79,7 @@ StateWatch is still pre-release. The production iPhone dashboard and watchOS app
 
 ## Privacy and Medical Safety Stance
 
-StateWatch is a wellness app, not a medical diagnosis app. It must not claim to diagnose, detect disease, detect illness, detect clinical stress, provide treatment guidance, or replace professional medical advice.
+StateWatch is a wellness app, not a medical diagnosis app. It must not claim to diagnose, treat, cure, or prevent disease; detect illness or clinical stress; provide medical advice; or replace professional guidance for medical concerns.
 
 For the MVP:
 
@@ -89,6 +89,7 @@ For the MVP:
 - HealthKit write access must not be added unless explicitly discussed and approved for a future phase.
 - Missing, denied, unavailable, empty, or partial HealthKit data should lower confidence or show calm fallback messaging instead of creating negative wellness conclusions.
 - UI copy should use cautious wellness wording such as "recent signals," "wellness estimate," "fatigue context," "mixed," and "low data."
+- Production-facing wording is tracked in `Docs/phase-8-6-production-wording-audit.md`.
 
 ## Project Structure
 

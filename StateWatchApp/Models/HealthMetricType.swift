@@ -45,7 +45,7 @@ enum HealthMetricType: String, CaseIterable, Codable, Identifiable, Equatable {
         case .averageHeartRate: return "Activity Load"
         case .sleepDuration: return "Sleep"
         case .activeEnergy, .exerciseMinutes, .standHours, .steps: return "Activity Load"
-        case .mindfulMinutes: return "Stress/Fatigue"
+        case .mindfulMinutes: return "Fatigue Context"
         }
     }
 }

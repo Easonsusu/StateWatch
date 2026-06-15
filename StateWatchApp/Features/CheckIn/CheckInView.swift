@@ -14,7 +14,7 @@ struct CheckInView: View {
             Picker("Fatigue", selection: $fatigue) {
                 ForEach(UserCheckIn.Intensity.allCases, id: \.self) { Text($0.rawValue).tag($0) }
             }
-            Picker("Perceived stress", selection: $perceivedStress) {
+            Picker("Felt strain", selection: $perceivedStress) {
                 ForEach(UserCheckIn.Intensity.allCases, id: \.self) { Text($0.rawValue).tag($0) }
             }
             TextField("Optional note", text: $note, axis: .vertical)

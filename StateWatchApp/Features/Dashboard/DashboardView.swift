@@ -401,7 +401,7 @@ struct DashboardMetricDisplay: Identifiable {
     }
 
     private static func displayTitle(for component: ScoreComponent) -> String {
-        if component.id == "stressFatigue" || component.title == "Stress/Fatigue" {
+        if component.id == "stressFatigue" {
             return "Fatigue Context"
         }
 

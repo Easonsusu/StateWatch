@@ -559,6 +559,26 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Confirm local Xcode validation was used.
 - Confirm GitHub Actions was not manually triggered.
 
+## Phase 8.6 Production Wording and App Store Safety Audit
+
+- Confirm `Docs/phase-8-6-production-wording-audit.md` exists.
+- Confirm production-facing Dashboard, Watch, WidgetKit, onboarding, permission, privacy, and debug-preview copy uses cautious wellness wording.
+- Confirm user-facing component labels use `Fatigue Context` instead of `Stress/Fatigue`.
+- Confirm low-data summaries do not use treatment-like phrasing such as `treat this as`.
+- Confirm missing, sparse, stale, denied, or unavailable data is described as `low data`, `not enough recent data`, `unavailable`, or lower confidence, not as a bad health state.
+- Confirm copy does not claim medical diagnosis, disease detection, illness detection, clinical stress detection, treatment, emergency alerting, abnormal-health warnings, medical risk prediction, or medical advice.
+- Confirm any high-risk words appear only in disclaimers or forbidden-word safety checklists.
+- Confirm correlation copy uses pattern language and avoids causal claims such as `you feel tired because you slept less`.
+- Confirm HealthKit-backed Dashboard remains behind the default-off local feature flag.
+- Confirm production iPhone Dashboard remains mock-backed by default.
+- Confirm HealthKit-derived output is not propagated to Watch, WidgetKit, or App Group shared state.
+- Confirm Watch app behavior remains unchanged.
+- Confirm WidgetKit behavior remains unchanged.
+- Confirm App Group shared state remains mock-only and summary-only.
+- Confirm no raw HealthKit samples are stored in App Group shared state.
+- Confirm no HealthKit write access, networking, cloud sync, account system, analytics rollout, remote config, server upload, or AI cloud analysis was added.
+- Confirm local Xcode validation was used.
+
 ## Phase 6.2 Watch App Visual Refresh
 
 - Confirm PR #22 is merged before starting the Watch visual refresh branch.

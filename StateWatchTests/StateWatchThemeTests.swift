@@ -1905,3 +1905,81 @@ final class HealthKitDashboardLowDataSafetyTests: XCTestCase {
             .deletingLastPathComponent()
     }
 }
+
+
+final class ProductionWordingSafetyAuditTests: XCTestCase {
+    func testFatigueContextTerminologyIsProductionFacing() throws {
+        let assessed = try XCTUnwrap(OverallStateEngine().assess(history: MockSampleData.weeklySnapshots))
+        let dashboardModel = DashboardDisplayModel(assessment: .mock)
+
+        XCTAssertEqual(assessed.stressFatigue.title, "Fatigue Context")
+        XCTAssertEqual(StateAssessment.mock.stressFatigue.title, "Fatigue Context")
+        XCTAssertEqual(StateAssessment.mockLow.stressFatigue.title, "Fatigue Context")
+        XCTAssertEqual(HealthMetricType.mindfulMinutes.wellnessArea, "Fatigue Context")
+        XCTAssertTrue(dashboardModel.metrics.map(\.title).contains("Fatigue Context"))
+        XCTAssertFalse(dashboardModel.searchableText.localizedCaseInsensitiveContains("Stress/Fatigue"))
+    }
+
+    func testProductionFacingCopyAvoidsHighRiskClaims() throws {
+        let assessed = try XCTUnwrap(OverallStateEngine().assess(history: MockSampleData.weeklySnapshots))
+        let dashboardText = [
+            DashboardDisplayModel(assessment: .mock).searchableText,
+            DashboardDisplayModel(assessment: .mockLow).searchableText,
+            DashboardDisplayModel(assessment: assessed).searchableText,
+            WatchDashboardDisplayModel(assessment: .mock).searchableText,
+            ComplicationStateSummary.mock.searchableText,
+            StateAssessment.mock.primarySuggestion,
+            StateAssessment.mockLow.primarySuggestion
+        ].joined(separator: " ")
+
+        for forbiddenTerm in [
+            "diagnos",
+            "disease detection",
+            "detected illness",
+            "clinical stress",
+            "treatment",
+            "health warning",
+            "emergency",
+            "abnormal health",
+            "health risk",
+            "medical advice",
+            "medical recommendation",
+            "Stress/Fatigue",
+            "treat this as",
+            "because you",
+            "caused by"
+        ] {
+            XCTAssertFalse(
+                dashboardText.localizedCaseInsensitiveContains(forbiddenTerm),
+                "Unexpected production-facing wording: \(forbiddenTerm)"
+            )
+        }
+    }
+
+    func testLowDataSummariesUseSoftNonTreatmentLanguage() {
+        let assessment = OverallStateEngine().assess(
+            snapshot: MockSampleData.todaySnapshot,
+            baseline: lowConfidenceBaseline()
+        )
+        let summaries = assessment.components.map(\.summary).joined(separator: " ")
+
+        XCTAssertTrue(summaries.localizedCaseInsensitiveContains("softer wellness estimate"))
+        XCTAssertFalse(summaries.localizedCaseInsensitiveContains("treat this as"))
+        XCTAssertFalse(summaries.localizedCaseInsensitiveContains("treatment"))
+        XCTAssertFalse(summaries.localizedCaseInsensitiveContains("medical advice"))
+    }
+
+    private func lowConfidenceBaseline() -> HealthBaseline {
+        HealthBaseline(
+            window: .sevenDays,
+            restingHeartRate: MetricBaseline(average: 59, validSampleCount: 1, confidence: .low),
+            averageHeartRate: MetricBaseline(average: 74, validSampleCount: 1, confidence: .low),
+            heartRateVariability: MetricBaseline(average: 58, validSampleCount: 1, confidence: .low),
+            sleepDuration: MetricBaseline(average: 7.2, validSampleCount: 1, confidence: .low),
+            activeEnergy: MetricBaseline(average: 540, validSampleCount: 1, confidence: .low),
+            exerciseMinutes: MetricBaseline(average: 32, validSampleCount: 1, confidence: .low),
+            stepCount: MetricBaseline(average: 8_000, validSampleCount: 1, confidence: .low),
+            sampleCount: 1
+        )
+    }
+}
