@@ -480,6 +480,32 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Confirm local WidgetKit complication build passes on an installed Apple Watch simulator.
 - Confirm GitHub Actions is not manually triggered or used as the debugging loop.
 
+
+## Phase 8.3 Feature-Flagged HealthKit-Backed iPhone Dashboard
+
+- Confirm `DashboardAssessmentProvider` returns mock `StateAssessment` when the local feature flag is off.
+- Confirm the local feature flag storage key remains `statewatch.feature.healthkitDashboard.enabled`.
+- Confirm enabling the local feature flag routes the iPhone Dashboard provider through the HealthKit-derived assessment path.
+- Confirm disabling or resetting the local feature flag returns the provider to the mock path.
+- Confirm HealthKit unavailable, empty data, sparse history, low-confidence assessment, and loading failure states fall back safely to mock data.
+- Confirm HealthKit-derived assessment scores are clamped to `0...100`.
+- Confirm all-nil or sparse snapshot history does not create a negative wellness conclusion.
+- Confirm production iPhone Dashboard remains mock-backed by default.
+- Confirm the iPhone Dashboard does not publish HealthKit-derived summaries to App Group shared state in this phase.
+- Confirm Watch app behavior remains mock/shared-mock-backed.
+- Confirm WidgetKit complication behavior remains mock/shared-mock-backed with static fallback.
+- Confirm WidgetKit does not fetch HealthKit data.
+- Confirm Watch app does not fetch HealthKit data.
+- Confirm no raw HealthKit samples are stored in App Group shared state.
+- Confirm no HealthKit write access was added.
+- Confirm no networking, upload path, remote config, cloud sync, WatchConnectivity, login, subscription, server call, or AI was added.
+- Confirm no visual redesign, icons, check-in UI, bilingual UI, localization, or Watch/WidgetKit UI changes were added.
+- Confirm local iOS XCTest passes on a concrete installed iPhone simulator.
+- Confirm local iOS build passes on an installed iPhone simulator.
+- Confirm local watchOS app build passes on an installed Apple Watch simulator.
+- Confirm local WidgetKit complication build passes on an installed Apple Watch simulator.
+- Confirm GitHub Actions is not manually triggered or used as the debugging loop.
+
 ## Phase 6.2 Watch App Visual Refresh
 
 - Confirm PR #22 is merged before starting the Watch visual refresh branch.

@@ -984,3 +984,198 @@ final class HealthKitDashboardFeatureFlagTests: XCTestCase {
             .deletingLastPathComponent()
     }
 }
+
+
+final class HealthKitDashboardAssessmentProviderTests: XCTestCase {
+    func testDefaultOffDashboardProviderReturnsMockAssessment() async throws {
+        let context = try makeUserDefaults(label: "default-off")
+        defer { context.userDefaults.removePersistentDomain(forName: context.suiteName) }
+        let flag = HealthKitDashboardFeatureFlag(userDefaults: context.userDefaults)
+        let provider = DashboardAssessmentProvider(
+            isFeatureEnabled: { flag.isEnabled },
+            snapshotLoader: { _ in
+                XCTFail("Default-off dashboard should not load HealthKit snapshots")
+                return Self.sufficientSnapshotHistory()
+            }
+        )
+
+        let result = await provider.loadAssessment()
+
+        XCTAssertEqual(result.source, .mock)
+        XCTAssertEqual(result.assessment, .mock)
+        XCTAssertFalse(result.usesHealthKitDerivedData)
+    }
+
+    func testEnabledDashboardProviderRoutesToHealthKitDerivedAssessment() async throws {
+        let context = try makeUserDefaults(label: "enabled")
+        defer { context.userDefaults.removePersistentDomain(forName: context.suiteName) }
+        let flag = HealthKitDashboardFeatureFlag(userDefaults: context.userDefaults)
+        flag.enable()
+        let provider = DashboardAssessmentProvider(
+            isFeatureEnabled: { flag.isEnabled },
+            snapshotLoader: { days in
+                XCTAssertEqual(days, DashboardAssessmentProvider.lookbackDays)
+                return Self.sufficientSnapshotHistory()
+            }
+        )
+
+        let result = await provider.loadAssessment()
+
+        XCTAssertEqual(result.source, .healthKitDerived)
+        XCTAssertTrue(result.usesHealthKitDerivedData)
+        XCTAssertTrue((0...100).contains(result.assessment.overallScore))
+        XCTAssertNotEqual(result.assessment, StateAssessment.mock)
+    }
+
+    func testResettingFeatureFlagReturnsDashboardProviderToMockPath() async throws {
+        let context = try makeUserDefaults(label: "reset")
+        defer { context.userDefaults.removePersistentDomain(forName: context.suiteName) }
+        let flag = HealthKitDashboardFeatureFlag(userDefaults: context.userDefaults)
+        flag.enable()
+        flag.reset()
+        let provider = DashboardAssessmentProvider(
+            isFeatureEnabled: { flag.isEnabled },
+            snapshotLoader: { _ in
+                XCTFail("Reset flag should return to mock path without loading snapshots")
+                return Self.sufficientSnapshotHistory()
+            }
+        )
+
+        let result = await provider.loadAssessment()
+
+        XCTAssertEqual(result.source, .mock)
+        XCTAssertEqual(result.assessment, .mock)
+        XCTAssertFalse(result.usesHealthKitDerivedData)
+    }
+
+    func testDashboardProviderFallsBackSafelyWhenHealthKitIsUnavailableOrEmpty() async throws {
+        let context = try makeUserDefaults(label: "empty")
+        defer { context.userDefaults.removePersistentDomain(forName: context.suiteName) }
+        let flag = HealthKitDashboardFeatureFlag(userDefaults: context.userDefaults)
+        flag.enable()
+        let provider = DashboardAssessmentProvider(
+            isFeatureEnabled: { flag.isEnabled },
+            snapshotLoader: { _ in [] }
+        )
+
+        let result = await provider.loadAssessment()
+
+        XCTAssertEqual(result.source, .fallback)
+        XCTAssertEqual(result.assessment, .mock)
+        XCTAssertEqual(result.notice, "HealthKit data was unavailable, so the dashboard is showing mock data.")
+        XCTAssertFalse(result.usesHealthKitDerivedData)
+    }
+
+    func testDashboardProviderHandlesSparseAllNilHistoryWithoutNegativeConclusion() async throws {
+        let context = try makeUserDefaults(label: "sparse")
+        defer { context.userDefaults.removePersistentDomain(forName: context.suiteName) }
+        let flag = HealthKitDashboardFeatureFlag(userDefaults: context.userDefaults)
+        flag.enable()
+        let provider = DashboardAssessmentProvider(
+            isFeatureEnabled: { flag.isEnabled },
+            snapshotLoader: { _ in
+                [
+                    DailyHealthSnapshot(date: Date(timeIntervalSince1970: 20_000)),
+                    DailyHealthSnapshot(date: Date(timeIntervalSince1970: 106_400))
+                ]
+            }
+        )
+
+        let result = await provider.loadAssessment()
+
+        XCTAssertEqual(result.source, .lowDataFallback)
+        XCTAssertEqual(result.assessment, .mock)
+        XCTAssertEqual(result.notice, "Recent data is limited, so the dashboard is showing mock data.")
+        XCTAssertFalse(result.usesHealthKitDerivedData)
+    }
+
+    func testDashboardProviderFallsBackSafelyWhenSnapshotLoadingFails() async throws {
+        struct LoaderError: Error {}
+        let context = try makeUserDefaults(label: "failure")
+        defer { context.userDefaults.removePersistentDomain(forName: context.suiteName) }
+        let flag = HealthKitDashboardFeatureFlag(userDefaults: context.userDefaults)
+        flag.enable()
+        let provider = DashboardAssessmentProvider(
+            isFeatureEnabled: { flag.isEnabled },
+            snapshotLoader: { _ in throw LoaderError() }
+        )
+
+        let result = await provider.loadAssessment()
+
+        XCTAssertEqual(result.source, .fallback)
+        XCTAssertEqual(result.assessment, .mock)
+        XCTAssertFalse(result.usesHealthKitDerivedData)
+    }
+
+    func testDashboardProviderStorageKeyRemainsStable() {
+        XCTAssertEqual(HealthKitDashboardFeatureFlag.storageKey, "statewatch.feature.healthkitDashboard.enabled")
+    }
+
+    func testDashboardProviderResultCopyAvoidsForbiddenClaims() async throws {
+        let context = try makeUserDefaults(label: "copy-safety")
+        defer { context.userDefaults.removePersistentDomain(forName: context.suiteName) }
+        let flag = HealthKitDashboardFeatureFlag(userDefaults: context.userDefaults)
+        flag.enable()
+        let provider = DashboardAssessmentProvider(
+            isFeatureEnabled: { flag.isEnabled },
+            snapshotLoader: { _ in [] }
+        )
+
+        let result = await provider.loadAssessment()
+        let searchableText = [
+            result.notice ?? "",
+            result.assessment.primarySuggestion,
+            result.assessment.reasons.joined(separator: " ")
+        ].joined(separator: " ")
+
+        for forbiddenTerm in [
+            "diagnos",
+            "disease",
+            "clinical stress",
+            "treatment",
+            "warning",
+            "alert",
+            "emergency",
+            "abnormal health",
+            "HealthKit write",
+            "cloud upload",
+            "AI health analysis",
+            "live HealthKit-backed Watch",
+            "live HealthKit-backed WidgetKit"
+        ] {
+            XCTAssertFalse(
+                searchableText.localizedCaseInsensitiveContains(forbiddenTerm),
+                "Unexpected flagged dashboard wording: \(forbiddenTerm)"
+            )
+        }
+    }
+
+    private func makeUserDefaults(label: String) throws -> (suiteName: String, userDefaults: UserDefaults) {
+        let suiteName = "statewatch.dashboard.provider.phase83.\(label).\(UUID().uuidString)"
+        let userDefaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        userDefaults.removePersistentDomain(forName: suiteName)
+        return (suiteName, userDefaults)
+    }
+
+    private static func sufficientSnapshotHistory() -> [DailyHealthSnapshot] {
+        let calendar = Calendar(identifier: .gregorian)
+        let start = Date(timeIntervalSince1970: 30_000)
+
+        return (0..<14).compactMap { offset in
+            guard let date = calendar.date(byAdding: .day, value: offset, to: start) else {
+                return nil
+            }
+
+            return DailyHealthSnapshot(
+                date: date,
+                restingHeartRate: offset == 13 ? 66 : 62,
+                averageHeartRate: offset == 13 ? 83 : 78,
+                heartRateVariability: offset == 13 ? 48 : 42,
+                sleepDurationHours: offset == 13 ? 7.4 : 7.1,
+                activeEnergyKcal: offset == 13 ? 510 : 460,
+                exerciseMinutes: offset == 13 ? 34 : 28,
+                stepCount: offset == 13 ? 8_800 : 7_600
+            )
+        }
+    }
+}

@@ -4,7 +4,7 @@ StateWatch is an early-stage, local-first SwiftUI iOS + watchOS wellness app for
 
 The repository includes a runnable Xcode project, HealthKit read-permission handling, a local-only HealthKit data fetcher, baseline calculation, rule-based scoring engines, XCTest coverage, CI, a SwiftUI design-system foundation, a debug-only HealthKit Scoring Preview, a debug-only Visual Dashboard Preview, a WidgetKit complication foundation, and a mock-only App Group shared state foundation for iPhone, WidgetKit, and Watch surfaces.
 
-StateWatch is still pre-release. The production iPhone dashboard and watchOS app now use the StateWatch dark technology-style visual direction, but both remain mock-backed. HealthKit-derived scoring is still validated through debug previews and should only reach production dashboard surfaces through a future gated rollout.
+StateWatch is still pre-release. The production iPhone dashboard and watchOS app now use the StateWatch dark technology-style visual direction, but both remain mock-backed. HealthKit-derived scoring is now available to the iPhone Dashboard only through an internal, default-off local feature flag. The default user experience remains mock-backed, and HealthKit-derived output is not propagated to Watch, WidgetKit, or App Group shared state.
 
 ## Current Status
 
@@ -18,11 +18,11 @@ StateWatch is still pre-release. The production iPhone dashboard and watchOS app
 - iPhone mock dashboard publishing: app launch publishes the current mock `StateAssessment` summary into App Group shared state.
 - Watch mock shared-state reading: the Watch app reads the mock shared summary when available and uses static mock fallback otherwise.
 - Shared local state architecture: documented for future production-ready summary sharing across iPhone, Watch, and WidgetKit surfaces.
-- HealthKit-backed dashboard rollout: planned and QA-audited in `Docs/healthkit-dashboard-rollout-plan.md`, with a local default-off feature flag foundation in place; production implementation remains deferred.
+- HealthKit-backed iPhone Dashboard path: implemented behind the local default-off `HealthKitDashboardFeatureFlag`; default production launch remains mock-backed.
 - HealthKit permission flow: implemented for read-only access.
 - HealthKit data fetcher: implemented locally for recent Apple Health samples.
 - Baseline and scoring engines: implemented as local rule-based wellness estimates.
-- Internal local HealthKit Dashboard feature flag foundation: implemented with default-off local storage; it does not change production Dashboard behavior yet.
+- Internal local HealthKit Dashboard feature flag: implemented with default-off local storage; when enabled internally, the iPhone Dashboard can attempt local HealthKit-derived scoring and falls back to mock data for unavailable, empty, sparse, or failed loads.
 - Debug HealthKit Scoring Preview: available from Settings in debug builds.
 - Debug Visual Dashboard Preview: available from Settings in debug builds.
 - CI: GitHub Actions runs lightweight checks on draft PRs and full Xcode validation on ready PRs, pushes to `main`, or manual dispatch.
@@ -56,8 +56,8 @@ StateWatch is still pre-release. The production iPhone dashboard and watchOS app
 
 ## Intentionally Deferred
 
-- Production HealthKit-backed iPhone or Watch dashboard.
-- Connecting the default-off feature flag to switch the production dashboard from mock data to local HealthKit-derived scoring.
+- Default-on or broadly released HealthKit-backed iPhone dashboard.
+- Production HealthKit-backed Watch dashboard.
 - Local persistence for snapshots and baselines.
 - Real-device HealthKit QA.
 - HealthKit-derived WidgetKit complication timelines.
@@ -70,8 +70,8 @@ StateWatch is still pre-release. The production iPhone dashboard and watchOS app
 
 ## Roadmap Notes
 
-- HealthKit-backed production dashboard work is planned as a feature-flagged, local-only rollout and remains deferred until the local feature flag and QA gates are complete.
-- HealthKit-derived scoring should not replace the mock production Dashboard until a later implementation explicitly uses the default-off local feature flag.
+- HealthKit-backed iPhone Dashboard work now has a default-off, local-only implementation path for internal testing.
+- HealthKit-derived scoring should not become the default production Dashboard until later QA explicitly approves enabling the local feature flag beyond internal validation.
 - Developers should not have cloud or backend access to user HealthKit data.
 - App Group shared state currently carries mock summary data only; production HealthKit-derived shared summaries remain deferred.
 - Future State Check-in, visual-first UI, and bilingual Traditional Chinese / English support are roadmap directions and should start from the existing Figma design system before SwiftUI implementation.
@@ -104,7 +104,7 @@ StateWatchTests/              XCTest target files using mock data and pure helpe
 MANUAL_QA_CHECKLIST.md        Manual QA checklist for stabilization and release review
 ```
 
-The WidgetKit complication target and Watch app intentionally use mock-only shared state and static fallback data. The iOS app publishes the current mock dashboard readiness summary through the App Group; WidgetKit and the Watch app can read that mock summary when available. HealthKit-derived scoring is not wired into production iPhone, Watch, or complication surfaces. WatchConnectivity and production-ready shared local state remain deferred.
+The WidgetKit complication target and Watch app intentionally use mock-only shared state and static fallback data. The iOS app publishes the current mock dashboard readiness summary through the App Group; WidgetKit and the Watch app can read that mock summary when available. The iPhone Dashboard can attempt HealthKit-derived scoring only when the internal local feature flag is enabled, and that HealthKit-derived output is not published to Watch, WidgetKit, or App Group shared state. WatchConnectivity and production-ready shared local state remain deferred.
 
 ## How to Run
 
