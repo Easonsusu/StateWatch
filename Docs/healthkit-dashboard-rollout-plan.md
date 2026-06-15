@@ -233,6 +233,20 @@ Phase 8.3 adds the feature-flagged iPhone Dashboard HealthKit path:
 - Raw HealthKit samples remain out of App Group storage.
 - No WatchConnectivity, networking, AI, remote config, HealthKit write access, or live WidgetKit HealthKit timelines are added.
 
+## Phase 8.4 QA Audit Scope
+
+Phase 8.4 audits the Phase 8.3 path without adding new product behavior:
+
+- The feature flag remains local-only and default-off.
+- The default iPhone Dashboard remains mock-backed.
+- The HealthKit-backed path runs only when the local flag is enabled.
+- HealthKit unavailable, unauthorized, empty, sparse, low-confidence, and failed loading states must stay calm and safe.
+- Missing data must not be treated as a negative wellness signal.
+- HealthKit-derived Dashboard output must not be written to App Group shared state in this phase.
+- Watch, WidgetKit, and App Group HealthKit propagation remain deferred.
+- Raw HealthKit samples must not enter App Group shared state.
+- Local Xcode simulator validation should be used for the QA loop; GitHub Actions should not be manually triggered for debugging.
+
 ## Safety Rules
 
 The rollout must preserve these boundaries:
