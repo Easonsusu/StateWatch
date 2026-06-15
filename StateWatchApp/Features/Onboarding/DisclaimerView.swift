@@ -5,7 +5,7 @@ struct DisclaimerView: View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Wellness only")
                 .font(.headline)
-            Text("StateWatch is not a medical device and does not provide diagnosis, treatment, or disease detection. If you have medical concerns, consult a qualified healthcare professional.")
+            Text("StateWatch is not a medical device. It does not diagnose, treat, cure, or prevent any disease, and it does not provide medical advice. If you have medical concerns, consult a qualified healthcare professional.")
                 .font(.callout)
                 .foregroundStyle(.secondary)
         }

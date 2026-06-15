@@ -62,9 +62,9 @@ recent sleep is consistently below baseline. Missing sleep data returns a
 conservative placeholder with unavailable confidence rather than a negative
 conclusion.
 
-### Stress/Fatigue Context
+### Fatigue Context
 
-The stress/fatigue score is a cautious context score, not stress detection. It
+The fatigue-context score is a cautious context score, not stress detection. It
 looks for patterns such as HRV below baseline, resting heart rate above baseline,
 sleep below baseline, recent activity load, and optional user check-in context.
 Explanations should use wording like "fatigue context" or "your body may benefit

@@ -58,7 +58,7 @@ struct SleepScoreEngine {
         case .high, .medium:
             summary = "Sleep reflects duration, recent trend, and estimated sleep debt compared with your baseline."
         case .low:
-            summary = "Sleep uses limited baseline history, so treat this as a softer wellness estimate."
+            summary = "Sleep uses limited baseline history, so this remains a softer wellness estimate."
         case .unavailable:
             summary = "Sleep baseline history is unavailable, so this score stays cautious."
         }

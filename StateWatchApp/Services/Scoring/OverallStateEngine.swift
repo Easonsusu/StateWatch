@@ -115,7 +115,7 @@ struct OverallStateEngine {
         case .high, .medium:
             summary = "Activity load compares steps, active energy, and exercise minutes with your baseline."
         case .low:
-            summary = "Activity load uses limited baseline data, so treat this as a softer wellness estimate."
+            summary = "Activity load uses limited baseline data, so this remains a softer wellness estimate."
         case .unavailable:
             summary = "Activity data is limited today, so this score stays cautious."
         }

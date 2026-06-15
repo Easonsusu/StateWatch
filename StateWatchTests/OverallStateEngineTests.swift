@@ -7,7 +7,7 @@ final class OverallStateEngineTests: XCTestCase {
 
         XCTAssertEqual(assessment.recovery.title, "Recovery")
         XCTAssertEqual(assessment.sleep.title, "Sleep")
-        XCTAssertEqual(assessment.stressFatigue.title, "Stress/Fatigue")
+        XCTAssertEqual(assessment.stressFatigue.title, "Fatigue Context")
         XCTAssertEqual(assessment.activityLoad.title, "Activity Load")
     }
 

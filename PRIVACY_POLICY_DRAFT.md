@@ -14,7 +14,7 @@ For the MVP, HealthKit data stays on your device. StateWatch does not upload Hea
 
 ## Wellness-only use
 
-StateWatch is not a medical device and does not provide medical diagnosis, treatment, or disease detection. Its summaries are wellness reflections based on available signals and should not replace professional medical advice.
+StateWatch is not a medical device. It does not diagnose, treat, cure, or prevent any disease, and it does not provide medical advice. Its summaries are wellness reflections based on available signals and should not replace professional guidance for medical concerns.
 
 ## User control
 

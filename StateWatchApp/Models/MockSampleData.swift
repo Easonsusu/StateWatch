@@ -130,7 +130,7 @@ enum MockSampleData {
         level: .mixed,
         recovery: ScoreComponent(id: "recovery", title: "Recovery", score: 78, summary: "Recovery signals look generally steady today."),
         sleep: ScoreComponent(id: "sleep", title: "Sleep", score: 82, summary: "Sleep duration is close to your recent pattern."),
-        stressFatigue: ScoreComponent(id: "stressFatigue", title: "Stress/Fatigue", score: 68, summary: "A few signals may suggest taking the day a little easier."),
+        stressFatigue: ScoreComponent(id: "stressFatigue", title: "Fatigue Context", score: 68, summary: "A few signals may suggest taking the day a little easier."),
         activityLoad: ScoreComponent(id: "activityLoad", title: "Activity Load", score: 74, summary: "Recent activity looks moderate."),
         reasons: [
             "Sleep duration is near your recent baseline.",
@@ -150,7 +150,7 @@ enum MockSampleData {
         level: .low,
         recovery: ScoreComponent(id: "recovery", title: "Recovery", score: 48, summary: "Some recovery signals are below the mock baseline."),
         sleep: ScoreComponent(id: "sleep", title: "Sleep", score: 58, summary: "Sleep duration is a bit shorter than the mock baseline."),
-        stressFatigue: ScoreComponent(id: "stressFatigue", title: "Stress/Fatigue", score: 50, summary: "Available signals may support a gentler day."),
+        stressFatigue: ScoreComponent(id: "stressFatigue", title: "Fatigue Context", score: 50, summary: "Available signals may support a gentler day."),
         activityLoad: ScoreComponent(id: "activityLoad", title: "Activity Load", score: 62, summary: "Activity load is moderate in the mock data."),
         reasons: [
             "Several mock signals are below the recent baseline.",
