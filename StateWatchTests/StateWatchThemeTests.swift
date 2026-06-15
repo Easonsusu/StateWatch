@@ -1179,3 +1179,301 @@ final class HealthKitDashboardAssessmentProviderTests: XCTestCase {
         }
     }
 }
+
+
+final class HealthKitDashboardPhase84QATests: XCTestCase {
+    func testDefaultOffProviderKeepsDashboardMockBackedAndDoesNotLoadSnapshots() async {
+        let provider = DashboardAssessmentProvider(
+            isFeatureEnabled: { false },
+            snapshotLoader: { _ in
+                XCTFail("Default-off dashboard must not attempt the HealthKit snapshot path")
+                return Self.healthKitLikeSnapshotHistory()
+            }
+        )
+
+        let result = await provider.loadAssessment()
+        let model = DashboardDisplayModel(assessment: result.assessment)
+
+        XCTAssertEqual(result.source, .mock)
+        XCTAssertFalse(result.usesHealthKitDerivedData)
+        XCTAssertNil(result.notice)
+        assertMockDashboardModel(model)
+    }
+
+    func testEnabledProviderUsesExistingScoringEngineOutputWithoutChangingSharedState() async throws {
+        let history = Self.healthKitLikeSnapshotHistory()
+        let expectedAssessment = try XCTUnwrap(OverallStateEngine().assess(history: history, window: .thirtyDays))
+        let context = try makeUserDefaults(label: "shared-state-isolation")
+        defer { context.userDefaults.removePersistentDomain(forName: context.suiteName) }
+        let sharedStore = SharedReadinessStore(userDefaults: context.userDefaults)
+        let provider = DashboardAssessmentProvider(
+            isFeatureEnabled: { true },
+            snapshotLoader: { days in
+                XCTAssertEqual(days, DashboardAssessmentProvider.lookbackDays)
+                return history
+            }
+        )
+
+        let result = await provider.loadAssessment()
+
+        XCTAssertEqual(result.source, .healthKitDerived)
+        XCTAssertTrue(result.usesHealthKitDerivedData)
+        XCTAssertNil(result.notice)
+        XCTAssertTrue((0...100).contains(result.assessment.overallScore))
+        XCTAssertNotEqual(result.assessment.confidence, .low)
+        XCTAssertNotEqual(result.assessment.confidence, .unavailable)
+        XCTAssertEqual(result.assessment.overallScore, expectedAssessment.overallScore)
+        XCTAssertEqual(result.assessment.recovery, expectedAssessment.recovery)
+        XCTAssertEqual(result.assessment.sleep, expectedAssessment.sleep)
+        XCTAssertEqual(result.assessment.stressFatigue, expectedAssessment.stressFatigue)
+        XCTAssertEqual(result.assessment.activityLoad, expectedAssessment.activityLoad)
+        XCTAssertNil(sharedStore.load(), "HealthKit-derived Dashboard output must not be written to App Group shared state in Phase 8.4")
+    }
+
+    func testUnavailableUnauthorizedEmptySparseAndLowConfidenceInputsFallBackSafely() async {
+        struct AuthorizationMissing: Error {}
+        struct ScoringUnavailable: Error {}
+
+        let cases: [(label: String, loader: DashboardAssessmentProvider.SnapshotLoader)] = [
+            ("unavailable", { _ in throw ScoringUnavailable() }),
+            ("authorization-missing", { _ in throw AuthorizationMissing() }),
+            ("empty", { _ in [] }),
+            ("all-nil", { _ in Self.allNilSnapshotHistory() }),
+            ("partial-low-confidence", { _ in Self.partialLowConfidenceHistory() })
+        ]
+
+        for testCase in cases {
+            let provider = DashboardAssessmentProvider(
+                isFeatureEnabled: { true },
+                snapshotLoader: testCase.loader
+            )
+
+            let result = await provider.loadAssessment()
+            let searchableText = [
+                result.notice ?? "",
+                result.assessment.level.rawValue,
+                result.assessment.primarySuggestion,
+                result.assessment.reasons.joined(separator: " ")
+            ].joined(separator: " ")
+
+            XCTAssertNotEqual(result.source, .healthKitDerived, "Unexpected HealthKit-derived source for \(testCase.label)")
+            XCTAssertEqual(result.assessment, .mock, "Fallback should preserve the safe mock Dashboard for \(testCase.label)")
+            XCTAssertFalse(result.usesHealthKitDerivedData)
+            XCTAssertTrue((0...100).contains(result.assessment.overallScore))
+            XCTAssertEqual(result.assessment.level, .mixed, "Missing data should not create a negative wellness conclusion for \(testCase.label)")
+            assertNoForbiddenHealthWording(in: searchableText, context: testCase.label)
+        }
+    }
+
+    func testWatchWidgetKitAndAppGroupRemainMockOnlyWhenDashboardUsesHealthKitPath() async throws {
+        let context = try makeUserDefaults(label: "surface-isolation")
+        defer { context.userDefaults.removePersistentDomain(forName: context.suiteName) }
+        let sharedStore = SharedReadinessStore(userDefaults: context.userDefaults)
+        let provider = DashboardAssessmentProvider(
+            isFeatureEnabled: { true },
+            snapshotLoader: { _ in Self.healthKitLikeSnapshotHistory() }
+        )
+
+        let result = await provider.loadAssessment()
+        let watchModel = WatchDashboardDisplayModel.sharedMockOrStaticFallback(
+            userDefaults: context.userDefaults,
+            now: Date(timeIntervalSince1970: 91_000)
+        )
+        let complicationSummary = ComplicationStateSummary.mock
+
+        XCTAssertEqual(result.source, .healthKitDerived)
+        XCTAssertNil(sharedStore.load())
+        XCTAssertEqual(watchModel.score, 76)
+        XCTAssertEqual(watchModel.stateLabel, "Mixed")
+        XCTAssertEqual(watchModel.confidenceText, "Medium")
+        XCTAssertEqual(watchModel.updatedText, "Demo")
+        XCTAssertEqual(watchModel.source, "static-watch-mock")
+        XCTAssertTrue(watchModel.isMock)
+        XCTAssertEqual(complicationSummary.score, 76)
+        XCTAssertEqual(complicationSummary.stateLabel, "Mixed")
+        XCTAssertEqual(complicationSummary.confidence, "Medium")
+        XCTAssertEqual(complicationSummary.updatedText, "Demo")
+    }
+
+    func testPhase84ProductionSurfaceSourcesDoNotIntroduceDisallowedMechanisms() throws {
+        let repositoryRoot = repositoryRoot()
+        let filesToScan = [
+            repositoryRoot.appendingPathComponent("StateWatchApp/Features/Dashboard/DashboardView.swift"),
+            repositoryRoot.appendingPathComponent("StateWatchApp/App/HealthKitDashboardFeatureFlag.swift"),
+            repositoryRoot.appendingPathComponent("StateWatchWatchApp/Features/WatchDashboardView.swift"),
+            repositoryRoot.appendingPathComponent("StateWatchComplications/StateWatchComplicationProvider.swift"),
+            repositoryRoot.appendingPathComponent("StateWatchComplications/ComplicationStateSummary.swift"),
+            repositoryRoot.appendingPathComponent("StateWatchShared/SharedReadinessStore.swift"),
+            repositoryRoot.appendingPathComponent("StateWatchShared/SharedReadinessSummary.swift")
+        ]
+
+        let disallowedTokensByPath: [(fileURL: URL, tokens: [String])] = filesToScan.map { fileURL in
+            if fileURL.path.contains("StateWatchComplications") || fileURL.path.contains("StateWatchWatchApp") {
+                return (
+                    fileURL,
+                    [
+                        "import HealthKit",
+                        "HealthKitDataFetcher",
+                        "fetchRecentSnapshots",
+                        "HKHealthStore",
+                        "HKQuantitySample",
+                        "requestAuthorization(toShare",
+                        "URLSession",
+                        "WatchConnectivity",
+                        "WCSession",
+                        "remoteConfig",
+                        "cloud sync"
+                    ]
+                )
+            }
+
+            return (
+                fileURL,
+                [
+                    "HKHealthStore.save",
+                    "HKQuantitySample(",
+                    "requestAuthorization(toShare",
+                    "NSHealthUpdateUsageDescription",
+                    "URLSession",
+                    "WatchConnectivity",
+                    "WCSession",
+                    "remoteConfig",
+                    "cloud sync",
+                    "developer upload",
+                    "backend upload"
+                ]
+            )
+        }
+
+        for (fileURL, disallowedTokens) in disallowedTokensByPath {
+            let source = try String(contentsOf: fileURL, encoding: .utf8)
+            for token in disallowedTokens {
+                XCTAssertFalse(
+                    source.localizedCaseInsensitiveContains(token),
+                    "Unexpected disallowed Phase 8.4 mechanism in \(fileURL.lastPathComponent): \(token)"
+                )
+            }
+        }
+    }
+
+    func testFeatureFlaggedDashboardStringsAvoidMedicalAndRolloutOverclaims() async {
+        let providers = [
+            DashboardAssessmentProvider(isFeatureEnabled: { false }),
+            DashboardAssessmentProvider(isFeatureEnabled: { true }, snapshotLoader: { _ in [] }),
+            DashboardAssessmentProvider(isFeatureEnabled: { true }, snapshotLoader: { _ in Self.healthKitLikeSnapshotHistory() })
+        ]
+
+        for provider in providers {
+            let result = await provider.loadAssessment()
+            let model = DashboardDisplayModel(assessment: result.assessment)
+            let searchableText = [
+                result.notice ?? "",
+                model.searchableText,
+                result.assessment.primarySuggestion,
+                result.assessment.reasons.joined(separator: " ")
+            ].joined(separator: " ")
+
+            assertNoForbiddenHealthWording(in: searchableText, context: "\(result.source)")
+            for forbiddenRolloutClaim in [
+                "live HealthKit-backed Watch",
+                "live HealthKit-backed WidgetKit",
+                "AI health analysis",
+                "medical recommendation",
+                "mental health diagnosis",
+                "abnormal health alert"
+            ] {
+                XCTAssertFalse(
+                    searchableText.localizedCaseInsensitiveContains(forbiddenRolloutClaim),
+                    "Unexpected rollout wording in \(result.source): \(forbiddenRolloutClaim)"
+                )
+            }
+        }
+    }
+
+    private func assertMockDashboardModel(
+        _ model: DashboardDisplayModel,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        XCTAssertEqual(model.score, 76, file: file, line: line)
+        XCTAssertEqual(model.stateLabel, "Mixed", file: file, line: line)
+        XCTAssertEqual(model.confidence, .medium, file: file, line: line)
+        XCTAssertTrue(model.updatedText.localizedCaseInsensitiveContains("Demo data"), file: file, line: line)
+        XCTAssertEqual(model.trendCaption, "Mock data", file: file, line: line)
+    }
+
+    private func assertNoForbiddenHealthWording(
+        in searchableText: String,
+        context: String,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        for forbiddenTerm in [
+            "diagnos",
+            "disease",
+            "clinical stress",
+            "treatment",
+            "warning",
+            "alert",
+            "emergency",
+            "health risk",
+            "medical advice"
+        ] {
+            XCTAssertFalse(
+                searchableText.localizedCaseInsensitiveContains(forbiddenTerm),
+                "Unexpected health wording in \(context): \(forbiddenTerm)",
+                file: file,
+                line: line
+            )
+        }
+    }
+
+    private func makeUserDefaults(label: String) throws -> (suiteName: String, userDefaults: UserDefaults) {
+        let suiteName = "statewatch.dashboard.phase84.\(label).\(UUID().uuidString)"
+        let userDefaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        userDefaults.removePersistentDomain(forName: suiteName)
+        return (suiteName, userDefaults)
+    }
+
+    private static func healthKitLikeSnapshotHistory() -> [DailyHealthSnapshot] {
+        let calendar = Calendar(identifier: .gregorian)
+        let start = Date(timeIntervalSince1970: 80_000)
+
+        return (0..<14).compactMap { offset in
+            guard let date = calendar.date(byAdding: .day, value: offset, to: start) else {
+                return nil
+            }
+
+            return DailyHealthSnapshot(
+                date: date,
+                restingHeartRate: offset == 13 ? 64 : 63,
+                averageHeartRate: offset == 13 ? 79 : 78,
+                heartRateVariability: offset == 13 ? 46 : 44,
+                sleepDurationHours: offset == 13 ? 7.3 : 7.1,
+                activeEnergyKcal: offset == 13 ? 495 : 470,
+                exerciseMinutes: offset == 13 ? 31 : 28,
+                stepCount: offset == 13 ? 8_500 : 7_900
+            )
+        }
+    }
+
+    private static func allNilSnapshotHistory() -> [DailyHealthSnapshot] {
+        [
+            DailyHealthSnapshot(date: Date(timeIntervalSince1970: 82_000)),
+            DailyHealthSnapshot(date: Date(timeIntervalSince1970: 168_400))
+        ]
+    }
+
+    private static func partialLowConfidenceHistory() -> [DailyHealthSnapshot] {
+        [
+            DailyHealthSnapshot(date: Date(timeIntervalSince1970: 84_000), stepCount: 4_000),
+            DailyHealthSnapshot(date: Date(timeIntervalSince1970: 170_400), stepCount: 4_200)
+        ]
+    }
+
+    private func repositoryRoot(filePath: String = #filePath) -> URL {
+        URL(fileURLWithPath: filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+    }
+}

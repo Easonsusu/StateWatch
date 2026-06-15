@@ -506,6 +506,31 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Confirm local WidgetKit complication build passes on an installed Apple Watch simulator.
 - Confirm GitHub Actions is not manually triggered or used as the debugging loop.
 
+## Phase 8.4 QA Audit for Feature-Flagged HealthKit Dashboard
+
+- Confirm the HealthKit Dashboard feature flag defaults off.
+- Confirm Dashboard remains mock-backed when the flag is off.
+- Confirm the default Dashboard mock values remain stable: score `76`, state label `Mixed`, confidence `Medium`, Dashboard demo text, and shared summary updated text `Demo`.
+- Confirm the HealthKit path only runs when the local flag is on.
+- Confirm HealthKit-derived assessment scores remain within `0...100`.
+- Confirm the HealthKit path reuses the existing HealthKit snapshot, baseline, and scoring pipeline instead of duplicating scoring logic.
+- Confirm HealthKit unavailable, unauthorized, empty, sparse, low-confidence, and failed scoring/loading states fall back safely.
+- Confirm missing data is not treated as a negative health status.
+- Confirm fallback copy remains calm and avoids diagnosis, disease detection, clinical stress detection, treatment, warning, alert, emergency, or medical advice language.
+- Confirm Watch app behavior remains unchanged.
+- Confirm WidgetKit behavior remains unchanged.
+- Confirm App Group behavior remains mock-only.
+- Confirm no HealthKit-derived summary is propagated to App Group.
+- Confirm no raw HealthKit samples are stored in App Group.
+- Confirm WidgetKit complications do not fetch HealthKit directly.
+- Confirm the Watch app does not fetch HealthKit directly.
+- Confirm no HealthKit write access was added.
+- Confirm no networking, upload path, remote config, cloud sync, WatchConnectivity, login, server call, or AI was added.
+- Confirm no visual-first UI, icon assets, check-in UI, bilingual UI, localization, or Dashboard layout changes were added.
+- Confirm future UI, icon, state imagery, check-in, complication, or bilingual work still uses the existing Figma design system as the source of truth first.
+- Confirm local Xcode validation was used.
+- Confirm GitHub Actions was not manually triggered.
+
 ## Phase 6.2 Watch App Visual Refresh
 
 - Confirm PR #22 is merged before starting the Watch visual refresh branch.
