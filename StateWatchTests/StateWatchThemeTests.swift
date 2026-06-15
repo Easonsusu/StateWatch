@@ -1477,3 +1477,431 @@ final class HealthKitDashboardPhase84QATests: XCTestCase {
             .deletingLastPathComponent()
     }
 }
+
+
+final class HealthKitDashboardLowDataSafetyTests: XCTestCase {
+    func testMissingAuthorizationFallsBackWithoutNegativeHealthStatus() async {
+        struct MissingAuthorization: Error {}
+        let provider = DashboardAssessmentProvider(
+            isFeatureEnabled: { true },
+            snapshotLoader: { _ in throw MissingAuthorization() }
+        )
+
+        let result = await provider.loadAssessment()
+
+        assertSafeFallback(result, context: "missing authorization")
+    }
+
+    func testEmptyMetricSpecificSnapshotHistoriesRemainSafe() async {
+        let cases: [(label: String, history: [DailyHealthSnapshot])] = [
+            ("empty sleep data", Self.historyWithoutSleep()),
+            ("empty HRV data", Self.historyWithoutHRV()),
+            ("empty resting heart rate data", Self.historyWithoutRestingHeartRate()),
+            ("empty activity load data", Self.historyWithoutActivityLoad()),
+            ("fully empty snapshots", Self.emptyMetricHistory())
+        ]
+
+        for testCase in cases {
+            let provider = DashboardAssessmentProvider(
+                isFeatureEnabled: { true },
+                snapshotLoader: { _ in testCase.history }
+            )
+
+            let result = await provider.loadAssessment()
+
+            assertSafeResult(result, context: testCase.label)
+            if result.source != .healthKitDerived {
+                XCTAssertEqual(result.assessment.level, .mixed, "Empty data should not lower health state by itself for \(testCase.label)")
+            }
+        }
+    }
+
+    func testSparsePartialDataFallsBackInsteadOfProducingStrongAdvice() async {
+        let cases: [(label: String, history: [DailyHealthSnapshot])] = [
+            ("only sleep data", Self.sparseOnlySleepHistory()),
+            ("only activity data", Self.sparseOnlyActivityHistory()),
+            ("only HRV and resting heart rate data", Self.sparseOnlyRecoverySignalHistory())
+        ]
+
+        for testCase in cases {
+            let provider = DashboardAssessmentProvider(
+                isFeatureEnabled: { true },
+                snapshotLoader: { _ in testCase.history }
+            )
+
+            let result = await provider.loadAssessment()
+
+            XCTAssertNotEqual(result.source, .healthKitDerived, "Sparse partial data should not produce an overconfident HealthKit-derived result for \(testCase.label)")
+            assertSafeFallback(result, context: testCase.label)
+            assertNoStrongAdvice(in: result.assessment.primarySuggestion, context: testCase.label)
+        }
+    }
+
+    func testStaleSparseDataFallsBackAndDoesNotLookCurrent() async {
+        let provider = DashboardAssessmentProvider(
+            isFeatureEnabled: { true },
+            snapshotLoader: { _ in Self.staleSparseHistory() }
+        )
+
+        let result = await provider.loadAssessment()
+
+        XCTAssertEqual(result.source, .lowDataFallback)
+        assertSafeFallback(result, context: "stale sparse data")
+        XCTAssertFalse(result.usesHealthKitDerivedData)
+        XCTAssertNotNil(result.notice)
+    }
+
+    func testImpossibleFiniteInputsDoNotCrashAndStayDisplaySafe() async {
+        let provider = DashboardAssessmentProvider(
+            isFeatureEnabled: { true },
+            snapshotLoader: { _ in Self.impossibleButFiniteHistory() }
+        )
+
+        let result = await provider.loadAssessment()
+
+        assertSafeResult(result, context: "impossible finite inputs")
+        XCTAssertTrue((0...100).contains(result.assessment.overallScore))
+        for component in result.assessment.components {
+            XCTAssertTrue((0...100).contains(component.score), "Component score escaped display range for \(component.title)")
+        }
+    }
+
+    func testLowConfidenceAndUnavailableInputsDoNotReadAsBadHealth() async {
+        let cases: [(label: String, history: [DailyHealthSnapshot])] = [
+            ("low confidence", Self.sparseOnlySleepHistory()),
+            ("unavailable confidence", Self.emptyMetricHistory())
+        ]
+
+        for testCase in cases {
+            let provider = DashboardAssessmentProvider(
+                isFeatureEnabled: { true },
+                snapshotLoader: { _ in testCase.history }
+            )
+
+            let result = await provider.loadAssessment()
+            let searchableText = searchableText(for: result)
+
+            XCTAssertNotEqual(result.source, .healthKitDerived)
+            assertNoNegativeHealthConclusion(in: searchableText, context: testCase.label)
+            assertNoStrongAdvice(in: result.assessment.primarySuggestion, context: testCase.label)
+        }
+    }
+
+    func testDefaultOffStillDoesNotLoadLowDataHealthKitFixtures() async {
+        let provider = DashboardAssessmentProvider(
+            isFeatureEnabled: { false },
+            snapshotLoader: { _ in
+                XCTFail("Default-off Dashboard must not inspect low-data HealthKit fixtures")
+                return Self.sparseOnlyActivityHistory()
+            }
+        )
+
+        let result = await provider.loadAssessment()
+
+        XCTAssertEqual(result.source, .mock)
+        XCTAssertEqual(result.assessment, .mock)
+        XCTAssertFalse(result.usesHealthKitDerivedData)
+    }
+
+    func testLowDataHealthKitPathStillDoesNotWriteAppGroupSharedState() async throws {
+        let context = try makeUserDefaults(label: "app-group-isolation")
+        defer { context.userDefaults.removePersistentDomain(forName: context.suiteName) }
+        let sharedStore = SharedReadinessStore(userDefaults: context.userDefaults)
+        let provider = DashboardAssessmentProvider(
+            isFeatureEnabled: { true },
+            snapshotLoader: { _ in Self.sparseOnlyActivityHistory() }
+        )
+
+        let result = await provider.loadAssessment()
+
+        XCTAssertNotEqual(result.source, .healthKitDerived)
+        XCTAssertNil(sharedStore.load())
+    }
+
+    func testLowDataSafetySourcesDoNotIntroduceDisallowedMechanisms() throws {
+        let root = repositoryRoot()
+        let filesToScan = [
+            root.appendingPathComponent("StateWatchApp/Features/Dashboard/DashboardView.swift"),
+            root.appendingPathComponent("StateWatchApp/App/HealthKitDashboardFeatureFlag.swift"),
+            root.appendingPathComponent("StateWatchWatchApp/Features/WatchDashboardView.swift"),
+            root.appendingPathComponent("StateWatchComplications/StateWatchComplicationProvider.swift"),
+            root.appendingPathComponent("StateWatchShared/SharedReadinessStore.swift"),
+            root.appendingPathComponent("StateWatchShared/SharedReadinessSummary.swift")
+        ]
+
+        for fileURL in filesToScan {
+            let source = try String(contentsOf: fileURL, encoding: .utf8)
+            let tokens = disallowedTokens(for: fileURL)
+            for token in tokens {
+                XCTAssertFalse(
+                    source.localizedCaseInsensitiveContains(token),
+                    "Unexpected disallowed low-data mechanism in \(fileURL.lastPathComponent): \(token)"
+                )
+            }
+        }
+    }
+
+    private func assertSafeFallback(
+        _ result: DashboardAssessmentResult,
+        context: String,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        XCTAssertNotEqual(result.source, .healthKitDerived, file: file, line: line)
+        XCTAssertEqual(result.assessment, .mock, file: file, line: line)
+        XCTAssertFalse(result.usesHealthKitDerivedData, file: file, line: line)
+        assertSafeResult(result, context: context, file: file, line: line)
+    }
+
+    private func assertSafeResult(
+        _ result: DashboardAssessmentResult,
+        context: String,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        XCTAssertTrue((0...100).contains(result.assessment.overallScore), file: file, line: line)
+        assertNoNegativeHealthConclusion(in: searchableText(for: result), context: context, file: file, line: line)
+    }
+
+    private func assertNoNegativeHealthConclusion(
+        in searchableText: String,
+        context: String,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        for forbiddenTerm in [
+            "diagnos",
+            "disease",
+            "clinical stress",
+            "treatment",
+            "warning",
+            "alert",
+            "emergency",
+            "abnormal health",
+            "bad health",
+            "health risk",
+            "medical advice",
+            "mental health diagnosis"
+        ] {
+            XCTAssertFalse(
+                searchableText.localizedCaseInsensitiveContains(forbiddenTerm),
+                "Unexpected low-data health wording in \(context): \(forbiddenTerm)",
+                file: file,
+                line: line
+            )
+        }
+    }
+
+    private func assertNoStrongAdvice(
+        in text: String,
+        context: String,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        for forbiddenAdvice in [
+            "must",
+            "need to",
+            "required",
+            "urgent",
+            "immediately",
+            "avoid exercise",
+            "seek treatment"
+        ] {
+            XCTAssertFalse(
+                text.localizedCaseInsensitiveContains(forbiddenAdvice),
+                "Unexpected strong advice in \(context): \(forbiddenAdvice)",
+                file: file,
+                line: line
+            )
+        }
+    }
+
+    private func searchableText(for result: DashboardAssessmentResult) -> String {
+        let model = DashboardDisplayModel(assessment: result.assessment)
+        return [
+            result.notice ?? "",
+            model.searchableText,
+            result.assessment.level.rawValue,
+            result.assessment.confidence.rawValue,
+            result.assessment.primarySuggestion,
+            result.assessment.reasons.joined(separator: " "),
+            result.assessment.components.map { "\($0.title) \($0.summary) \($0.confidence.rawValue)" }.joined(separator: " ")
+        ].joined(separator: " ")
+    }
+
+    private func disallowedTokens(for fileURL: URL) -> [String] {
+        if fileURL.path.contains("StateWatchComplications") || fileURL.path.contains("StateWatchWatchApp") {
+            return [
+                "import HealthKit",
+                "HealthKitDataFetcher",
+                "fetchRecentSnapshots",
+                "HKHealthStore",
+                "HKQuantitySample",
+                "URLSession",
+                "WatchConnectivity",
+                "WCSession",
+                "raw HealthKit",
+                "developer upload",
+                "backend upload"
+            ]
+        }
+
+        if fileURL.path.contains("StateWatchShared") {
+            return [
+                "DailyHealthSnapshot",
+                "HealthBaseline",
+                "HealthKitDataFetcher",
+                "HKHealthStore",
+                "HKQuantitySample",
+                "URLSession",
+                "WatchConnectivity",
+                "WCSession",
+                "raw HealthKit"
+            ]
+        }
+
+        return [
+            "HKHealthStore.save",
+            "HKQuantitySample(",
+            "requestAuthorization(toShare",
+            "NSHealthUpdateUsageDescription",
+            "URLSession",
+            "WatchConnectivity",
+            "WCSession",
+            "remoteConfig",
+            "cloud sync",
+            "analytics rollout",
+            "developer upload",
+            "backend upload"
+        ]
+    }
+
+    private func makeUserDefaults(label: String) throws -> (suiteName: String, userDefaults: UserDefaults) {
+        let suiteName = "statewatch.dashboard.phase85.\(label).\(UUID().uuidString)"
+        let userDefaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        userDefaults.removePersistentDomain(forName: suiteName)
+        return (suiteName, userDefaults)
+    }
+
+    private static func historyWithoutSleep() -> [DailyHealthSnapshot] {
+        metricHistory { offset, date in
+            DailyHealthSnapshot(
+                date: date,
+                restingHeartRate: offset == 13 ? 65 : 63,
+                averageHeartRate: offset == 13 ? 80 : 78,
+                heartRateVariability: offset == 13 ? 47 : 44,
+                activeEnergyKcal: offset == 13 ? 505 : 470,
+                exerciseMinutes: offset == 13 ? 32 : 28,
+                stepCount: offset == 13 ? 8_400 : 7_800
+            )
+        }
+    }
+
+    private static func historyWithoutHRV() -> [DailyHealthSnapshot] {
+        metricHistory { offset, date in
+            DailyHealthSnapshot(
+                date: date,
+                restingHeartRate: offset == 13 ? 65 : 63,
+                averageHeartRate: offset == 13 ? 80 : 78,
+                sleepDurationHours: offset == 13 ? 7.2 : 7.0,
+                activeEnergyKcal: offset == 13 ? 505 : 470,
+                exerciseMinutes: offset == 13 ? 32 : 28,
+                stepCount: offset == 13 ? 8_400 : 7_800
+            )
+        }
+    }
+
+    private static func historyWithoutRestingHeartRate() -> [DailyHealthSnapshot] {
+        metricHistory { offset, date in
+            DailyHealthSnapshot(
+                date: date,
+                averageHeartRate: offset == 13 ? 80 : 78,
+                heartRateVariability: offset == 13 ? 47 : 44,
+                sleepDurationHours: offset == 13 ? 7.2 : 7.0,
+                activeEnergyKcal: offset == 13 ? 505 : 470,
+                exerciseMinutes: offset == 13 ? 32 : 28,
+                stepCount: offset == 13 ? 8_400 : 7_800
+            )
+        }
+    }
+
+    private static func historyWithoutActivityLoad() -> [DailyHealthSnapshot] {
+        metricHistory { offset, date in
+            DailyHealthSnapshot(
+                date: date,
+                restingHeartRate: offset == 13 ? 65 : 63,
+                averageHeartRate: offset == 13 ? 80 : 78,
+                heartRateVariability: offset == 13 ? 47 : 44,
+                sleepDurationHours: offset == 13 ? 7.2 : 7.0
+            )
+        }
+    }
+
+    private static func emptyMetricHistory() -> [DailyHealthSnapshot] {
+        metricHistory { _, date in DailyHealthSnapshot(date: date) }
+    }
+
+    private static func sparseOnlySleepHistory() -> [DailyHealthSnapshot] {
+        [
+            DailyHealthSnapshot(date: Date(timeIntervalSince1970: 150_000), sleepDurationHours: 6.8),
+            DailyHealthSnapshot(date: Date(timeIntervalSince1970: 236_400), sleepDurationHours: 7.0)
+        ]
+    }
+
+    private static func sparseOnlyActivityHistory() -> [DailyHealthSnapshot] {
+        [
+            DailyHealthSnapshot(date: Date(timeIntervalSince1970: 152_000), activeEnergyKcal: 300, exerciseMinutes: 12, stepCount: 4_200),
+            DailyHealthSnapshot(date: Date(timeIntervalSince1970: 238_400), activeEnergyKcal: 320, exerciseMinutes: 14, stepCount: 4_500)
+        ]
+    }
+
+    private static func sparseOnlyRecoverySignalHistory() -> [DailyHealthSnapshot] {
+        [
+            DailyHealthSnapshot(date: Date(timeIntervalSince1970: 154_000), restingHeartRate: 65, heartRateVariability: 42),
+            DailyHealthSnapshot(date: Date(timeIntervalSince1970: 240_400), restingHeartRate: 66, heartRateVariability: 41)
+        ]
+    }
+
+    private static func staleSparseHistory() -> [DailyHealthSnapshot] {
+        [
+            DailyHealthSnapshot(date: Date(timeIntervalSince1970: 10_000), stepCount: 5_000),
+            DailyHealthSnapshot(date: Date(timeIntervalSince1970: 96_400), stepCount: 5_200)
+        ]
+    }
+
+    private static func impossibleButFiniteHistory() -> [DailyHealthSnapshot] {
+        metricHistory { offset, date in
+            DailyHealthSnapshot(
+                date: date,
+                restingHeartRate: offset == 13 ? -20 : 300,
+                averageHeartRate: offset == 13 ? 400 : -10,
+                heartRateVariability: offset == 13 ? -50 : 1_000,
+                sleepDurationHours: offset == 13 ? -3 : 30,
+                activeEnergyKcal: offset == 13 ? -200 : 10_000,
+                exerciseMinutes: offset == 13 ? -15 : 900,
+                stepCount: offset == 13 ? -1_000 : 100_000
+            )
+        }
+    }
+
+    private static func metricHistory(
+        build: (_ offset: Int, _ date: Date) -> DailyHealthSnapshot
+    ) -> [DailyHealthSnapshot] {
+        let calendar = Calendar(identifier: .gregorian)
+        let start = Date(timeIntervalSince1970: 120_000)
+
+        return (0..<14).compactMap { offset in
+            guard let date = calendar.date(byAdding: .day, value: offset, to: start) else {
+                return nil
+            }
+
+            return build(offset, date)
+        }
+    }
+
+    private func repositoryRoot(filePath: String = #filePath) -> URL {
+        URL(fileURLWithPath: filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+    }
+}

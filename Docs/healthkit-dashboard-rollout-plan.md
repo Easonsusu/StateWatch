@@ -247,6 +247,20 @@ Phase 8.4 audits the Phase 8.3 path without adding new product behavior:
 - Raw HealthKit samples must not enter App Group shared state.
 - Local Xcode simulator validation should be used for the QA loop; GitHub Actions should not be manually triggered for debugging.
 
+## Phase 8.5 Low-Data Safety Audit Scope
+
+Phase 8.5 narrows the audit to low-data and missing-data safety:
+
+- Missing HealthKit authorization must not crash the Dashboard provider.
+- HealthKit unavailable or denied states must fall back safely.
+- Empty sleep, HRV, resting heart rate, and activity/load inputs must not be treated as negative health status.
+- Sparse or partial data should lower confidence or fall back safely, not produce overconfident recommendations.
+- Stale data should not produce strong current-state claims.
+- Scoring failure or impossible inputs must not crash and any produced score must remain display-safe.
+- Watch, WidgetKit, and App Group HealthKit propagation remain deferred.
+- HealthKit-derived Dashboard output must not be written into App Group shared state in this phase.
+- Raw HealthKit samples must not enter App Group shared state.
+
 ## Safety Rules
 
 The rollout must preserve these boundaries:
