@@ -85,7 +85,7 @@ Component cards should summarize:
 
 - Recovery
 - Sleep
-- Stress/fatigue context
+- Fatigue context
 - Activity load
 
 Each card should include:

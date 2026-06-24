@@ -83,7 +83,7 @@ recovery, while missing activity data lowers confidence only.
 
 - Recovery: 35%
 - Sleep: 25%
-- Stress/fatigue context: 25%
+- Fatigue context: 25%
 - Activity load: 15%
 
 Scores are clamped from 0 to 100. The MVP labels are intentionally plain:
