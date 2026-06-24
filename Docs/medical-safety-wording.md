@@ -5,7 +5,7 @@
 - "Daily wellness reflection"
 - "Recovery signal"
 - "Sleep trend"
-- "Stress/fatigue context"
+- "Fatigue context"
 - "Activity load"
 - "May suggest"
 - "Consider taking it easier"
@@ -24,7 +24,7 @@
 
 ## Disclaimer draft
 
-StateWatch provides wellness reflections based on available Apple Health and check-in data. It is not a medical device and does not provide medical diagnosis, treatment, or disease detection. If you have medical concerns, consult a qualified healthcare professional.
+StateWatch provides wellness reflections based on available Apple Health and check-in data. It is not a medical device and does not diagnose, treat, cure, or prevent any disease. It does not provide medical advice. If you have medical concerns, consult a qualified healthcare professional.
 
 ## Suggestion tone
 

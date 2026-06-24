@@ -16,7 +16,7 @@ This repository is not App Store ready. It contains the initial foundation and p
 
 ## Reviewer notes draft
 
-StateWatch is a wellness reflection app for iPhone and Apple Watch. It uses Apple Health data only with user permission and keeps HealthKit data local in the MVP. It does not provide medical diagnosis, disease detection, treatment, or prevention claims.
+StateWatch is a wellness reflection app for iPhone and Apple Watch. It uses Apple Health data only with user permission and keeps HealthKit data local in the MVP. It is not a medical device and does not diagnose, treat, cure, or prevent any disease.
 
 ## TODO
 

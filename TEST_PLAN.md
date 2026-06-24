@@ -24,7 +24,7 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Recovery scoring responds conservatively to resting heart rate above baseline.
 - Sleep scoring reflects duration below baseline and recent sleep trend.
 - Missing sleep data returns a cautious placeholder and unavailable confidence.
-- Overall state combines recovery, sleep, stress/fatigue context, and activity load with the MVP weights.
+- Overall state combines recovery, sleep, fatigue context, and activity load with the MVP weights.
 - Scores are clamped between 0 and 100.
 - Low-data history produces lower-confidence StateAssessment output.
 - Suggestion generation avoids medical advice and uses cautious language.

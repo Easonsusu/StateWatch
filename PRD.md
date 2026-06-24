@@ -2,7 +2,7 @@
 
 ## Product summary
 
-StateWatch helps users reflect on their daily wellness state by combining Apple Watch / Apple Health signals with optional user check-ins. The MVP focuses on recovery, sleep, stress/fatigue, and activity load.
+StateWatch helps users reflect on their daily wellness state by combining Apple Watch / Apple Health signals with optional user check-ins. The MVP focuses on recovery, sleep, fatigue context, and activity load.
 
 ## Goals
 
@@ -22,7 +22,7 @@ StateWatch helps users reflect on their daily wellness state by combining Apple 
 ## MVP user stories
 
 - As a user, I can grant HealthKit read access after seeing a plain-language privacy explanation.
-- As a user, I can view a daily wellness state score with recovery, sleep, stress/fatigue, and activity context.
+- As a user, I can view a daily wellness state score with recovery, sleep, fatigue context, and activity context.
 - As a user, I can see reasons behind today's state in cautious language.
 - As a user, I can add a subjective check-in to complement wearable signals.
 - As a user, I can view simple trend placeholders before deeper charts are built.
@@ -35,7 +35,7 @@ StateWatch helps users reflect on their daily wellness state by combining Apple 
 - Sleep duration and sleep consistency.
 - Active energy, steps, exercise minutes, and stand hours.
 - Mindfulness minutes, when available.
-- Optional user check-ins for mood, fatigue, stress, and notes.
+- Optional user check-ins for mood, fatigue, felt strain, and notes.
 
 ## Acceptance criteria for this foundation task
 

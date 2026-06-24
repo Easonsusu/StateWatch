@@ -6,7 +6,7 @@ StateWatch is a wellness reflection app for iPhone and Apple Watch.
 
 ## Data sources
 
-With your permission, StateWatch may read selected Apple Health / HealthKit data such as sleep, heart rate, heart rate variability, activity, and mindfulness-related signals. You may also enter optional check-ins such as perceived mood, fatigue, stress, and notes.
+With your permission, StateWatch may read selected Apple Health / HealthKit data such as sleep, heart rate, heart rate variability, activity, and mindfulness-related signals. You may also enter optional check-ins such as perceived mood, fatigue, felt strain, and notes.
 
 ## Local-first MVP
 
