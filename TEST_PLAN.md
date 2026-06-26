@@ -596,6 +596,23 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Confirm no Phase 9 State Check-in or Watch/WidgetKit HealthKit propagation work was started.
 - Confirm GitHub Actions is not manually triggered or used as the debugging loop.
 
+## Phase 9.0 State Check-in Architecture Design
+
+- Confirm `Docs/phase-9-0-state-checkin-architecture.md` exists.
+- Confirm State Check-in is documented as subjective self-report only.
+- Confirm the initial states are exactly `Energized`, `Stable`, `Tired`, and `Low`.
+- Confirm Traditional Chinese labels are exactly `有活力`, `穩定`, `疲累`, and `低狀態`.
+- Confirm the architecture avoids emotion diagnosis, mental-health diagnosis, anxiety detection, depression detection, clinical stress detection, disease detection, treatment, emergency, abnormal-state, and medical advice claims.
+- Confirm future timing concepts such as morning, midday, and evening do not add scheduling, reminders, notifications, or background delivery in Phase 9.0.
+- Confirm the proposed model is documentation-only and no Swift `StateCheckIn` implementation was added.
+- Confirm local-only storage direction is documented without adding storage, cloud sync, account systems, analytics, AI, or developer-accessible data.
+- Confirm App Group use is deferred and raw check-in history, notes, HealthKit samples, and HealthKit objects are excluded from future shared state.
+- Confirm HealthKit relationship is complementary and avoids causal or medical-signal claims.
+- Confirm missing check-ins remain optional and do not imply a bad state or lower HealthKit-derived scores.
+- Confirm future UI work is gated by Figma, especially Watch layout, icon buttons, and bilingual layout.
+- Confirm no iPhone UI, Watch UI, WidgetKit display, App Group propagation, WatchConnectivity, HealthKit write access, networking, remote config, or Phase 9.1+ work was added.
+- Confirm GitHub Actions is not manually triggered or used as the debugging loop.
+
 ## Phase 6.2 Watch App Visual Refresh
 
 - Confirm PR #22 is merged before starting the Watch visual refresh branch.
