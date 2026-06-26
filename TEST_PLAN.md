@@ -579,6 +579,23 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Confirm no HealthKit write access, networking, cloud sync, account system, analytics rollout, remote config, server upload, or AI cloud analysis was added.
 - Confirm local Xcode validation was used.
 
+## Phase 8.9 Real-Device HealthKit QA Plan
+
+- Confirm `Docs/phase-8-9-real-device-healthkit-qa-plan.md` exists.
+- Confirm the plan requires a real iPhone for meaningful HealthKit validation.
+- Confirm a paired Apple Watch is recommended, but not required, for richer real-device data.
+- Confirm simulator validation is described as useful for builds but insufficient for real HealthKit data behavior.
+- Confirm the HealthKit Dashboard feature flag remains local-only and default-off.
+- Confirm the production Dashboard remains mock-backed when the flag is off or reset.
+- Confirm local internal testing instructions do not add a public Settings toggle, remote config, account control, or analytics control.
+- Confirm HealthKit permission test cases cover first launch, allowed access, denied access, revoked access, partial data, no sleep data, no activity data, stale data, sparse data, low confidence, and unavailable/fetch-failure states.
+- Confirm missing, denied, sparse, stale, low-confidence, and unavailable data are expected to lower confidence, show unavailable/low-data/fallback behavior, or keep mock data instead of creating a negative health state.
+- Confirm evidence collection excludes raw HealthKit samples, full health history, identifiable screenshots, exported Health databases, cloud logs containing health data, and user account health profiles.
+- Confirm HealthKit-derived output remains isolated to the feature-flagged iPhone Dashboard path and is not propagated to Watch, WidgetKit, or App Group shared state.
+- Confirm no networking, upload path, cloud sync, AI, analytics, remote config, account system, WatchConnectivity, or HealthKit write access was added.
+- Confirm no Phase 9 State Check-in or Watch/WidgetKit HealthKit propagation work was started.
+- Confirm GitHub Actions is not manually triggered or used as the debugging loop.
+
 ## Phase 6.2 Watch App Visual Refresh
 
 - Confirm PR #22 is merged before starting the Watch visual refresh branch.
