@@ -629,6 +629,20 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Confirm Phase 9.2, Phase 9.3, and Phase 9.4 remain future work.
 - Confirm GitHub Actions is not manually triggered or used as the debugging loop.
 
+## Phase 9.2 Watch Check-in Figma Mockups
+
+- Confirm `Docs/phase-9-2-watch-checkin-figma-mockups.md` exists.
+- Confirm the phase is documentation and Figma handoff planning only.
+- Confirm no Swift source files, Xcode project files, assets, or Figma binary files changed.
+- Confirm the approved states are exactly `Energized`, `Stable`, `Tired`, and `Low`.
+- Confirm Traditional Chinese labels are exactly `有活力`, `穩定`, `疲累`, and `低狀態`.
+- Confirm at least two Watch layout options are documented.
+- Confirm confirmation, no-check-in-yet, and unavailable copy is calm and non-alarming.
+- Confirm icon direction remains placeholder-level only.
+- Confirm the Figma handoff checklist exists before Phase 9.3 SwiftUI work.
+- Confirm no check-in storage, reminders, notifications, WidgetKit check-in display, App Group propagation, WatchConnectivity, networking, cloud, analytics, remote config, AI, HealthKit write access, or HealthKit rollout behavior was added.
+- Confirm GitHub Actions is not manually triggered or used as the debugging loop.
+
 ## Phase 6.2 Watch App Visual Refresh
 
 - Confirm PR #22 is merged before starting the Watch visual refresh branch.
