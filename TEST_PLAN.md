@@ -613,6 +613,22 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Confirm no iPhone UI, Watch UI, WidgetKit display, App Group propagation, WatchConnectivity, HealthKit write access, networking, remote config, or Phase 9.1+ work was added.
 - Confirm GitHub Actions is not manually triggered or used as the debugging loop.
 
+## Phase 9.1 State Check-in Architecture QA
+
+- Confirm `Docs/phase-9-1-state-checkin-architecture-qa.md` exists.
+- Confirm the QA audit reviewed `Docs/phase-9-0-state-checkin-architecture.md` and related safety, privacy, scoring, rollout, and planning docs.
+- Confirm State Check-in remains subjective self-report only.
+- Confirm the approved states remain exactly `Energized`, `Stable`, `Tired`, and `Low`.
+- Confirm Traditional Chinese labels remain exactly `有活力`, `穩定`, `疲累`, and `低狀態`.
+- Confirm no diagnosis, mental-health detection, anxiety detection, depression detection, clinical stress detection, treatment, therapy, emergency, warning, abnormal-state, or medical-advice claims were introduced.
+- Confirm missing check-ins remain optional and are not treated as negative or score-lowering.
+- Confirm future storage remains local-only and no cloud, developer-accessible database, analytics, AI cloud profiling, ad profile, networking, or remote config was added.
+- Confirm HealthKit relationship remains complementary and non-causal.
+- Confirm App Group, WidgetKit, WatchConnectivity, HealthKit write, reminders, notifications, scheduling, storage, and UI implementation remain out of scope.
+- Confirm Figma-first sequencing is preserved before any Watch, iPhone, bilingual, icon, or complication UI implementation.
+- Confirm Phase 9.2, Phase 9.3, and Phase 9.4 remain future work.
+- Confirm GitHub Actions is not manually triggered or used as the debugging loop.
+
 ## Phase 6.2 Watch App Visual Refresh
 
 - Confirm PR #22 is merged before starting the Watch visual refresh branch.

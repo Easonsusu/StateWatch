@@ -35,7 +35,9 @@ StateWatch helps users reflect on their daily wellness state by combining Apple 
 - Sleep duration and sleep consistency.
 - Active energy, steps, exercise minutes, and stand hours.
 - Mindfulness minutes, when available.
-- Optional user check-ins for mood, fatigue, felt strain, and notes.
+- Optional State Check-ins using the approved self-report labels `Energized`,
+  `Stable`, `Tired`, and `Low`; optional notes remain a later privacy-reviewed
+  decision.
 
 ## Acceptance criteria for this foundation task
 
