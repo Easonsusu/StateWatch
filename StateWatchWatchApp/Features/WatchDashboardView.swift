@@ -20,6 +20,8 @@ struct WatchDashboardView: View {
                 updatedText: content.updatedText
             )
 
+            WatchCheckInView()
+
             componentSummary
 
             WatchSuggestionView(text: content.suggestion)

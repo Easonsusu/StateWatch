@@ -643,6 +643,23 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Confirm no check-in storage, reminders, notifications, WidgetKit check-in display, App Group propagation, WatchConnectivity, networking, cloud, analytics, remote config, AI, HealthKit write access, or HealthKit rollout behavior was added.
 - Confirm GitHub Actions is not manually triggered or used as the debugging loop.
 
+## Phase 9.3 Watch Check-in Mock UI
+
+- Confirm Watch app builds and launches to the existing mock-backed dashboard.
+- Confirm the Watch Dashboard includes a visible `Check in` entry as a Watch tab.
+- Confirm the check-in screen uses exactly these options: `Energized`, `Stable`, `Tired`, and `Low`.
+- Confirm Traditional Chinese reference labels remain exactly `有活力`, `穩定`, `疲累`, and `低狀態`.
+- Confirm each option can be tapped on Apple Watch and shows a calm confirmation state.
+- Confirm the confirmation copy is `Saved`, `Check-in saved`, and `You can update it later.`
+- Confirm `Done` returns to the check-in option list.
+- Confirm selected check-in state is held in memory only and is not persisted.
+- Confirm no check-in storage, reminders, notifications, WidgetKit check-in display, App Group propagation, WatchConnectivity, networking, cloud, analytics, remote config, AI, HealthKit write access, or HealthKit rollout behavior was added.
+- Confirm the iPhone Dashboard remains mock-backed and HealthKit-backed Dashboard remains feature-flagged/default-off.
+- Confirm the Watch score, state label, confidence, metrics, and suggestion remain mock-backed and are not affected by check-in selection.
+- Confirm WidgetKit complications remain mock-backed and do not display check-in state.
+- Confirm no medical, diagnostic, clinical, warning, emergency, treatment, or cause-and-effect wording appears in check-in UI copy.
+- Confirm GitHub Actions is not manually triggered or used as the debugging loop.
+
 ## Phase 6.2 Watch App Visual Refresh
 
 - Confirm PR #22 is merged before starting the Watch visual refresh branch.

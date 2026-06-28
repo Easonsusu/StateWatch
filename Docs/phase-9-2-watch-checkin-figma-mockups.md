@@ -116,6 +116,11 @@ Watch Dashboard or future State Check-in entry
 Future implementation may also allow the user to update the current check-in
 later in the day. That behavior is not implemented in Phase 9.2.
 
+Phase 9.3 implements the initial Watch mock UI using the vertical list direction
+from this handoff. It remains local in-memory only and does not add persistence,
+sync, WidgetKit check-in display, App Group propagation, WatchConnectivity, or
+HealthKit write access.
+
 ## Screen Inventory
 
 1. Entry point concept.
