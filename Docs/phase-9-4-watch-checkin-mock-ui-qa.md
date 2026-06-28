@@ -243,7 +243,6 @@ Phase 9.4 this QA audit, with storage planning deferred to a later phase.
 ## Changes Made
 
 - Added this Phase 9.4 QA audit document.
-- Updated `TEST_PLAN.md` with a Phase 9.4 QA checklist.
 - Clarified the older Phase 9.1 sequencing note so Phase 9.4 is this QA audit
   and storage remains deferred.
 
