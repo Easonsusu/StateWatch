@@ -1983,3 +1983,82 @@ final class ProductionWordingSafetyAuditTests: XCTestCase {
         )
     }
 }
+
+final class WatchStateCheckInOptionTests: XCTestCase {
+    func testWatchCheckInOptionsUseApprovedLabelsInOrder() {
+        XCTAssertEqual(
+            StateCheckInOption.allCases.map(\.label),
+            ["Energized", "Stable", "Tired", "Low"]
+        )
+    }
+
+    func testWatchCheckInOptionsKeepTraditionalChineseReferenceLabels() {
+        XCTAssertEqual(
+            StateCheckInOption.allCases.map(\.traditionalChineseReferenceLabel),
+            ["有活力", "穩定", "疲累", "低狀態"]
+        )
+    }
+
+    func testWatchCheckInConfirmationCopyIsSafeAndNonMedical() {
+        XCTAssertEqual(StateCheckInOption.screenTitle, "Check in")
+        XCTAssertEqual(StateCheckInOption.screenSubtitle, "How do you feel right now?")
+        XCTAssertEqual(StateCheckInOption.confirmationTitle, "Saved")
+        XCTAssertEqual(StateCheckInOption.confirmationMessage, "Check-in saved")
+        XCTAssertEqual(StateCheckInOption.confirmationDetail, "You can update it later.")
+
+        for forbiddenTerm in safetyForbiddenTerms {
+            XCTAssertFalse(
+                StateCheckInOption.searchableCopy.localizedCaseInsensitiveContains(forbiddenTerm),
+                "Unexpected Watch check-in wording: \(forbiddenTerm)"
+            )
+        }
+    }
+
+    func testWatchCheckInOptionMetadataDoesNotIntroduceStorageOrSyncConcepts() {
+        for forbiddenTerm in implementationBoundaryTerms {
+            XCTAssertFalse(
+                StateCheckInOption.searchableCopy.localizedCaseInsensitiveContains(forbiddenTerm),
+                "Unexpected Watch check-in implementation concept in UI model: \(forbiddenTerm)"
+            )
+        }
+    }
+
+    private var safetyForbiddenTerms: [String] {
+        [
+            "diagnos",
+            "disease",
+            "illness",
+            "clinical",
+            "medical condition",
+            "treatment",
+            "therapy",
+            "emergency",
+            "warning",
+            "abnormal",
+            "health risk",
+            "symptom",
+            "detected",
+            "caused by",
+            "because you"
+        ]
+    }
+
+    private var implementationBoundaryTerms: [String] {
+        [
+            "UserDefaults",
+            "AppStorage",
+            "storage",
+            "persist",
+            "sync",
+            "App Group",
+            "WidgetKit",
+            "WatchConnectivity",
+            "HealthKit",
+            "network",
+            "cloud",
+            "AI",
+            "analytics",
+            "remote config"
+        ]
+    }
+}

@@ -15,6 +15,7 @@
 		53FFE876097319951743F30D /* DailyHealthSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A57ED9AFD7DDB1725B8E7F /* DailyHealthSnapshot.swift */; };
 		6765537052C7181AB3E947F6 /* HealthBaseline.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8F5BD50E4760680B43F867 /* HealthBaseline.swift */; };
 		8CBC479BB9CC9B2BCDF0F394 /* StateAssessment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0BB8F8130B13AAC0B9896B /* StateAssessment.swift */; };
+		B93000000000000000000002 /* StateCheckInOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93000000000000000000001 /* StateCheckInOption.swift */; };
 		88EACA03513945BA11B16D42 /* HealthMetricType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039195CC2B0FCC75A5124F9F /* HealthMetricType.swift */; };
 		6BFAE487968ECF8D6D282007 /* UserCheckIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F4810A4EECE5330E442257 /* UserCheckIn.swift */; };
 		869E719C1BCF39EC5D3AA05E /* MockSampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2236905CD340B8005EFB409B /* MockSampleData.swift */; };
@@ -59,11 +60,13 @@
 		9B3BCE063A0C83DE4F2B6BDC /* DailyHealthSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A57ED9AFD7DDB1725B8E7F /* DailyHealthSnapshot.swift */; };
 		AD7BCB2B8E9837F46FBD1D0C /* HealthBaseline.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8F5BD50E4760680B43F867 /* HealthBaseline.swift */; };
 		B0A5678559FF8F3405D533E9 /* StateAssessment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0BB8F8130B13AAC0B9896B /* StateAssessment.swift */; };
+		B93000000000000000000003 /* StateCheckInOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93000000000000000000001 /* StateCheckInOption.swift */; };
 		8B8B8A5E574880D54805B37E /* HealthMetricType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039195CC2B0FCC75A5124F9F /* HealthMetricType.swift */; };
 		E4ACF6624B70733A25F403B8 /* UserCheckIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F4810A4EECE5330E442257 /* UserCheckIn.swift */; };
 		0246927AC5F4D9507B292DCF /* MockSampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2236905CD340B8005EFB409B /* MockSampleData.swift */; };
 		2320930913CB8693BF55CAD0 /* StateWatchWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A106FE680F4F943C00E6ABC1 /* StateWatchWatchApp.swift */; };
 		9B161F9D95FA2B2197EADE04 /* WatchDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CEC8652F64EEF8B1C402DE /* WatchDashboardView.swift */; };
+		B93000000000000000000005 /* WatchCheckInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93000000000000000000004 /* WatchCheckInView.swift */; };
 		020AD294E232EEAA418E9B15 /* WatchScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6787F57710496E230B5F3CB /* WatchScoreView.swift */; };
 		475E6B6DA305F647BCEAB541 /* WatchSuggestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C99B9AA3D66A5E28720FCE /* WatchSuggestionView.swift */; };
 		739149B27465A24F818A77CF /* BaselineCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E935F18D147B46483011FF69 /* BaselineCalculatorTests.swift */; };
@@ -151,6 +154,7 @@
 		039195CC2B0FCC75A5124F9F /* HealthMetricType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Models/HealthMetricType.swift; sourceTree = "<group>"; };
 		2236905CD340B8005EFB409B /* MockSampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Models/MockSampleData.swift; sourceTree = "<group>"; };
 		BA0BB8F8130B13AAC0B9896B /* StateAssessment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Models/StateAssessment.swift; sourceTree = "<group>"; };
+		B93000000000000000000001 /* StateCheckInOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Models/StateCheckInOption.swift; sourceTree = "<group>"; };
 		93F4810A4EECE5330E442257 /* UserCheckIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Models/UserCheckIn.swift; sourceTree = "<group>"; };
 		91D4105804A8108983609354 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = StateWatchApp/Resources/Assets.xcassets; sourceTree = "<group>"; };
 		F083CE7B13FB89F932A9172B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = StateWatchApp/Resources/Info.plist; sourceTree = "<group>"; };
@@ -191,6 +195,7 @@
 		A106FE680F4F943C00E6ABC1 /* StateWatchWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/App/StateWatchWatchApp.swift; sourceTree = "<group>"; };
 		DDA00BD7ACAE0EB5046D8BB8 /* StateWatchComplicationBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/Complications/StateWatchComplicationBundle.swift; sourceTree = "<group>"; };
 		E67D696501BF3FC7D59194CA /* StateWatchWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/Complications/StateWatchWidgetView.swift; sourceTree = "<group>"; };
+		B93000000000000000000004 /* WatchCheckInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/Features/WatchCheckInView.swift; sourceTree = "<group>"; };
 		96CEC8652F64EEF8B1C402DE /* WatchDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/Features/WatchDashboardView.swift; sourceTree = "<group>"; };
 		A6787F57710496E230B5F3CB /* WatchScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/Features/WatchScoreView.swift; sourceTree = "<group>"; };
 		88C99B9AA3D66A5E28720FCE /* WatchSuggestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/Features/WatchSuggestionView.swift; sourceTree = "<group>"; };
@@ -396,6 +401,7 @@
 				039195CC2B0FCC75A5124F9F /* HealthMetricType.swift */,
 				2236905CD340B8005EFB409B /* MockSampleData.swift */,
 				BA0BB8F8130B13AAC0B9896B /* StateAssessment.swift */,
+				B93000000000000000000001 /* StateCheckInOption.swift */,
 				93F4810A4EECE5330E442257 /* UserCheckIn.swift */,
 			);
 			name = Models;
@@ -503,6 +509,7 @@
 		732088BE33F0083B8E1152BB /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				B93000000000000000000004 /* WatchCheckInView.swift */,
 				96CEC8652F64EEF8B1C402DE /* WatchDashboardView.swift */,
 				A6787F57710496E230B5F3CB /* WatchScoreView.swift */,
 				88C99B9AA3D66A5E28720FCE /* WatchSuggestionView.swift */,
@@ -731,6 +738,7 @@
 				53FFE876097319951743F30D /* DailyHealthSnapshot.swift in Sources */,
 				6765537052C7181AB3E947F6 /* HealthBaseline.swift in Sources */,
 				8CBC479BB9CC9B2BCDF0F394 /* StateAssessment.swift in Sources */,
+				B93000000000000000000002 /* StateCheckInOption.swift in Sources */,
 				88EACA03513945BA11B16D42 /* HealthMetricType.swift in Sources */,
 				6BFAE487968ECF8D6D282007 /* UserCheckIn.swift in Sources */,
 				869E719C1BCF39EC5D3AA05E /* MockSampleData.swift in Sources */,
@@ -784,12 +792,14 @@
 				9B3BCE063A0C83DE4F2B6BDC /* DailyHealthSnapshot.swift in Sources */,
 				AD7BCB2B8E9837F46FBD1D0C /* HealthBaseline.swift in Sources */,
 				B0A5678559FF8F3405D533E9 /* StateAssessment.swift in Sources */,
+				B93000000000000000000003 /* StateCheckInOption.swift in Sources */,
 				8B8B8A5E574880D54805B37E /* HealthMetricType.swift in Sources */,
 				E4ACF6624B70733A25F403B8 /* UserCheckIn.swift in Sources */,
 				0246927AC5F4D9507B292DCF /* MockSampleData.swift in Sources */,
 				A68000000000000000000003 /* SharedReadinessSummary.swift in Sources */,
 				A68000000000000000000004 /* SharedReadinessStore.swift in Sources */,
 				2320930913CB8693BF55CAD0 /* StateWatchWatchApp.swift in Sources */,
+				B93000000000000000000005 /* WatchCheckInView.swift in Sources */,
 				9B161F9D95FA2B2197EADE04 /* WatchDashboardView.swift in Sources */,
 				020AD294E232EEAA418E9B15 /* WatchScoreView.swift in Sources */,
 				475E6B6DA305F647BCEAB541 /* WatchSuggestionView.swift in Sources */,
