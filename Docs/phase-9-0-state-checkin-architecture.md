@@ -358,10 +358,14 @@ Sequence:
 1. Phase 9.1: QA audit for State Check-in architecture.
 2. Phase 9.2: Figma Watch check-in mockups.
 3. Phase 9.3: Watch check-in mock UI implementation.
-4. Phase 9.4: Check-in local storage foundation.
-5. Phase 9.5: QA audit for check-in storage.
-6. Phase 9.6: Check-in display preference: icon / text / icon+text.
-7. Phase 9.7: QA audit for check-in UX.
+4. Phase 9.4: QA audit for the Watch check-in mock UI.
+5. Phase 9.5: Scoped local-only check-in storage design.
+6. Phase 9.6: QA audit for local storage design.
+7. Phase 9.7: Implement local-only check-in storage foundation on one approved
+   surface.
+8. Phase 9.8: QA audit for storage implementation.
+9. Phase 9.9: Display preference / icon-text behavior, if still needed.
+10. Phase 9.10: UX QA audit before pattern analysis.
 
 Codex should not invent final icon, layout, or bilingual UI directly in SwiftUI
 if Figma specs exist or are planned for the phase.
@@ -420,7 +424,7 @@ Phase 9.0 fails if:
 
 ## Open Questions
 
-- Should Phase 9.4 support optional notes, or should notes wait until a later
+- Should a future storage phase support optional notes, or should notes wait until a later
   privacy review?
 - Should check-ins be editable or deletable in the first storage phase?
 - What retention window is appropriate for local-only check-in history?
@@ -440,4 +444,4 @@ Phase 9.0 fails if:
 - Figma-first future UI rule is documented.
 - App Group, WatchConnectivity, WidgetKit, storage, notifications, networking,
   AI, analytics, remote config, and HealthKit write access remain unimplemented.
-- Phase 9.1 through Phase 9.7 remain future work.
+- Later State Check-in implementation phases remain future work until scoped.
