@@ -700,6 +700,31 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Confirm no iPhone check-in UI or Watch check-in behavior change was added.
 - Confirm GitHub Actions is not manually triggered or used as the debugging loop.
 
+## Phase 9.6 State Check-in Local Storage Design QA
+
+- Confirm `Docs/phase-9-6-state-checkin-local-storage-design-qa.md` exists.
+- Confirm Phase 9.6 is QA/documentation only.
+- Confirm no check-in storage implementation was added.
+- Confirm no Swift source, Xcode project, entitlement, or CI workflow files were changed.
+- Confirm the future `StateCheckInRecord` concept remains narrow and privacy-safe.
+- Confirm included fields are minimal and justified.
+- Confirm excluded fields cover raw HealthKit samples, diagnoses, clinical labels, treatment recommendations, anxiety/depression labels, inferred emotions, cloud/account/ad/analytics identifiers, remote config variants, precise location, unnecessary device identifiers, and hidden AI profile information.
+- Confirm local JSON or an equivalent lightweight local store remains recommended only behind a narrow repository/service abstraction.
+- Confirm raw `UserDefaults` arrays are not recommended for check-in history.
+- Confirm atomic writes, decode-failure behavior, corruption handling, and schema versioning are required for the future implementation phase.
+- Confirm deletion, clear-all, and conservative local retention expectations remain documented.
+- Confirm notes and export remain deferred until later privacy-reviewed phases.
+- Confirm missing check-ins remain neutral and non-score-lowering.
+- Confirm `Low` check-ins remain subjective, non-medical, and non-warning.
+- Confirm State Score relationship remains non-medical and non-punitive.
+- Confirm HealthKit remains read-only and check-in records do not store raw HealthKit samples.
+- Confirm WidgetKit direct check-in reads remain forbidden.
+- Confirm App Group raw check-in history and notes remain forbidden.
+- Confirm WatchConnectivity remains deferred to a separate future design and QA phase.
+- Confirm future pattern summaries remain local-only and non-causal.
+- Confirm no reminders, notifications, scheduling, networking, cloud sync, iCloud sync, AI cloud analysis, accounts, analytics, remote config, HealthKit write access, HealthKit rollout change, iPhone check-in UI, Watch check-in behavior change, or Phase 9.7 implementation work was added.
+- Confirm GitHub Actions is not manually triggered or used as the debugging loop.
+
 ## Phase 6.2 Watch App Visual Refresh
 
 - Confirm PR #22 is merged before starting the Watch visual refresh branch.
