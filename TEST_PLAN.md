@@ -660,6 +660,25 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Confirm no medical, diagnostic, clinical, warning, emergency, treatment, or cause-and-effect wording appears in check-in UI copy.
 - Confirm GitHub Actions is not manually triggered or used as the debugging loop.
 
+## Phase 9.4 Watch Check-in Mock UI QA
+
+- Confirm `Docs/phase-9-4-watch-checkin-mock-ui-qa.md` exists.
+- Confirm this phase is QA/documentation-first and does not add product behavior.
+- Confirm `WatchCheckInView` is reachable as a page inside the Watch Dashboard `TabView`.
+- Confirm any `tab` wording refers to the existing Watch `TabView` page, not a new navigation architecture.
+- Confirm `StateCheckInOption` remains UI-only and does not introduce storage fields, schema versions, migrations, HealthKit data, or sharing fields.
+- Confirm `selectedOption` and `showsConfirmation` remain private `@State` inside `WatchCheckInView`.
+- Confirm selected check-in state does not escape `WatchCheckInView`.
+- Confirm check-in selection does not modify score, state label, confidence, metrics, suggestion, WidgetKit complications, App Group summary, or iPhone state.
+- Confirm no check-in storage, UserDefaults, @AppStorage, SwiftData, CoreData, FileManager persistence, database, schema, or migration logic was added.
+- Confirm no reminders, notifications, scheduling, WidgetKit check-in display, App Group propagation, WatchConnectivity, networking, cloud, analytics, remote config, AI, HealthKit write access, or HealthKit rollout behavior was added.
+- Confirm the approved states are exactly `Energized`, `Stable`, `Tired`, and `Low`.
+- Confirm Traditional Chinese references are exactly `有活力`, `穩定`, `疲累`, and `低狀態`.
+- Confirm user-facing copy remains subjective, calm, optional, and non-medical.
+- Confirm `Low` uses calm styling and does not appear as a red alert, danger state, health warning, or medical condition.
+- Confirm existing tests cover approved labels, Traditional Chinese references, safe confirmation copy, forbidden medical wording, and storage/sync concept drift.
+- Confirm GitHub Actions is not manually triggered or used as the debugging loop.
+
 ## Phase 6.2 Watch App Visual Refresh
 
 - Confirm PR #22 is merged before starting the Watch visual refresh branch.
