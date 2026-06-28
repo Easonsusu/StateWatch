@@ -679,6 +679,27 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Confirm existing tests cover approved labels, Traditional Chinese references, safe confirmation copy, forbidden medical wording, and storage/sync concept drift.
 - Confirm GitHub Actions is not manually triggered or used as the debugging loop.
 
+## Phase 9.5 State Check-in Local Storage Design
+
+- Confirm `Docs/phase-9-5-state-checkin-local-storage-design.md` exists.
+- Confirm Phase 9.5 is architecture/documentation only.
+- Confirm no check-in storage implementation was added.
+- Confirm future `StateCheckInRecord` fields are documented.
+- Confirm explicitly excluded fields include raw HealthKit samples, diagnoses, clinical labels, treatment recommendations, cloud/account/ad/analytics identifiers, precise location, unnecessary device identifiers, and hidden AI profile information.
+- Confirm storage options compare UserDefaults, local JSON file, SwiftData, and CoreData.
+- Confirm the recommended first implementation is a small local JSON file or equivalent lightweight local store behind a narrow repository/service abstraction.
+- Confirm future deletion and clear-all expectations are documented.
+- Confirm retention remains local, conservative, and avoids permanent-history or cloud-backup promises.
+- Confirm missing check-ins remain neutral and do not reduce State Score.
+- Confirm `Low` check-ins remain subjective, non-medical, and non-warning.
+- Confirm HealthKit remains read-only and check-in records do not store raw HealthKit samples.
+- Confirm WidgetKit does not read check-ins directly.
+- Confirm App Group does not store raw check-in history or notes.
+- Confirm WatchConnectivity remains deferred to a separate future phase.
+- Confirm no reminders, notifications, scheduling, networking, cloud sync, iCloud sync, AI cloud analysis, accounts, analytics, remote config, or HealthKit write access was added.
+- Confirm no iPhone check-in UI or Watch check-in behavior change was added.
+- Confirm GitHub Actions is not manually triggered or used as the debugging loop.
+
 ## Phase 6.2 Watch App Visual Refresh
 
 - Confirm PR #22 is merged before starting the Watch visual refresh branch.

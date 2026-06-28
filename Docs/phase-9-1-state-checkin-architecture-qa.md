@@ -101,11 +101,11 @@ The architecture correctly positions a check-in as the user's own reported state
 at a moment in time. It does not position check-ins as measurements,
 diagnostics, symptoms, clinical categories, or medical signals.
 
-Phase 9.2, Phase 9.3, and Phase 9.4 remain future work:
+At the time of the Phase 9.1 audit, these phases remained future work:
 
 - Phase 9.2: Figma Watch check-in mockups.
 - Phase 9.3: Watch check-in mock UI implementation.
-- Phase 9.4: Check-in local storage foundation.
+- Phase 9.4: Follow-up Watch check-in QA before storage planning.
 
 ## Safety Wording Findings
 
