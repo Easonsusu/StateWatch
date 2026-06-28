@@ -222,11 +222,12 @@ Confirmed boundaries:
 
 Figma-first sequencing is preserved.
 
-Future UI work must follow this sequence:
+Future UI work follows this sequence:
 
 1. Phase 9.2: Figma Watch check-in mockups.
 2. Phase 9.3: Watch check-in mock UI implementation.
-3. Phase 9.4: Check-in local storage foundation.
+3. Phase 9.4: QA audit for the Watch check-in mock UI.
+4. Later scoped phase: Check-in local storage foundation.
 
 Codex should not invent final Watch layouts, icon choices, bilingual UI, or
 complication treatments directly in SwiftUI while Figma specs are planned or
