@@ -1,8 +1,15 @@
 import SwiftUI
 
 struct WatchCheckInView: View {
+    private let store: any StateCheckInStoring
+
     @State private var selectedOption: StateCheckInOption?
     @State private var showsConfirmation = false
+    @State private var confirmationState = CheckInConfirmationState.saved
+
+    init(store: any StateCheckInStoring = LocalStateCheckInStore()) {
+        self.store = store
+    }
 
     var body: some View {
         WatchPage {
@@ -32,8 +39,7 @@ struct WatchCheckInView: View {
             VStack(spacing: 6) {
                 ForEach(StateCheckInOption.allCases) { option in
                     Button {
-                        selectedOption = option
-                        showsConfirmation = true
+                        save(option)
                     } label: {
                         optionRow(option)
                     }
@@ -77,11 +83,11 @@ struct WatchCheckInView: View {
                 .foregroundStyle(WatchStyle.accentCyan)
 
             VStack(spacing: 3) {
-                Text(StateCheckInOption.confirmationTitle)
+                Text(confirmationState.title)
                     .font(.system(size: 16, weight: .semibold, design: .rounded))
                     .foregroundStyle(WatchStyle.textPrimary)
 
-                Text(StateCheckInOption.confirmationMessage)
+                Text(confirmationState.message)
                     .font(.system(size: 12, weight: .medium, design: .rounded))
                     .foregroundStyle(WatchStyle.textSecondary)
                     .lineLimit(1)
@@ -96,7 +102,7 @@ struct WatchCheckInView: View {
                     .clipShape(Capsule())
             }
 
-            Text(StateCheckInOption.confirmationDetail)
+            Text(confirmationState.detail)
                 .font(.system(size: 11, weight: .medium, design: .rounded))
                 .foregroundStyle(WatchStyle.textMuted)
                 .lineLimit(2)
@@ -115,10 +121,23 @@ struct WatchCheckInView: View {
 
     private var accessibilitySummary: String {
         if showsConfirmation, let selectedOption {
-            return "\(StateCheckInOption.confirmationMessage). \(selectedOption.accessibilityLabel)."
+            return "\(confirmationState.message). \(selectedOption.accessibilityLabel)."
         }
 
         return "\(StateCheckInOption.screenTitle). \(StateCheckInOption.screenSubtitle)"
+    }
+
+    private func save(_ option: StateCheckInOption) {
+        selectedOption = option
+
+        do {
+            try store.save(StateCheckInRecord(option: option))
+            confirmationState = .saved
+        } catch {
+            confirmationState = .unavailable
+        }
+
+        showsConfirmation = true
     }
 
     private func optionColor(for option: StateCheckInOption) -> Color {
@@ -131,6 +150,38 @@ struct WatchCheckInView: View {
             return WatchStyle.cautionAmber
         case .low:
             return WatchStyle.textMuted
+        }
+    }
+}
+
+private enum CheckInConfirmationState {
+    case saved
+    case unavailable
+
+    var title: String {
+        switch self {
+        case .saved:
+            return StateCheckInOption.confirmationTitle
+        case .unavailable:
+            return "Unavailable"
+        }
+    }
+
+    var message: String {
+        switch self {
+        case .saved:
+            return StateCheckInOption.confirmationMessage
+        case .unavailable:
+            return "Check-in unavailable"
+        }
+    }
+
+    var detail: String {
+        switch self {
+        case .saved:
+            return StateCheckInOption.confirmationDetail
+        case .unavailable:
+            return "Try again later."
         }
     }
 }
