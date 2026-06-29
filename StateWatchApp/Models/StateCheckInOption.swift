@@ -1,6 +1,6 @@
 import Foundation
 
-enum StateCheckInOption: String, CaseIterable, Identifiable, Equatable {
+enum StateCheckInOption: String, CaseIterable, Identifiable, Equatable, Codable {
     case energized
     case stable
     case tired

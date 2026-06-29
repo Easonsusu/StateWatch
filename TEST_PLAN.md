@@ -725,6 +725,38 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Confirm no reminders, notifications, scheduling, networking, cloud sync, iCloud sync, AI cloud analysis, accounts, analytics, remote config, HealthKit write access, HealthKit rollout change, iPhone check-in UI, Watch check-in behavior change, or Phase 9.7 implementation work was added.
 - Confirm GitHub Actions is not manually triggered or used as the debugging loop.
 
+## Phase 9.7 Watch Check-in Local Storage Foundation
+
+- Confirm `Docs/phase-9-7-watch-checkin-local-storage-foundation.md` exists.
+- Confirm Watch Check-in storage is local-only and limited to the Watch app surface.
+- Confirm `StateCheckInRecord` includes only `id`, `option`, `createdAt`, `updatedAt`, `sourceSurface`, `schemaVersion`, and `noteStatus`.
+- Confirm `StateCheckInRecord` does not store raw HealthKit samples, inferred health state, diagnosis, clinical labels, treatment recommendations, cloud identifiers, account identifiers, advertising identifiers, analytics identifiers, remote config variants, precise location, unnecessary device identifiers, hidden AI profile information, or free-form notes.
+- Confirm the approved states remain exactly `Energized`, `Stable`, `Tired`, and `Low`.
+- Confirm Traditional Chinese references remain exactly `有活力`, `穩定`, `疲累`, and `低狀態`.
+- Confirm the store uses a local JSON file or equivalent lightweight local store behind a narrow storage protocol.
+- Confirm local writes are atomic.
+- Confirm empty history loads safely.
+- Confirm corrupted JSON loads safely as empty history and does not crash.
+- Confirm unknown future schema versions are ignored safely.
+- Confirm clear-all behavior is available for future deletion UI and tests.
+- Confirm Watch Check-in save confirmation remains calm and non-medical.
+- Confirm unavailable storage copy remains calm and does not imply a bad health state.
+- Confirm missing check-ins remain neutral and non-score-lowering.
+- Confirm `Low` remains subjective, non-medical, and non-warning.
+- Confirm check-ins do not change State Score, state label, confidence, metrics, suggestions, HealthKit-derived output, WidgetKit complications, App Group summary, iPhone Dashboard state, or Watch score state.
+- Confirm iPhone Dashboard remains mock-backed by default and HealthKit-backed Dashboard remains feature-flagged/default-off.
+- Confirm no iPhone check-in UI was added.
+- Confirm no WidgetKit check-in display was added.
+- Confirm no WidgetKit reads of check-in records were added.
+- Confirm no App Group check-in propagation was added.
+- Confirm raw check-in history is not stored in App Group shared state.
+- Confirm no WatchConnectivity was added.
+- Confirm no reminders, notifications, scheduling, or background delivery were added.
+- Confirm no HealthKit write access or HealthKit write authorization was added.
+- Confirm no networking, cloud sync, iCloud sync, accounts, analytics, remote config, AI, or AI cloud analysis was added.
+- Confirm XCTest covers record coding, stable schema version, approved labels, empty history, save/load, recent-history ordering, clear-all, corrupted JSON, unknown schema fallback, and prohibited propagation/upload mechanisms.
+- Confirm GitHub Actions is not manually triggered or used as the debugging loop.
+
 ## Phase 6.2 Watch App Visual Refresh
 
 - Confirm PR #22 is merged before starting the Watch visual refresh branch.
