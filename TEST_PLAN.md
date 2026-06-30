@@ -821,6 +821,45 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Confirm local validation is used as the source of truth if GitHub Actions quota or availability is limited.
 - Confirm GitHub Actions is not manually triggered or used as the debugging loop.
 
+## Phase 9.10 Watch Check-in Display Preference QA
+
+- Confirm `Docs/phase-9-10-watch-checkin-display-preference-qa.md` exists.
+- Confirm Phase 9.10 is QA/documentation-only unless a concrete audit issue requires a minimal fix.
+- Confirm Phase 9.9 implementation remains Watch-only.
+- Confirm display modes remain exactly `iconAndText`, `iconOnly`, and `textOnly`.
+- Confirm no new display modes were added.
+- Confirm `iconAndText` remains the default display mode.
+- Confirm invalid or missing stored display preference values fall back to `iconAndText`.
+- Confirm the display preference key remains `statewatch.watchCheckIn.displayMode.v1`.
+- Confirm the display preference stores only the display mode raw value.
+- Confirm production display preference storage uses Watch app `UserDefaults.standard`.
+- Confirm production display preference storage does not use `UserDefaults(suiteName:)`, App Group storage, iCloud key-value storage, or shared container storage.
+- Confirm test-only isolated `UserDefaults(suiteName:)` usage remains limited to XCTest.
+- Confirm check-in history is not stored in UserDefaults.
+- Confirm `StateCheckInRecord` schema remains unchanged.
+- Confirm `LocalStateCheckInStore` history behavior remains unchanged.
+- Confirm icon-only mode keeps meaningful accessibility labels for all check-in options.
+- Confirm text-only mode remains visually clear and accessible.
+- Confirm the display preference selector has clear accessibility labeling.
+- Confirm the check-in save flow remains separate from display preference updates.
+- Confirm display preference does not affect State Score, component scores, confidence, reasons, suggestions, HealthKit-derived scoring, WidgetKit complications, App Group summary, iPhone Dashboard state, or Watch score state.
+- Confirm missing check-ins remain neutral and do not lower State Score.
+- Confirm `Low` check-ins remain subjective, non-medical, and non-warning.
+- Confirm no iPhone check-in UI or behavior was added.
+- Confirm no WidgetKit check-in display or direct check-in read was added.
+- Confirm no App Group raw check-in history or display preference propagation was added.
+- Confirm no WatchConnectivity was added.
+- Confirm no HealthKit write access or HealthKit write authorization was added.
+- Confirm no raw HealthKit samples are stored in check-in records, UserDefaults, App Group, or WidgetKit.
+- Confirm no reminders, notifications, scheduling, export, notes, or pattern summaries were added.
+- Confirm no networking, cloud sync, iCloud sync, analytics, remote config, AI, account system, login, upload path, or developer-accessible database was added.
+- Confirm user-facing copy remains subjective, calm, and non-medical.
+- Confirm no diagnosis, anxiety detection, depression detection, clinical stress detection, disease detection, treatment, therapy, emergency, warning, abnormal-state, health-risk, or medical-advice wording was introduced.
+- Confirm XCTest coverage includes display mode raw values, labels, IDs, default fallback, invalid fallback, save/load, raw-value storage, no check-in record storage, forbidden mechanism source checks, and non-medical display mode copy.
+- Confirm local validation is used as the source of truth if GitHub Actions quota or availability is limited.
+- Confirm GitHub Actions is not manually triggered or used as the debugging loop.
+- Confirm no Phase 9.11 work was started.
+
 ## Phase 6.2 Watch App Visual Refresh
 
 - Confirm PR #22 is merged before starting the Watch visual refresh branch.
