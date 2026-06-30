@@ -196,3 +196,119 @@ final class LocalStateCheckInStoreTests: XCTestCase {
             .deletingLastPathComponent()
     }
 }
+
+final class StateCheckInDisplayPreferenceTests: XCTestCase {
+    func testDisplayModesUseStableRawValuesAndLabels() {
+        XCTAssertEqual(StateCheckInDisplayMode.allCases.map(\.rawValue), ["iconAndText", "iconOnly", "textOnly"])
+        XCTAssertEqual(StateCheckInDisplayMode.allCases.map(\.label), ["Icon + Text", "Icon Only", "Text Only"])
+        XCTAssertEqual(StateCheckInDisplayMode.allCases.map(\.id), ["iconAndText", "iconOnly", "textOnly"])
+    }
+
+    func testDefaultDisplayModeIsIconAndText() throws {
+        let store = try makePreferenceStore()
+
+        XCTAssertEqual(store.load(), .iconAndText)
+    }
+
+    func testInvalidStoredDisplayModeFallsBackToIconAndText() throws {
+        let store = try makePreferenceStore()
+        store.userDefaultsForTests.set("gridWithVitals", forKey: store.storageKeyForTests)
+
+        XCTAssertEqual(store.load(), .iconAndText)
+    }
+
+    func testSavingAndLoadingDisplayModeStoresOnlyRawValue() throws {
+        let store = try makePreferenceStore()
+
+        store.save(.textOnly)
+
+        XCTAssertEqual(store.load(), .textOnly)
+        XCTAssertEqual(store.userDefaultsForTests.string(forKey: store.storageKeyForTests), "textOnly")
+    }
+
+    func testDisplayPreferenceStoreDoesNotStoreCheckInRecords() throws {
+        let store = try makePreferenceStore()
+
+        store.save(.iconOnly)
+
+        let persistedValue = try XCTUnwrap(store.userDefaultsForTests.string(forKey: store.storageKeyForTests))
+        XCTAssertEqual(store.userDefaultsForTests.dictionaryRepresentation().keys.filter { $0 == store.storageKeyForTests }, [store.storageKeyForTests])
+
+        for forbiddenValue in StateCheckInOption.allCases.map(\.rawValue) + ["StateCheckInRecord", "createdAt", "sourceSurface", "schemaVersion"] {
+            XCTAssertFalse(
+                persistedValue.localizedCaseInsensitiveContains(forbiddenValue),
+                "Display preference unexpectedly stores check-in record data: \(forbiddenValue)"
+            )
+        }
+    }
+
+    func testDisplayPreferenceStoreSourceDoesNotUseForbiddenMechanisms() throws {
+        let source = try String(
+            contentsOf: repositoryRoot().appendingPathComponent("StateWatchWatchApp/Services/CheckIn/StateCheckInDisplayPreference.swift"),
+            encoding: .utf8
+        )
+
+        for forbiddenTerm in [
+            "UserDefaults(suiteName",
+            "group.",
+            "App Group",
+            "WidgetKit",
+            "TimelineProvider",
+            "WCSession",
+            "WatchConnectivity",
+            "URLSession",
+            "HKHealthStore.save",
+            "requestAuthorization(toShare",
+            "analytics",
+            "remote config",
+            "iCloud",
+            "cloud sync",
+            "AI cloud",
+            "account",
+            "StateCheckInRecord"
+        ] {
+            XCTAssertFalse(
+                source.localizedCaseInsensitiveContains(forbiddenTerm),
+                "Unexpected display preference implementation boundary term: \(forbiddenTerm)"
+            )
+        }
+    }
+
+    func testDisplayModeCopyDoesNotUseMedicalOrWarningWording() {
+        let searchableCopy = StateCheckInDisplayMode.allCases
+            .map(\.label)
+            .joined(separator: " ")
+
+        for forbiddenTerm in [
+            "diagnos",
+            "clinical",
+            "medical advice",
+            "treatment",
+            "therapy",
+            "emergency",
+            "warning",
+            "abnormal",
+            "health risk",
+            "anxiety",
+            "depression"
+        ] {
+            XCTAssertFalse(
+                searchableCopy.localizedCaseInsensitiveContains(forbiddenTerm),
+                "Display preference copy should stay non-medical: \(forbiddenTerm)"
+            )
+        }
+    }
+
+    private func makePreferenceStore(file: StaticString = #filePath, line: UInt = #line) throws -> LocalStateCheckInDisplayPreferenceStore {
+        let suiteName = "statewatch-display-preference-tests-\(UUID().uuidString)"
+        let userDefaults = try XCTUnwrap(UserDefaults(suiteName: suiteName), file: file, line: line)
+        userDefaults.removePersistentDomain(forName: suiteName)
+        return LocalStateCheckInDisplayPreferenceStore(userDefaults: userDefaults)
+    }
+
+    private func repositoryRoot(filePath: String = #filePath) -> URL {
+        URL(fileURLWithPath: filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+    }
+}

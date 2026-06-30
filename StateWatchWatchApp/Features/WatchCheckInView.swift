@@ -2,13 +2,19 @@ import SwiftUI
 
 struct WatchCheckInView: View {
     private let store: any StateCheckInStoring
+    private let displayPreferenceStore: any StateCheckInDisplayPreferenceStoring
 
     @State private var selectedOption: StateCheckInOption?
     @State private var showsConfirmation = false
     @State private var confirmationState = CheckInConfirmationState.saved
+    @State private var displayMode = StateCheckInDisplayMode.defaultMode
 
-    init(store: any StateCheckInStoring = LocalStateCheckInStore()) {
+    init(
+        store: any StateCheckInStoring = LocalStateCheckInStore(),
+        displayPreferenceStore: any StateCheckInDisplayPreferenceStoring = LocalStateCheckInDisplayPreferenceStore()
+    ) {
         self.store = store
+        self.displayPreferenceStore = displayPreferenceStore
     }
 
     var body: some View {
@@ -36,6 +42,8 @@ struct WatchCheckInView: View {
                     .minimumScaleFactor(0.8)
             }
 
+            displayModeSelector
+
             VStack(spacing: 6) {
                 ForEach(StateCheckInOption.allCases) { option in
                     Button {
@@ -50,18 +58,49 @@ struct WatchCheckInView: View {
         }
     }
 
+    private var displayModeSelector: some View {
+        HStack(spacing: 4) {
+            ForEach(StateCheckInDisplayMode.allCases) { mode in
+                Button {
+                    updateDisplayMode(mode)
+                } label: {
+                    Text(mode.compactLabel)
+                        .font(.system(size: 10, weight: .semibold, design: .rounded))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.75)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 5)
+                        .foregroundStyle(displayMode == mode ? WatchStyle.backgroundPrimary : WatchStyle.textSecondary)
+                        .background(displayMode == mode ? WatchStyle.accentCyan : WatchStyle.panel)
+                        .clipShape(Capsule())
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Check-in display style, \(mode.label)")
+            }
+        }
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel("Check-in display style")
+        .onAppear {
+            displayMode = displayPreferenceStore.load()
+        }
+    }
+
     private func optionRow(_ option: StateCheckInOption) -> some View {
         HStack(spacing: 8) {
-            Image(systemName: option.symbolName)
-                .font(.system(size: 13, weight: .semibold))
-                .foregroundStyle(optionColor(for: option))
-                .frame(width: 18, height: 18)
+            if displayMode.showsIcon {
+                Image(systemName: option.symbolName)
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(optionColor(for: option))
+                    .frame(width: 18, height: 18)
+            }
 
-            Text(option.label)
-                .font(.system(size: 13, weight: .semibold, design: .rounded))
-                .foregroundStyle(WatchStyle.textPrimary)
-                .lineLimit(1)
-                .minimumScaleFactor(0.78)
+            if displayMode.showsText {
+                Text(option.label)
+                    .font(.system(size: 13, weight: .semibold, design: .rounded))
+                    .foregroundStyle(WatchStyle.textPrimary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.78)
+            }
 
             Spacer(minLength: 4)
         }
@@ -125,6 +164,11 @@ struct WatchCheckInView: View {
         }
 
         return "\(StateCheckInOption.screenTitle). \(StateCheckInOption.screenSubtitle)"
+    }
+
+    private func updateDisplayMode(_ mode: StateCheckInDisplayMode) {
+        displayMode = mode
+        displayPreferenceStore.save(mode)
     }
 
     private func save(_ option: StateCheckInOption) {

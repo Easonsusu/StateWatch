@@ -66,6 +66,7 @@
 		0246927AC5F4D9507B292DCF /* MockSampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2236905CD340B8005EFB409B /* MockSampleData.swift */; };
 		B97100000000000000000002 /* StateCheckInRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97100000000000000000001 /* StateCheckInRecord.swift */; };
 		B97200000000000000000002 /* LocalStateCheckInStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97200000000000000000001 /* LocalStateCheckInStore.swift */; };
+		B97800000000000000000002 /* StateCheckInDisplayPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97800000000000000000001 /* StateCheckInDisplayPreference.swift */; };
 		2320930913CB8693BF55CAD0 /* StateWatchWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A106FE680F4F943C00E6ABC1 /* StateWatchWatchApp.swift */; };
 		9B161F9D95FA2B2197EADE04 /* WatchDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CEC8652F64EEF8B1C402DE /* WatchDashboardView.swift */; };
 		B93000000000000000000005 /* WatchCheckInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93000000000000000000004 /* WatchCheckInView.swift */; };
@@ -81,6 +82,7 @@
 		B97700000000000000000002 /* StateCheckInOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93000000000000000000001 /* StateCheckInOption.swift */; };
 		B97300000000000000000002 /* StateCheckInRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97100000000000000000001 /* StateCheckInRecord.swift */; };
 		B97400000000000000000002 /* LocalStateCheckInStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97200000000000000000001 /* LocalStateCheckInStore.swift */; };
+		B97900000000000000000002 /* StateCheckInDisplayPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97800000000000000000001 /* StateCheckInDisplayPreference.swift */; };
 		B97000000000000000000002 /* StateCheckInStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97000000000000000000001 /* StateCheckInStorageTests.swift */; };
 		E5800000000000000000000C /* StateWatchThemeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5900000000000000000000C /* StateWatchThemeTests.swift */; };
 		F5B400000000000000000004 /* StateWatchVisualPreviewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B500000000000000000005 /* StateWatchVisualPreviewTests.swift */; };
@@ -206,6 +208,7 @@
 		96CEC8652F64EEF8B1C402DE /* WatchDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/Features/WatchDashboardView.swift; sourceTree = "<group>"; };
 		A6787F57710496E230B5F3CB /* WatchScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/Features/WatchScoreView.swift; sourceTree = "<group>"; };
 		88C99B9AA3D66A5E28720FCE /* WatchSuggestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/Features/WatchSuggestionView.swift; sourceTree = "<group>"; };
+		B97800000000000000000001 /* StateCheckInDisplayPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/Services/CheckIn/StateCheckInDisplayPreference.swift; sourceTree = "<group>"; };
 		B97200000000000000000001 /* LocalStateCheckInStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/Services/CheckIn/LocalStateCheckInStore.swift; sourceTree = "<group>"; };
 		B97100000000000000000001 /* StateCheckInRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/Services/CheckIn/StateCheckInRecord.swift; sourceTree = "<group>"; };
 		9C273FDA27C713F4E89B8D78 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = StateWatchWatchApp/Resources/Assets.xcassets; sourceTree = "<group>"; };
@@ -549,6 +552,7 @@
 		B97600000000000000000001 /* CheckIn */ = {
 			isa = PBXGroup;
 			children = (
+				B97800000000000000000001 /* StateCheckInDisplayPreference.swift */,
 				B97200000000000000000001 /* LocalStateCheckInStore.swift */,
 				B97100000000000000000001 /* StateCheckInRecord.swift */,
 			);
@@ -828,6 +832,7 @@
 				A68000000000000000000004 /* SharedReadinessStore.swift in Sources */,
 				B97100000000000000000002 /* StateCheckInRecord.swift in Sources */,
 				B97200000000000000000002 /* LocalStateCheckInStore.swift in Sources */,
+				B97800000000000000000002 /* StateCheckInDisplayPreference.swift in Sources */,
 				2320930913CB8693BF55CAD0 /* StateWatchWatchApp.swift in Sources */,
 				B93000000000000000000005 /* WatchCheckInView.swift in Sources */,
 				9B161F9D95FA2B2197EADE04 /* WatchDashboardView.swift in Sources */,
@@ -850,6 +855,7 @@
 				B97700000000000000000002 /* StateCheckInOption.swift in Sources */,
 				B97300000000000000000002 /* StateCheckInRecord.swift in Sources */,
 				B97400000000000000000002 /* LocalStateCheckInStore.swift in Sources */,
+				B97900000000000000000002 /* StateCheckInDisplayPreference.swift in Sources */,
 				B97000000000000000000002 /* StateCheckInStorageTests.swift in Sources */,
 				E5800000000000000000000C /* StateWatchThemeTests.swift in Sources */,
 				F5B400000000000000000004 /* StateWatchVisualPreviewTests.swift in Sources */,
