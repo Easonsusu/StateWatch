@@ -860,6 +860,48 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Confirm GitHub Actions is not manually triggered or used as the debugging loop.
 - Confirm no Phase 9.11 work was started.
 
+## Phase 9.11 Watch Check-in History Management Design
+
+- Confirm `Docs/phase-9-11-watch-checkin-history-management-design.md` exists.
+- Confirm Phase 9.11 is design/documentation-only.
+- Confirm no production Swift files changed.
+- Confirm no Xcode project files changed.
+- Confirm no entitlements changed.
+- Confirm no CI workflows changed.
+- Confirm no product behavior changed.
+- Confirm no history UI was implemented.
+- Confirm no deletion UI was implemented.
+- Confirm no clear-all UI was implemented.
+- Confirm no new storage behavior was implemented.
+- Confirm no `StateCheckInRecord` schema change was added.
+- Confirm no `LocalStateCheckInStore` behavior change was added.
+- Confirm the recommended future recent history list is Watch-only.
+- Confirm the recommended first visible history limit is the latest 3 check-ins.
+- Confirm any latest-5 history display remains a future readability-dependent option only.
+- Confirm single-record deletion remains future design and was not implemented.
+- Confirm clear-all remains future design and was not implemented.
+- Confirm empty history uses calm neutral copy such as `No check-ins yet` and `Check-ins are optional.`
+- Confirm missing check-ins remain neutral and non-score-lowering.
+- Confirm `Low` check-ins remain subjective, non-medical, non-warning, and not styled as danger or emergency.
+- Confirm future deletion copy states local Watch scope and does not imply HealthKit, cloud, account, or medical-record deletion.
+- Confirm no iPhone check-in UI or behavior was added.
+- Confirm no WidgetKit check-in display or direct check-in read was added.
+- Confirm no App Group raw check-in history, display preference, deletion state, or check-in propagation was added.
+- Confirm no raw check-in history is stored in App Group shared state.
+- Confirm no WatchConnectivity was added.
+- Confirm no HealthKit write access or HealthKit write authorization was added.
+- Confirm no raw HealthKit samples are stored in check-in records.
+- Confirm HealthKit rollout behavior remains unchanged and default-off where applicable.
+- Confirm no reminders, notifications, scheduling, export, notes, or pattern summaries were added.
+- Confirm no networking, cloud sync, iCloud sync, analytics, remote config, AI, AI cloud analysis, account system, login, upload path, or developer-accessible database was added.
+- Confirm check-ins do not affect State Score, component scores, confidence, reasons, suggestions, HealthKit-derived scoring, WidgetKit complications, App Group summary, iPhone Dashboard state, or Watch score state.
+- Confirm user-facing copy remains subjective, calm, and non-medical.
+- Confirm no diagnosis, anxiety detection, depression detection, clinical stress detection, disease detection, treatment, therapy, emergency, warning, abnormal-state, health-risk, symptom-history, medical-record, or medical-advice wording was introduced outside safety guardrails or forbidden-copy examples.
+- Confirm future implementation requires a separate implementation phase and QA phase.
+- Confirm local validation is used as the source of truth if GitHub Actions quota or availability is limited.
+- Confirm GitHub Actions is not manually triggered or used as the debugging loop.
+- Confirm no Phase 9.12 implementation or later work was started.
+
 ## Phase 6.2 Watch App Visual Refresh
 
 - Confirm PR #22 is merged before starting the Watch visual refresh branch.
