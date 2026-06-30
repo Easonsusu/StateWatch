@@ -792,6 +792,35 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Confirm GitHub Actions is not manually triggered or used as the debugging loop.
 - Confirm no Phase 9.9 work was started.
 
+## Phase 9.9 Watch Check-in Display Preference
+
+- Confirm `Docs/phase-9-9-watch-checkin-display-preference.md` exists.
+- Confirm Watch Check-in supports `iconAndText`, `iconOnly`, and `textOnly` display modes.
+- Confirm `iconAndText` remains the default display mode.
+- Confirm invalid or missing stored display preference values fall back to `iconAndText`.
+- Confirm the display preference stores only a tiny raw value in Watch app `UserDefaults.standard`.
+- Confirm the display preference key remains `statewatch.watchCheckIn.displayMode.v1`.
+- Confirm the display preference does not store check-in records, check-in history, notes, HealthKit data, score output, or raw HealthKit samples.
+- Confirm `StateCheckInRecord` schema remains unchanged.
+- Confirm `LocalStateCheckInStore` remains the check-in history store and was not replaced with UserDefaults arrays.
+- Confirm no `UserDefaults(suiteName:)` production storage was added for the display preference.
+- Confirm no App Group check-in propagation was added.
+- Confirm no WidgetKit check-in display or direct check-in read was added.
+- Confirm no WatchConnectivity was added.
+- Confirm no reminders, notifications, scheduling, or background delivery were added.
+- Confirm no iPhone check-in UI or behavior was added.
+- Confirm Watch score, state label, confidence, metrics, suggestion, WidgetKit complications, App Group summary, HealthKit-derived output, and iPhone state remain unaffected by the display preference.
+- Confirm HealthKit rollout behavior remains unchanged and default-off where applicable.
+- Confirm no HealthKit write access or HealthKit write authorization was added.
+- Confirm no networking, cloud sync, iCloud sync, accounts, analytics, remote config, AI, or AI cloud analysis was added.
+- Confirm icon-only mode keeps meaningful accessibility labels for all check-in options.
+- Confirm the four approved states remain exactly `Energized`, `Stable`, `Tired`, and `Low`.
+- Confirm user-facing copy remains subjective, calm, and non-medical.
+- Confirm no diagnosis, anxiety detection, depression detection, clinical stress detection, disease detection, treatment, therapy, emergency, warning, abnormal-state, or medical-advice wording was introduced.
+- Confirm XCTest covers stable display mode raw values, labels, default fallback, invalid fallback, save/load, storage value boundaries, and forbidden propagation/upload mechanisms.
+- Confirm local validation is used as the source of truth if GitHub Actions quota or availability is limited.
+- Confirm GitHub Actions is not manually triggered or used as the debugging loop.
+
 ## Phase 6.2 Watch App Visual Refresh
 
 - Confirm PR #22 is merged before starting the Watch visual refresh branch.
