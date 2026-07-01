@@ -989,6 +989,43 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Confirm GitHub Actions is not manually triggered or used as the debugging loop.
 - Confirm no Phase 9.14 QA or later work was started.
 
+## Phase 9.14 Watch Check-in Recent History and Deletion QA
+
+- Confirm `Docs/phase-9-14-watch-checkin-recent-history-deletion-qa.md` exists.
+- Confirm Phase 9.14 is QA-first.
+- Confirm no new product features were added unless a concrete minimal fix was required.
+- Confirm Watch-only latest-3 recent history remains the only history surface.
+- Confirm latest 5 was not implemented.
+- Confirm recent history still uses `LocalStateCheckInStore.loadRecent(limit: 3)`.
+- Confirm recent history remains newest-first.
+- Confirm saving a check-in refreshes recent history.
+- Confirm deleting a check-in refreshes recent history.
+- Confirm single-record deletion remains Watch-local only.
+- Confirm delete missing id is a safe no-op.
+- Confirm existing `clearAll()` storage behavior remains intact.
+- Confirm no clear-all UI was added.
+- Confirm no `StateCheckInRecord` schema change was added.
+- Confirm no history moved to `UserDefaults`.
+- Confirm no raw history moved to App Group.
+- Confirm no WidgetKit check-in display or direct read was added.
+- Confirm no WatchConnectivity was added.
+- Confirm no iPhone check-in UI, history, deletion, or settings were added.
+- Confirm no HealthKit write access or HealthKit write authorization was added.
+- Confirm no raw HealthKit samples are stored in check-in records.
+- Confirm no networking, cloud sync, iCloud sync, analytics, AI, account system, login, upload path, or remote config was added.
+- Confirm no reminders, notifications, scheduling, background delivery, completion pressure, export, notes, or pattern summaries were added.
+- Confirm check-ins do not affect State Score, component scores, confidence, reasons, suggestions, HealthKit-derived scoring, WidgetKit complications, App Group summary, iPhone Dashboard state, or Watch score state.
+- Confirm missing check-ins remain neutral and non-score-lowering.
+- Confirm `Low` remains subjective, non-medical, non-warning, and non-score-lowering.
+- Confirm user-facing copy remains calm, local-only, and non-medical.
+- Confirm accessibility labels remain meaningful for check-in options, recent rows, delete actions, and delete confirmation.
+- Confirm icon-only display preference does not remove accessibility meaning.
+- Confirm tests cover recent history, latest-three ordering, single-record deletion, missing-id no-op deletion, post-delete history, copy safety, and storage boundaries.
+- Confirm local validation passes.
+- Confirm automatic GitHub Actions status is reviewed after PR creation.
+- Confirm GitHub Actions is not manually rerun unless a clear transient or infrastructure failure is identified after local validation passes.
+- Confirm no Phase 9.15 work was started.
+
 ## Phase 6.2 Watch App Visual Refresh
 
 - Confirm PR #22 is merged before starting the Watch visual refresh branch.
