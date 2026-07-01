@@ -1055,6 +1055,33 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Confirm GitHub Actions is not manually rerun unless a clear transient or infrastructure failure is identified after local validation passes.
 - Confirm no Phase 9.16 work was started.
 
+## Phase 9.16 MVP Check-in Boundary QA
+
+- Confirm `Docs/phase-9-16-mvp-checkin-boundary-qa.md` exists.
+- Confirm Phase 9.16 is QA/documentation-only.
+- Confirm Phase 9.15 decision remains unchanged.
+- Confirm MVP Check-in remains Watch-only.
+- Confirm MVP Check-in remains local-only.
+- Confirm no iPhone read-only check-in history was added.
+- Confirm no iPhone check-in entry, deletion, or management was added.
+- Confirm no WidgetKit check-in display, summary, or direct read was added.
+- Confirm no App Group raw check-in history, propagation, deletion state, or display preference propagation was added.
+- Confirm no WatchConnectivity was added.
+- Confirm no State Score integration was added.
+- Confirm no clear-all UI was added.
+- Confirm no notes or export were added.
+- Confirm no reminders, notifications, scheduling, or background delivery were added.
+- Confirm no trends, streaks, counts, causes, interpretations, or pattern summaries were added.
+- Confirm no HealthKit write access or write authorization was added.
+- Confirm no networking, cloud sync, iCloud sync, analytics, AI, account system, login, upload path, or remote config was added.
+- Confirm missing check-ins remain neutral.
+- Confirm `Low` check-ins remain subjective, non-medical, non-warning, and non-score-lowering.
+- Confirm future iPhone, WidgetKit, App Group, WatchConnectivity, or State Score check-in work requires separate design, privacy, deletion, consistency, and QA phases.
+- Confirm local validation passes.
+- Confirm automatic GitHub Actions status is reviewed after PR creation.
+- Confirm GitHub Actions is not manually rerun unless a clear transient or infrastructure failure is identified after local validation passes.
+- Confirm no Phase 9.17 work was started.
+
 ## Phase 6.2 Watch App Visual Refresh
 
 - Confirm PR #22 is merged before starting the Watch visual refresh branch.
