@@ -4,6 +4,7 @@ protocol StateCheckInStoring {
     func save(_ record: StateCheckInRecord) throws
     func loadRecent(limit: Int) -> [StateCheckInRecord]
     func loadAll() -> [StateCheckInRecord]
+    func delete(id: UUID) throws
     func clearAll() throws
 }
 
@@ -55,6 +56,18 @@ struct LocalStateCheckInStore: StateCheckInStoring {
         } catch {
             return []
         }
+    }
+
+    func delete(id: UUID) throws {
+        var records = loadAll()
+        let originalCount = records.count
+        records.removeAll { $0.id == id }
+
+        guard records.count != originalCount else {
+            return
+        }
+
+        try write(records)
     }
 
     func clearAll() throws {

@@ -109,6 +109,67 @@ final class LocalStateCheckInStoreTests: XCTestCase {
         XCTAssertEqual(store.loadRecent(limit: 10), [newRecord, oldRecord])
     }
 
+    func testRecentHistoryReturnsLatestThreeNewestFirst() throws {
+        let store = try makeStore()
+        let oldestRecord = try makeRecord(id: "55555555-5555-5555-5555-555555555551", option: .energized, timestamp: 1_000)
+        let thirdNewestRecord = try makeRecord(id: "55555555-5555-5555-5555-555555555552", option: .stable, timestamp: 2_000)
+        let secondNewestRecord = try makeRecord(id: "55555555-5555-5555-5555-555555555553", option: .tired, timestamp: 3_000)
+        let newestRecord = try makeRecord(id: "55555555-5555-5555-5555-555555555554", option: .low, timestamp: 4_000)
+
+        try store.save(oldestRecord)
+        try store.save(secondNewestRecord)
+        try store.save(newestRecord)
+        try store.save(thirdNewestRecord)
+
+        XCTAssertEqual(store.loadRecent(limit: 3), [newestRecord, secondNewestRecord, thirdNewestRecord])
+    }
+
+    func testDeleteRemovesOnlyMatchingRecordAndPreservesRemainingRecords() throws {
+        let store = try makeStore()
+        let oldRecord = try makeRecord(id: "66666666-6666-6666-6666-666666666661", option: .energized, timestamp: 1_000)
+        let deletedRecord = try makeRecord(id: "66666666-6666-6666-6666-666666666662", option: .stable, timestamp: 2_000)
+        let newRecord = try makeRecord(id: "66666666-6666-6666-6666-666666666663", option: .tired, timestamp: 3_000)
+
+        try store.save(oldRecord)
+        try store.save(deletedRecord)
+        try store.save(newRecord)
+
+        try store.delete(id: deletedRecord.id)
+
+        XCTAssertEqual(store.loadAll(), [newRecord, oldRecord])
+        XCTAssertEqual(store.loadRecent(limit: 3), [newRecord, oldRecord])
+    }
+
+    func testDeleteMissingRecordIsSafeNoOp() throws {
+        let store = try makeStore()
+        let record = try makeRecord(id: "77777777-7777-7777-7777-777777777771", option: .low, timestamp: 1_000)
+        let missingID = try XCTUnwrap(UUID(uuidString: "77777777-7777-7777-7777-777777777772"))
+
+        try store.save(record)
+        try store.delete(id: missingID)
+
+        XCTAssertEqual(store.loadAll(), [record])
+    }
+
+    func testDeletingThenLoadingRecentReturnsUpdatedNewestFirstHistory() throws {
+        let store = try makeStore()
+        let oldestRecord = try makeRecord(id: "88888888-8888-8888-8888-888888888881", option: .energized, timestamp: 1_000)
+        let thirdNewestRecord = try makeRecord(id: "88888888-8888-8888-8888-888888888882", option: .stable, timestamp: 2_000)
+        let deletedRecord = try makeRecord(id: "88888888-8888-8888-8888-888888888883", option: .tired, timestamp: 3_000)
+        let newestRecord = try makeRecord(id: "88888888-8888-8888-8888-888888888884", option: .low, timestamp: 4_000)
+
+        try store.save(oldestRecord)
+        try store.save(thirdNewestRecord)
+        try store.save(deletedRecord)
+        try store.save(newestRecord)
+
+        XCTAssertEqual(store.loadRecent(limit: 3), [newestRecord, deletedRecord, thirdNewestRecord])
+
+        try store.delete(id: deletedRecord.id)
+
+        XCTAssertEqual(store.loadRecent(limit: 3), [newestRecord, thirdNewestRecord, oldestRecord])
+    }
+
     func testClearAllRemovesRecords() throws {
         let store = try makeStore()
         try store.save(StateCheckInRecord(option: .stable, createdAt: Date(timeIntervalSince1970: 1_600)))
@@ -188,6 +249,15 @@ final class LocalStateCheckInStoreTests: XCTestCase {
             .appendingPathComponent("statewatch-checkin-tests-\(UUID().uuidString)", isDirectory: true)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         return LocalStateCheckInStore(directoryURL: directory)
+    }
+
+    private func makeRecord(id: String, option: StateCheckInOption, timestamp: TimeInterval, file: StaticString = #filePath, line: UInt = #line) throws -> StateCheckInRecord {
+        StateCheckInRecord(
+            id: try XCTUnwrap(UUID(uuidString: id), file: file, line: line),
+            option: option,
+            createdAt: Date(timeIntervalSince1970: timestamp),
+            sourceSurface: .watch
+        )
     }
 
     private func repositoryRoot(filePath: String = #filePath) -> URL {

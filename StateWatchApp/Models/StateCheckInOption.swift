@@ -59,6 +59,14 @@ enum StateCheckInOption: String, CaseIterable, Identifiable, Equatable, Codable 
     static let doneButtonTitle = "Done"
     static let noCheckInTitle = "No check-in yet"
     static let optionalCheckInMessage = "Check-ins are optional."
+    static let recentCheckInsTitle = "Recent check-ins"
+    static let deleteCheckInTitle = "Delete check-in"
+    static let deleteCheckInPrompt = "Remove this local check-in?"
+    static let deleteCheckInDetail = "This removes it from this Watch."
+    static let deleteButtonTitle = "Delete"
+    static let keepButtonTitle = "Keep"
+    static let deleteUnavailableTitle = "Delete unavailable"
+    static let tryAgainLaterMessage = "Try again later."
 
     static var searchableCopy: String {
         (
@@ -70,7 +78,15 @@ enum StateCheckInOption: String, CaseIterable, Identifiable, Equatable, Codable 
                 confirmationDetail,
                 doneButtonTitle,
                 noCheckInTitle,
-                optionalCheckInMessage
+                optionalCheckInMessage,
+                recentCheckInsTitle,
+                deleteCheckInTitle,
+                deleteCheckInPrompt,
+                deleteCheckInDetail,
+                deleteButtonTitle,
+                keepButtonTitle,
+                deleteUnavailableTitle,
+                tryAgainLaterMessage
             ]
             + allCases.flatMap {
                 [
