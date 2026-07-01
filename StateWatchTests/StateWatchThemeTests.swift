@@ -2014,10 +2014,28 @@ final class WatchStateCheckInOptionTests: XCTestCase {
         }
     }
 
+    func testWatchCheckInHistoryAndDeleteCopyIsSafeAndLocalOnly() {
+        XCTAssertEqual(StateCheckInOption.recentCheckInsTitle, "Recent check-ins")
+        XCTAssertEqual(StateCheckInOption.deleteCheckInTitle, "Delete check-in")
+        XCTAssertEqual(StateCheckInOption.deleteCheckInPrompt, "Remove this local check-in?")
+        XCTAssertEqual(StateCheckInOption.deleteCheckInDetail, "This removes it from this Watch.")
+        XCTAssertEqual(StateCheckInOption.deleteButtonTitle, "Delete")
+        XCTAssertEqual(StateCheckInOption.keepButtonTitle, "Keep")
+        XCTAssertEqual(StateCheckInOption.deleteUnavailableTitle, "Delete unavailable")
+        XCTAssertEqual(StateCheckInOption.tryAgainLaterMessage, "Try again later.")
+
+        for forbiddenTerm in safetyForbiddenTerms {
+            XCTAssertFalse(
+                StateCheckInOption.searchableCopy.localizedCaseInsensitiveContains(forbiddenTerm),
+                "Unexpected Watch check-in history/delete wording: \(forbiddenTerm)"
+            )
+        }
+    }
+
     func testWatchCheckInOptionMetadataDoesNotIntroduceStorageOrSyncConcepts() {
         for forbiddenTerm in implementationBoundaryTerms {
             XCTAssertFalse(
-                StateCheckInOption.searchableCopy.localizedCaseInsensitiveContains(forbiddenTerm),
+                searchableCopyContainsForbiddenImplementationTerm(forbiddenTerm),
                 "Unexpected Watch check-in implementation concept in UI model: \(forbiddenTerm)"
             )
         }
@@ -2060,5 +2078,15 @@ final class WatchStateCheckInOptionTests: XCTestCase {
             "analytics",
             "remote config"
         ]
+    }
+
+    private func searchableCopyContainsForbiddenImplementationTerm(_ forbiddenTerm: String) -> Bool {
+        if forbiddenTerm == "AI" {
+            return StateCheckInOption.searchableCopy
+                .components(separatedBy: CharacterSet.alphanumerics.inverted)
+                .contains { $0.caseInsensitiveCompare(forbiddenTerm) == .orderedSame }
+        }
+
+        return StateCheckInOption.searchableCopy.localizedCaseInsensitiveContains(forbiddenTerm)
     }
 }

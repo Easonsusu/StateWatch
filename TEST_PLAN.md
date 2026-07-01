@@ -946,6 +946,49 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Confirm GitHub Actions is not manually triggered or used as the debugging loop.
 - Confirm no Phase 9.13 implementation or later work was started.
 
+## Phase 9.13 Watch Check-in Recent History and Deletion Foundation
+
+- Confirm `Docs/phase-9-13-watch-checkin-recent-history-deletion-foundation.md` exists.
+- Confirm the Watch Check-in screen shows recent check-ins only on Apple Watch.
+- Confirm the recent list is capped at the latest 3 records.
+- Confirm recent history is ordered newest-first.
+- Confirm empty history uses neutral copy: `No check-in yet` and `Check-ins are optional.`
+- Confirm saving a new check-in refreshes the recent history list.
+- Confirm each recent row shows a subjective state label and compact timestamp context.
+- Confirm icon-only display preference does not remove meaningful accessibility labels.
+- Confirm single-record deletion is available for recent check-ins.
+- Confirm deletion uses calm local-only confirmation copy.
+- Confirm deleting one record removes only that matching local Watch record.
+- Confirm deleting a missing record is a safe no-op.
+- Confirm deletion failure uses calm fallback copy and does not imply a bad health state.
+- Confirm no clear-all UI was added.
+- Confirm no history export was added.
+- Confirm no notes, free-form text, causes, interpretations, trends, counts, streaks, or pattern summaries were added.
+- Confirm `StateCheckInRecord` schema remains limited to `id`, `option`, `createdAt`, `updatedAt`, `sourceSurface`, `schemaVersion`, and `noteStatus`.
+- Confirm no HealthKit sample identifiers, raw HealthKit samples, symptoms, medical fields, account identifiers, analytics identifiers, cloud identifiers, or AI profile fields were added to the record schema.
+- Confirm `LocalStateCheckInStore.delete(id:)` is local-only and uses the existing Watch-local JSON store.
+- Confirm Watch check-ins remain stored in the Watch app container only.
+- Confirm no raw check-in history is stored in `UserDefaults`.
+- Confirm no raw check-in history is stored in App Group shared state.
+- Confirm no App Group check-in propagation, deletion state propagation, or display preference propagation was added.
+- Confirm no WidgetKit check-in display or direct check-in read was added.
+- Confirm no WatchConnectivity was added.
+- Confirm no iPhone check-in UI, iPhone history display, iPhone deletion, or iPhone settings were added.
+- Confirm no HealthKit write access or HealthKit write authorization was added.
+- Confirm HealthKit rollout behavior remains unchanged and default-off where applicable.
+- Confirm no raw HealthKit samples are stored in check-in records.
+- Confirm check-ins do not affect State Score, component scores, confidence, reasons, suggestions, HealthKit-derived scoring, WidgetKit complications, App Group summary, iPhone Dashboard state, or Watch score state.
+- Confirm missing check-ins remain neutral and non-score-lowering.
+- Confirm `Low` check-ins remain subjective, non-medical, non-warning, and not styled or described as danger, risk, emergency, or abnormal state.
+- Confirm no reminders, notifications, scheduling, background delivery, completion pressure, or prompts were added.
+- Confirm no networking, cloud sync, iCloud sync, analytics, remote config, AI, AI cloud analysis, account system, login, upload path, or developer-accessible database was added.
+- Confirm user-facing copy remains subjective, calm, and non-medical.
+- Confirm no diagnosis, anxiety detection, depression detection, clinical stress detection, disease detection, treatment, therapy, emergency, warning, abnormal-state, health-risk, symptom-history, medical-record, or medical-advice wording was introduced as approved product copy.
+- Confirm XCTest coverage includes latest-three newest-first history, single-record deletion, missing-record deletion no-op behavior, post-delete recent history, safe copy, and existing storage boundary checks.
+- Confirm local validation is used as the source of truth if GitHub Actions quota or availability is limited.
+- Confirm GitHub Actions is not manually triggered or used as the debugging loop.
+- Confirm no Phase 9.14 QA or later work was started.
+
 ## Phase 6.2 Watch App Visual Refresh
 
 - Confirm PR #22 is merged before starting the Watch visual refresh branch.
