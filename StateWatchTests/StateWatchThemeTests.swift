@@ -2032,6 +2032,22 @@ final class WatchStateCheckInOptionTests: XCTestCase {
         }
     }
 
+    func testWatchCheckInAccessibilityHintsAreCalmAndLocalOnly() {
+        XCTAssertEqual(StateCheckInOption.saveAccessibilityHint, "Saves this self-reported state on this Watch.")
+        XCTAssertEqual(StateCheckInOption.displayStyleAccessibilityHint, "Changes how check-in options are shown on this Watch.")
+        XCTAssertEqual(StateCheckInOption.recentCheckInAccessibilityHint, "Recent local Watch check-in.")
+        XCTAssertEqual(StateCheckInOption.deleteCheckInAccessibilityHint, "Shows a local delete confirmation.")
+        XCTAssertEqual(StateCheckInOption.confirmDeleteAccessibilityHint, "Removes only this local Watch check-in.")
+        XCTAssertEqual(StateCheckInOption.keepCheckInAccessibilityHint, "Keeps this local check-in.")
+
+        for forbiddenTerm in safetyForbiddenTerms {
+            XCTAssertFalse(
+                StateCheckInOption.searchableCopy.localizedCaseInsensitiveContains(forbiddenTerm),
+                "Unexpected Watch check-in accessibility wording: \(forbiddenTerm)"
+            )
+        }
+    }
+
     func testWatchCheckInOptionMetadataDoesNotIntroduceStorageOrSyncConcepts() {
         for forbiddenTerm in implementationBoundaryTerms {
             XCTAssertFalse(

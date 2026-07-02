@@ -59,6 +59,7 @@ struct WatchCheckInView: View {
                         }
                         .buttonStyle(.plain)
                         .accessibilityLabel(option.accessibilityLabel)
+                        .accessibilityHint(StateCheckInOption.saveAccessibilityHint)
                     }
                 }
 
@@ -81,13 +82,19 @@ struct WatchCheckInView: View {
                         .lineLimit(1)
                         .minimumScaleFactor(0.75)
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, 5)
+                        .padding(.vertical, 4)
                         .foregroundStyle(displayMode == mode ? WatchStyle.backgroundPrimary : WatchStyle.textSecondary)
-                        .background(displayMode == mode ? WatchStyle.accentCyan : WatchStyle.panel)
+                        .background(displayMode == mode ? WatchStyle.accentCyan : WatchStyle.panel.opacity(0.56))
                         .clipShape(Capsule())
+                        .overlay(
+                            Capsule()
+                                .stroke(displayMode == mode ? WatchStyle.accentCyan.opacity(0.2) : WatchStyle.border.opacity(0.42), lineWidth: 1)
+                        )
                 }
                 .buttonStyle(.plain)
                 .accessibilityLabel("Check-in display style, \(mode.label)")
+                .accessibilityValue(displayMode == mode ? "Selected" : "Not selected")
+                .accessibilityHint(StateCheckInOption.displayStyleAccessibilityHint)
             }
         }
         .accessibilityElement(children: .contain)
@@ -264,6 +271,7 @@ struct WatchCheckInView: View {
             }
             .buttonStyle(.plain)
             .accessibilityLabel("Delete \(record.option.label) check-in")
+            .accessibilityHint(StateCheckInOption.deleteCheckInAccessibilityHint)
         }
         .padding(.horizontal, 9)
         .padding(.vertical, 7)
@@ -272,6 +280,7 @@ struct WatchCheckInView: View {
         .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
         .accessibilityElement(children: .contain)
         .accessibilityLabel("\(record.option.accessibilityLabel), \(timestampText(for: record.createdAt))")
+        .accessibilityHint(StateCheckInOption.recentCheckInAccessibilityHint)
     }
 
     private func deleteConfirmationView(for record: StateCheckInRecord) -> some View {
@@ -293,6 +302,7 @@ struct WatchCheckInView: View {
                 .buttonStyle(.borderedProminent)
                 .tint(WatchStyle.accentBlue)
                 .accessibilityLabel("\(StateCheckInOption.deleteCheckInTitle), \(record.option.label)")
+                .accessibilityHint(StateCheckInOption.confirmDeleteAccessibilityHint)
 
                 Button(StateCheckInOption.keepButtonTitle) {
                     pendingDeleteRecord = nil
@@ -300,6 +310,8 @@ struct WatchCheckInView: View {
                 .font(.system(size: 10, weight: .semibold, design: .rounded))
                 .buttonStyle(.bordered)
                 .tint(WatchStyle.textMuted)
+                .accessibilityLabel(StateCheckInOption.keepButtonTitle)
+                .accessibilityHint(StateCheckInOption.keepCheckInAccessibilityHint)
             }
         }
         .padding(9)
