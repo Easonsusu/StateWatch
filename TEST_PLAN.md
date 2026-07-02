@@ -1082,6 +1082,37 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Confirm GitHub Actions is not manually rerun unless a clear transient or infrastructure failure is identified after local validation passes.
 - Confirm no Phase 9.17 work was started.
 
+## Phase 9.17 Watch Check-in Final UX Polish Design
+
+- Confirm `Docs/phase-9-17-watch-checkin-final-ux-polish-design.md` exists.
+- Confirm Phase 9.17 is design/documentation-only.
+- Confirm no Swift source files were changed.
+- Confirm no Xcode project files were changed.
+- Confirm no entitlement files were changed.
+- Confirm no CI workflow files were changed.
+- Confirm no product behavior was changed.
+- Confirm Watch Check-in remains Watch-only.
+- Confirm Watch Check-in remains local-only.
+- Confirm latest-three history remains the MVP boundary.
+- Confirm no latest-five history was added.
+- Confirm no clear-all UI was added.
+- Confirm no notes, export, reminders, notifications, trends, streaks, counts, causes, interpretations, pattern summaries, or insights were added.
+- Confirm no iPhone Check-in UI, history, or deletion was added.
+- Confirm no WidgetKit Check-in display, summary, or direct read was added.
+- Confirm no App Group raw Check-in history or propagation was added.
+- Confirm no WatchConnectivity was added.
+- Confirm no State Score integration was added.
+- Confirm no HealthKit write access or write authorization was added.
+- Confirm no networking, cloud sync, iCloud sync, analytics, AI, account system, login, upload path, or remote config was added.
+- Confirm missing Check-ins remain neutral.
+- Confirm `Low` remains subjective, non-medical, non-warning, and non-score-lowering.
+- Confirm Phase 9.18 scope is limited to Watch-only UX polish.
+- Confirm manual real-device QA notes are documented for Phase 9.18.
+- Confirm local validation passes.
+- Confirm automatic GitHub Actions status is reviewed after PR creation.
+- Confirm GitHub Actions is not manually rerun unless a clear transient or infrastructure failure is identified after local validation passes.
+- Confirm no Phase 9.18 work was started.
+
 ## Phase 6.2 Watch App Visual Refresh
 
 - Confirm PR #22 is merged before starting the Watch visual refresh branch.
