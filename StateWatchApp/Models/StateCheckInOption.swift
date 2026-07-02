@@ -67,6 +67,12 @@ enum StateCheckInOption: String, CaseIterable, Identifiable, Equatable, Codable 
     static let keepButtonTitle = "Keep"
     static let deleteUnavailableTitle = "Delete unavailable"
     static let tryAgainLaterMessage = "Try again later."
+    static let saveAccessibilityHint = "Saves this self-reported state on this Watch."
+    static let displayStyleAccessibilityHint = "Changes how check-in options are shown on this Watch."
+    static let recentCheckInAccessibilityHint = "Recent local Watch check-in."
+    static let deleteCheckInAccessibilityHint = "Shows a local delete confirmation."
+    static let confirmDeleteAccessibilityHint = "Removes only this local Watch check-in."
+    static let keepCheckInAccessibilityHint = "Keeps this local check-in."
 
     static var searchableCopy: String {
         (
@@ -86,7 +92,13 @@ enum StateCheckInOption: String, CaseIterable, Identifiable, Equatable, Codable 
                 deleteButtonTitle,
                 keepButtonTitle,
                 deleteUnavailableTitle,
-                tryAgainLaterMessage
+                tryAgainLaterMessage,
+                saveAccessibilityHint,
+                displayStyleAccessibilityHint,
+                recentCheckInAccessibilityHint,
+                deleteCheckInAccessibilityHint,
+                confirmDeleteAccessibilityHint,
+                keepCheckInAccessibilityHint
             ]
             + allCases.flatMap {
                 [
