@@ -1222,6 +1222,47 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Confirm GitHub Actions is not manually rerun unless a clear transient or infrastructure failure is identified after local validation passes.
 - Confirm no Phase 9.21 work was started.
 
+## Phase 9.21 Watch Check-in VoiceOver QA Results
+
+- Confirm `Docs/phase-9-21-watch-checkin-voiceover-qa-results.md` exists.
+- Confirm Phase 9.21 records actual execution results honestly.
+- Confirm real-device VoiceOver QA is not claimed as passed unless a real Apple Watch was actually used.
+- Confirm any unavailable real-device QA is marked blocked, partial, or not run rather than passed.
+- Confirm no fabricated real-device result, spoken VoiceOver phrase, screenshot, recording, device name, OS version, or pass/fail outcome is claimed.
+- Confirm simulator/source-review results are clearly labeled as limited.
+- Confirm `VO-001` through `VO-009` are documented with status, environment, evidence, and limitations.
+- Confirm no Swift files changed.
+- Confirm no Xcode project files changed.
+- Confirm no entitlement files changed.
+- Confirm no CI workflow files changed.
+- Confirm no product behavior changed.
+- Confirm Watch Check-in remains Watch-only.
+- Confirm Watch Check-in remains local-only.
+- Confirm the four approved states remain exactly `Energized`, `Stable`, `Tired`, and `Low`.
+- Confirm Traditional Chinese reference labels remain exactly `有活力`, `穩定`, `疲累`, and `低狀態`.
+- Confirm display modes remain exactly `Icon + Text`, `Icon Only`, and `Text Only`.
+- Confirm default display remains `Icon + Text`.
+- Confirm latest-three recent history remains unchanged.
+- Confirm no latest-five history was added.
+- Confirm no clear-all UI was added.
+- Confirm no long-term Check-in history was added.
+- Confirm no notes, export, reminders, notifications, trends, streaks, counts, causes, interpretations, pattern summaries, or insights were added.
+- Confirm no iPhone Check-in UI, history, deletion, or management was added.
+- Confirm the old iPhone CheckInView scaffold was not addressed.
+- Confirm no WidgetKit Check-in display, summary, or direct read was added.
+- Confirm no App Group raw Check-in history, Check-in propagation, or display preference propagation was added.
+- Confirm no WatchConnectivity was added.
+- Confirm no State Score integration was added.
+- Confirm no HealthKit write access or write authorization was added.
+- Confirm no networking, cloud sync, iCloud sync, analytics, AI, account system, login, upload path, or remote config was added.
+- Confirm missing Check-ins remain neutral.
+- Confirm `Low` remains subjective, non-medical, non-warning, and non-score-lowering.
+- Confirm issues found, if any, are documented and not fixed in this PR.
+- Confirm local validation commands pass.
+- Confirm GitHub Actions status is reviewed after PR creation.
+- Confirm GitHub Actions is not manually rerun unless a clear transient or infrastructure failure is identified after local validation passes.
+- Confirm no Phase 9.22 work was started.
+
 ## Phase 6.2 Watch App Visual Refresh
 
 - Confirm PR #22 is merged before starting the Watch visual refresh branch.
