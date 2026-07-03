@@ -1471,6 +1471,67 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Confirm GitHub Actions status is reviewed after PR creation.
 - Confirm no Phase 9.27 work was started.
 
+## Phase 9.27 Non-real-device Release Candidate Validation
+
+- Confirm `Docs/phase-9-27-non-real-device-release-candidate-validation.md` exists.
+- Confirm the document is non-real-device validation only.
+- Confirm Phase 9.23, Phase 9.24, Phase 9.25, and Phase 9.26 were used as input.
+- Confirm explicit limitations are carried forward.
+- Confirm Xcode version was recorded.
+- Confirm available simulator inventory was recorded.
+- Confirm real-device inventory was recorded.
+- Confirm Phase 9.22 remains deferred/blocked, not completed.
+- Confirm real-device Watch Check-in VoiceOver QA remains unresolved.
+- Confirm physical Apple Watch tap ergonomics remain unresolved.
+- Confirm real-device HealthKit QA remains planned, not executed.
+- Confirm non-real-device validation does not replace real-device QA.
+- Confirm repository hygiene validation was run.
+- Confirm `git diff --check origin/main...HEAD` passed or failed honestly.
+- Confirm `git diff --cached --check` passed or failed honestly.
+- Confirm `plutil -lint StateWatch.xcodeproj/project.pbxproj` passed or failed honestly.
+- Confirm iOS app simulator build/test was run or marked blocked with reason.
+- Confirm Watch app simulator build was run or marked blocked with reason.
+- Confirm Widget / complications simulator build was run or marked blocked with reason.
+- Confirm no failed validation was marked passed.
+- Confirm no broad release-ready claim is made.
+- Confirm no App Store approval or external submission-readiness claim is made.
+- Confirm no TestFlight upload was performed.
+- Confirm no App Store Connect release work was performed.
+- Confirm no real-device QA result was fabricated.
+- Confirm HealthKit remains read-only.
+- Confirm no HealthKit write access or write authorization was added.
+- Confirm no raw HealthKit upload or developer-accessible health database is introduced.
+- Confirm no diagnosis, treatment, therapy, emergency, abnormal-state, warning, disease-detection, clinical-stress, or medical-advice claim is made.
+- Confirm `Low` remains subjective, non-medical, non-warning, and non-score-lowering.
+- Confirm missing Check-ins and missing HealthKit data remain neutral.
+- Confirm Check-ins do not affect State Score.
+- Confirm no Swift files changed.
+- Confirm no Xcode project files changed.
+- Confirm no entitlements changed.
+- Confirm no CI workflows changed.
+- Confirm no product behavior changed.
+- Confirm Watch Check-in remains Watch-only.
+- Confirm Watch Check-in remains local-only.
+- Confirm the four approved states remain exactly `Energized`, `Stable`, `Tired`, and `Low`.
+- Confirm Traditional Chinese reference labels remain exactly `有活力`, `穩定`, `疲累`, and `低狀態`.
+- Confirm display modes remain exactly `Icon + Text`, `Icon Only`, and `Text Only`.
+- Confirm default display remains `Icon + Text`.
+- Confirm latest-three recent history remains unchanged.
+- Confirm no latest-five history was added.
+- Confirm no clear-all UI was added.
+- Confirm no long-term history was added.
+- Confirm no notes, export, reminders, notifications, trends, streaks, counts, causes, interpretations, pattern summaries, or insights were added.
+- Confirm no iPhone Check-in UI, history, deletion, or management was added.
+- Confirm the old iPhone CheckInView scaffold was not addressed.
+- Confirm no WidgetKit Check-in display, summary, or direct read was added.
+- Confirm no App Group raw Check-in history, Check-in propagation, or display preference propagation was added.
+- Confirm no WatchConnectivity was added.
+- Confirm no State Score integration was added.
+- Confirm no networking, cloud sync, iCloud sync, analytics, AI, account system, login, upload path, or remote config was added.
+- Confirm recommended next phase is Phase 9.28: Known Limitations and Release Notes.
+- Confirm GitHub Actions status is reviewed after PR creation.
+- Confirm no Phase 9.28 work was started.
+
 ## Phase 6.2 Watch App Visual Refresh
 
 - Confirm PR #22 is merged before starting the Watch visual refresh branch.
