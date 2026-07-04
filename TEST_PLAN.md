@@ -1598,6 +1598,76 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Confirm GitHub Actions status is reviewed.
 - Confirm no Phase 9.29 work started.
 
+## Phase 9.29 Internal TestFlight Distribution Readiness Checklist
+
+- Confirm `Docs/phase-9-29-internal-testflight-distribution-readiness-checklist.md` exists.
+- Confirm the Phase 9.29 document is readiness checklist only, not TestFlight upload or App Store Connect release action.
+- Confirm Phase 9.23 through Phase 9.28 were used as input.
+- Confirm explicit limitations are carried forward.
+- Confirm Phase 9.22 remains deferred/blocked, not completed.
+- Confirm real-device Watch Check-in VoiceOver QA remains unresolved.
+- Confirm physical Apple Watch tap ergonomics remain unresolved.
+- Confirm real Watch VoiceOver spoken cadence and focus order remain unresolved.
+- Confirm real-device HealthKit QA remains planned, not executed.
+- Confirm Phase 9.27 validation is described as non-real-device validation only.
+- Confirm non-real-device validation is not treated as real-device QA.
+- Confirm internal TestFlight distribution may be prepared only with explicit limitations.
+- Confirm no TestFlight upload was performed.
+- Confirm no App Store Connect release work was performed.
+- Confirm no App Store metadata was changed.
+- Confirm no broad release-ready claim is made.
+- Confirm no App Store approval or external submission-readiness claim is made.
+- Confirm build and version record template is documented.
+- Confirm internal tester group template is documented.
+- Confirm internal release notes template is documented.
+- Confirm known limitations disclosure template is documented.
+- Confirm App Store Connect items to verify later are documented.
+- Confirm TestFlight upload items to verify later are documented.
+- Confirm Privacy / HealthKit readiness review is documented.
+- Confirm medical-safety readiness review is documented.
+- Confirm Watch Check-in MVP readiness review is documented.
+- Confirm items not included in current MVP are documented.
+- Confirm prohibited internal distribution claims are documented.
+- Confirm allowed internal distribution claims are documented.
+- Confirm work that may continue is documented.
+- Confirm work that must wait is documented.
+- Confirm non-blocking follow-ups are documented.
+- Confirm no real-device QA result was fabricated.
+- Confirm HealthKit remains read-only.
+- Confirm no HealthKit write access or write authorization was added.
+- Confirm no raw HealthKit upload or developer-accessible health database is introduced.
+- Confirm no diagnosis, treatment, therapy, emergency, abnormal-state, warning, disease-detection, clinical-stress, or medical-advice claim is made.
+- Confirm `Low` remains subjective, non-medical, non-warning, and non-score-lowering.
+- Confirm missing Check-ins and missing HealthKit data remain neutral.
+- Confirm Check-ins do not affect State Score.
+- Confirm no Swift files changed.
+- Confirm no Xcode project files changed.
+- Confirm no entitlements changed.
+- Confirm no CI workflows changed.
+- Confirm no product behavior changed.
+- Confirm Watch Check-in remains Watch-only.
+- Confirm Watch Check-in remains local-only.
+- Confirm four states remain `Energized`, `Stable`, `Tired`, and `Low`.
+- Confirm Traditional Chinese reference labels remain `有活力`, `穩定`, `疲累`, and `低狀態`.
+- Confirm display modes remain `Icon + Text`, `Icon Only`, and `Text Only`.
+- Confirm default display remains `Icon + Text`.
+- Confirm latest-three recent history remains unchanged.
+- Confirm no latest-five history added.
+- Confirm no clear-all UI added.
+- Confirm no long-term history added.
+- Confirm no notes, export, reminders, notifications, trends, streaks, counts, causes, interpretations, pattern summaries, or insights added.
+- Confirm no iPhone Check-in UI, history, deletion, or management added.
+- Confirm old iPhone CheckInView scaffold was not addressed.
+- Confirm no WidgetKit Check-in display, summary, or direct read added.
+- Confirm no App Group raw Check-in history, propagation, or display preference propagation added.
+- Confirm no WatchConnectivity added.
+- Confirm no State Score integration added.
+- Confirm no networking, cloud sync, iCloud sync, analytics, AI, account system, login, upload path, or remote config added.
+- Confirm recommended next phase is Phase 9.30: Internal TestFlight Build Preparation Plan.
+- Confirm local validation commands pass.
+- Confirm GitHub Actions status is reviewed.
+- Confirm no Phase 9.30 work started.
+
 ## Phase 6.2 Watch App Visual Refresh
 
 - Confirm PR #22 is merged before starting the Watch visual refresh branch.
