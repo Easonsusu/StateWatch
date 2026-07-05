@@ -1748,6 +1748,86 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Confirm GitHub Actions status is reviewed.
 - Confirm no Phase 9.31 work started.
 
+## Phase 9.31 Archive and Signing Environment Inventory
+
+- Confirm `Docs/phase-9-31-archive-signing-environment-inventory.md` exists.
+- Confirm this is an archive and signing environment inventory, not an Xcode archive, TestFlight upload, App Store Connect release action, App Store submission, or release-ready claim.
+- Confirm no Xcode archive was performed.
+- Confirm no `.xcarchive` was created.
+- Confirm no `.ipa` was exported.
+- Confirm no TestFlight upload was performed.
+- Confirm no App Store Connect release work was performed.
+- Confirm no App Store metadata, screenshots, privacy labels, or review notes were changed.
+- Confirm no bundle identifiers were changed.
+- Confirm no signing settings were changed.
+- Confirm no provisioning profiles were changed.
+- Confirm no certificates were installed, modified, or committed.
+- Confirm Xcode version is recorded.
+- Confirm SDK inventory is recorded.
+- Confirm simulator / device inventory is recorded.
+- Confirm scheme and target inventory is recorded.
+- Confirm archive scheme decision is documented as needing verification before archive.
+- Confirm bundle identifiers are recorded for iOS app, watchOS app, WidgetKit complications, and tests.
+- Confirm marketing version and build number are recorded.
+- Confirm signing style is recorded.
+- Confirm development team status is recorded.
+- Confirm code signing identity status is recorded.
+- Confirm provisioning profile specifier status is recorded.
+- Confirm local code-signing identity status is recorded without exposing private certificate details.
+- Confirm entitlements and capabilities are recorded.
+- Confirm HealthKit capability status is recorded.
+- Confirm App Group / Widget / Watch capability status is recorded.
+- Confirm archive feasibility is documented as needing future verification.
+- Confirm TestFlight upload feasibility is documented as needing Apple Developer / App Store Connect verification.
+- Confirm Phase 9.22 remains deferred/blocked, not completed.
+- Confirm real-device Watch Check-in VoiceOver QA remains unresolved.
+- Confirm physical Apple Watch tap ergonomics remain unresolved.
+- Confirm real Watch VoiceOver spoken cadence and focus order remain unresolved.
+- Confirm real-device HealthKit QA remains planned, not executed.
+- Confirm Phase 9.27 validation is described as non-real-device validation only.
+- Confirm non-real-device validation is not treated as real Apple Watch QA or real-device HealthKit QA.
+- Confirm internal TestFlight archive/signing planning may continue only with explicit limitations.
+- Confirm no broad release-ready claim is made.
+- Confirm no App Store approval or external submission-readiness claim is made.
+- Confirm no claim is made that signing is fully verified for distribution.
+- Confirm no claim is made that StateWatch is fully validated on Apple Watch.
+- Confirm no fabricated real-device QA result is claimed.
+- Confirm HealthKit remains read-only.
+- Confirm no HealthKit write access or write authorization was added.
+- Confirm no raw HealthKit upload or developer-accessible health database is introduced.
+- Confirm no networking, cloud sync, iCloud sync, analytics, AI, account system, login, upload path, or remote config was added.
+- Confirm no diagnosis, treatment, therapy, emergency, abnormal-state, warning, disease-detection, clinical-stress, medical-grade, or medical-advice claim is made.
+- Confirm `Low` remains subjective, non-medical, non-warning, and non-score-lowering.
+- Confirm missing Check-ins and missing HealthKit data remain neutral.
+- Confirm Check-ins do not affect State Score.
+- Confirm Watch Check-in remains Watch-only.
+- Confirm Watch Check-in remains local-only.
+- Confirm the four states remain exactly `Energized`, `Stable`, `Tired`, and `Low`.
+- Confirm Traditional Chinese reference labels remain exactly `有活力`, `穩定`, `疲累`, and `低狀態`.
+- Confirm display modes remain `Icon + Text`, `Icon Only`, and `Text Only`.
+- Confirm default display remains `Icon + Text`.
+- Confirm latest-three recent history remains unchanged.
+- Confirm no latest-five history added.
+- Confirm no clear-all UI added.
+- Confirm no long-term history added.
+- Confirm no notes, export, reminders, notifications, trends, streaks, counts, causes, interpretations, pattern summaries, or insights added.
+- Confirm no iPhone Check-in UI, history, deletion, or management added.
+- Confirm old iPhone CheckInView scaffold was not addressed.
+- Confirm no WidgetKit Check-in display, summary, or direct read added.
+- Confirm no App Group raw Check-in history, propagation, or display preference propagation added.
+- Confirm no WatchConnectivity added.
+- Confirm no State Score integration added.
+- Confirm no Swift files changed.
+- Confirm no Xcode project files changed.
+- Confirm no entitlements changed.
+- Confirm no plists changed.
+- Confirm no CI workflows changed.
+- Confirm no product behavior changed.
+- Confirm local validation commands pass.
+- Confirm GitHub Actions status is reviewed after PR creation.
+- Confirm recommended next phase is Phase 9.32: Archive dry-run planning or Apple Developer signing verification, still without performing an archive unless explicitly authorized.
+- Confirm no Phase 9.32 work started.
+
 ## Phase 6.2 Watch App Visual Refresh
 
 - Confirm PR #22 is merged before starting the Watch visual refresh branch.
