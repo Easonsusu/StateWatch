@@ -2544,6 +2544,91 @@ StateWatch now includes a runnable iOS app target, watchOS app target, WidgetKit
 - Confirm GitHub Actions status is reviewed.
 - Confirm no Phase 9.40 work started.
 
+## Phase 9.40 Apple Developer Account Setup Guide
+
+- Confirm `Docs/phase-9-40-apple-developer-account-setup-guide.md` exists.
+- Confirm the document is Apple Developer account setup guidance only, not Apple Developer configuration execution, App Store Connect configuration execution, signing configuration execution, controlled signing re-verification, Xcode project signing changes, Xcode archive, TestFlight upload, App Store Connect release action, App Store submission, or release-ready claim.
+- Confirm Phase 9.23 through Phase 9.39 were used as input.
+- Confirm conservative Phase 9.39 evidence is carried forward.
+- Confirm Apple Developer Program membership manual check is documented.
+- Confirm Apple Developer team role manual check is documented.
+- Confirm Team ID manual check is documented.
+- Confirm Xcode Settings > Accounts manual check is documented.
+- Confirm Apple Development signing identity manual check is documented.
+- Confirm Apple Distribution signing identity manual check is documented.
+- Confirm iOS App ID manual check is documented.
+- Confirm watchOS App ID manual check is documented.
+- Confirm WidgetKit / complications App ID manual check is documented.
+- Confirm HealthKit capability manual check is documented.
+- Confirm App Group existence and attachment manual check is documented.
+- Confirm Watch app relationship manual check is documented.
+- Confirm WidgetKit / complications relationship manual check is documented.
+- Confirm App Store Connect access manual check is documented.
+- Confirm App Store Connect app record manual check is documented.
+- Confirm Agreements / compliance blocker manual check is documented.
+- Confirm TestFlight availability manual check is documented.
+- Confirm Provisioning/profile resolution manual check is documented.
+- Confirm future authorization decision checklist is documented.
+- Confirm real-device QA availability check is documented.
+- Confirm safe user output template is documented.
+- Confirm secret handling rules are documented.
+- Confirm optional screenshot redaction rules are documented.
+- Confirm enough evidence criteria for controlled signing re-verification are documented.
+- Confirm enough evidence criteria for archive dry-run planning are documented.
+- Confirm enough evidence criteria for TestFlight upload planning are documented.
+- Confirm no Apple Developer configuration was performed.
+- Confirm no App Store Connect configuration was performed.
+- Confirm no signing configuration was changed.
+- Confirm no controlled signing re-verification was performed.
+- Confirm no DEVELOPMENT_TEAM was set.
+- Confirm no certificates were installed, revoked, created, or modified.
+- Confirm no provisioning profiles were created, downloaded, selected, or modified.
+- Confirm no bundle identifiers were created or modified.
+- Confirm no capabilities were enabled or disabled.
+- Confirm no xcodebuild archive was run.
+- Confirm no xcodebuild -allowProvisioningUpdates was run.
+- Confirm no Xcode archive was performed.
+- Confirm no `.xcarchive` was created.
+- Confirm no `.ipa` was exported.
+- Confirm no TestFlight upload was performed.
+- Confirm no App Store Connect release work was performed.
+- Confirm no App Store metadata was changed.
+- Confirm no screenshots, privacy labels, or review notes were changed.
+- Confirm no secrets/certificates/private keys/provisioning profiles/tokens/account emails/device UDIDs/personal addresses/phone numbers/raw HealthKit data were committed.
+- Confirm no broad release-ready claim is made.
+- Confirm no App Store approval or external submission-readiness claim is made.
+- Confirm no claim is made that signing is fixed or fully verified for distribution.
+- Confirm no claim is made that StateWatch is archive-ready or TestFlight-ready.
+- Confirm Phase 9.22 remains deferred/blocked, not completed.
+- Confirm real-device Watch Check-in VoiceOver QA remains unresolved.
+- Confirm physical Apple Watch tap ergonomics remain unresolved.
+- Confirm real Watch VoiceOver spoken cadence and focus order remain unresolved.
+- Confirm real-device HealthKit QA remains planned, not executed.
+- Confirm Phase 9.27 validation is described as non-real-device validation only.
+- Confirm non-real-device validation is not treated as real Apple Watch QA or real-device HealthKit QA.
+- Confirm HealthKit remains read-only.
+- Confirm no HealthKit write access or write authorization was added.
+- Confirm no diagnosis, treatment, therapy, emergency, abnormal-state, warning, disease-detection, clinical-stress, medical-grade, or medical-advice claim is made.
+- Confirm Watch Check-in remains Watch-only.
+- Confirm Watch Check-in remains local-only.
+- Confirm Check-ins do not affect State Score.
+- Confirm no iPhone Check-in UI, history, deletion, or management added.
+- Confirm no WidgetKit Check-in display, summary, or direct read added.
+- Confirm no App Group raw Check-in history, propagation, or display preference propagation added.
+- Confirm no WatchConnectivity added.
+- Confirm no State Score integration added.
+- Confirm no networking, cloud sync, iCloud sync, analytics, AI, account system, login, upload path, or remote config added.
+- Confirm no Swift files changed.
+- Confirm no Xcode project files changed.
+- Confirm no entitlements changed.
+- Confirm no plist files changed.
+- Confirm no CI workflows changed.
+- Confirm no product behavior changed.
+- Confirm recommended next phase is defined.
+- Confirm local validation commands pass.
+- Confirm GitHub Actions status is reviewed.
+- Confirm no Phase 9.41 work started.
+
 ## Phase 6.2 Watch App Visual Refresh
 
 - Confirm PR #22 is merged before starting the Watch visual refresh branch.
