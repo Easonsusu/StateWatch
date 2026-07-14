@@ -35,6 +35,7 @@
 		4391F5A1AD345FD661D9B527 /* HealthPermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3C00CF85CD4AF8A7927D5C /* HealthPermissionView.swift */; };
 		55C28D91C049A59ACC5443B1 /* DisclaimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF10FA19CC37AAF5A36C0F2 /* DisclaimerView.swift */; };
 		24E4328E3CC26259A3990AE4 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A13807477DE67A97BCCF9CC /* DashboardView.swift */; };
+		D10000000000000000000001 /* DashboardPresentationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10100000000000000000001 /* DashboardPresentationModel.swift */; };
 		DAFB098807124E82D12DDFC4 /* ScoreRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC163E3729080AA28ADAFD5E /* ScoreRingView.swift */; };
 		02BE34F4D8C7F07DE3B0B8EE /* ReasonCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A94081BAF63A296A8F2EA5 /* ReasonCardView.swift */; };
 		8CFD169683EF6272EF6825CB /* TodaySuggestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DCD0B8FBC46721B48E58A4 /* TodaySuggestionView.swift */; };
@@ -85,6 +86,7 @@
 		B97900000000000000000002 /* StateCheckInDisplayPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97800000000000000000001 /* StateCheckInDisplayPreference.swift */; };
 		B97000000000000000000002 /* StateCheckInStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97000000000000000000001 /* StateCheckInStorageTests.swift */; };
 		E5800000000000000000000C /* StateWatchThemeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5900000000000000000000C /* StateWatchThemeTests.swift */; };
+		D10000000000000000000002 /* DashboardPresentationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10100000000000000000002 /* DashboardPresentationModelTests.swift */; };
 		F5B400000000000000000004 /* StateWatchVisualPreviewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B500000000000000000005 /* StateWatchVisualPreviewTests.swift */; };
 		F64000000000000000000001 /* ComplicationStateSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64100000000000000000001 /* ComplicationStateSummary.swift */; };
 		F64000000000000000000002 /* StateWatchComplicationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64100000000000000000002 /* StateWatchComplicationProvider.swift */; };
@@ -144,6 +146,7 @@
 		F82000000000000000000001 /* HealthKitDashboardFeatureFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/App/HealthKitDashboardFeatureFlag.swift; sourceTree = "<group>"; };
 		A1F4627276151E5D357A595C /* CheckInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/CheckIn/CheckInView.swift; sourceTree = "<group>"; };
 		0A13807477DE67A97BCCF9CC /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Dashboard/DashboardView.swift; sourceTree = "<group>"; };
+		D10100000000000000000001 /* DashboardPresentationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Dashboard/DashboardPresentationModel.swift; sourceTree = "<group>"; };
 		60A94081BAF63A296A8F2EA5 /* ReasonCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Dashboard/ReasonCardView.swift; sourceTree = "<group>"; };
 		FC163E3729080AA28ADAFD5E /* ScoreRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Dashboard/ScoreRingView.swift; sourceTree = "<group>"; };
 		A3DCD0B8FBC46721B48E58A4 /* TodaySuggestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Dashboard/TodaySuggestionView.swift; sourceTree = "<group>"; };
@@ -200,6 +203,7 @@
 		7D7961319B0F3E33F2242038 /* SleepScoreEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/SleepScoreEngineTests.swift; sourceTree = "<group>"; };
 		B97000000000000000000001 /* StateCheckInStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/StateCheckInStorageTests.swift; sourceTree = "<group>"; };
 		E5900000000000000000000C /* StateWatchThemeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/StateWatchThemeTests.swift; sourceTree = "<group>"; };
+		D10100000000000000000002 /* DashboardPresentationModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/DashboardPresentationModelTests.swift; sourceTree = "<group>"; };
 		F5B500000000000000000005 /* StateWatchVisualPreviewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/StateWatchVisualPreviewTests.swift; sourceTree = "<group>"; };
 		A106FE680F4F943C00E6ABC1 /* StateWatchWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/App/StateWatchWatchApp.swift; sourceTree = "<group>"; };
 		DDA00BD7ACAE0EB5046D8BB8 /* StateWatchComplicationBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/Complications/StateWatchComplicationBundle.swift; sourceTree = "<group>"; };
@@ -368,6 +372,7 @@
 		FD31001C4EA117B3FE6EBF46 /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
+				D10100000000000000000001 /* DashboardPresentationModel.swift */,
 				0A13807477DE67A97BCCF9CC /* DashboardView.swift */,
 				60A94081BAF63A296A8F2EA5 /* ReasonCardView.swift */,
 				FC163E3729080AA28ADAFD5E /* ScoreRingView.swift */,
@@ -476,6 +481,7 @@
 			isa = PBXGroup;
 			children = (
 				E935F18D147B46483011FF69 /* BaselineCalculatorTests.swift */,
+				D10100000000000000000002 /* DashboardPresentationModelTests.swift */,
 				F66F66F66F66F66F66F66F66 /* HealthKitPermissionTests.swift */,
 				F5A200000000000000000002 /* HealthKitScoringPreviewTests.swift */,
 				40C0B250765F998AA81DAE61 /* Info.plist */,
@@ -792,6 +798,7 @@
 				4391F5A1AD345FD661D9B527 /* HealthPermissionView.swift in Sources */,
 				55C28D91C049A59ACC5443B1 /* DisclaimerView.swift in Sources */,
 				24E4328E3CC26259A3990AE4 /* DashboardView.swift in Sources */,
+				D10000000000000000000001 /* DashboardPresentationModel.swift in Sources */,
 				DAFB098807124E82D12DDFC4 /* ScoreRingView.swift in Sources */,
 				02BE34F4D8C7F07DE3B0B8EE /* ReasonCardView.swift in Sources */,
 				8CFD169683EF6272EF6825CB /* TodaySuggestionView.swift in Sources */,
@@ -858,6 +865,7 @@
 				B97900000000000000000002 /* StateCheckInDisplayPreference.swift in Sources */,
 				B97000000000000000000002 /* StateCheckInStorageTests.swift in Sources */,
 				E5800000000000000000000C /* StateWatchThemeTests.swift in Sources */,
+				D10000000000000000000002 /* DashboardPresentationModelTests.swift in Sources */,
 				F5B400000000000000000004 /* StateWatchVisualPreviewTests.swift in Sources */,
 				F82000000000000000000003 /* HealthKitDashboardFeatureFlag.swift in Sources */,
 				F64000000000000000000005 /* ComplicationStateSummary.swift in Sources */,

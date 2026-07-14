@@ -102,7 +102,7 @@ final class DashboardDisplayModelTests: XCTestCase {
         XCTAssertEqual(model.score, 76)
         XCTAssertEqual(model.stateLabel, "Mixed")
         XCTAssertEqual(model.confidence, .medium)
-        XCTAssertEqual(model.trendCaption, "Mock data")
+        XCTAssertEqual(model.trendCaption, "Demo data")
         XCTAssertEqual(model.trendValues, [62, 67, 64, 72, 70, 76, 74])
     }
 
@@ -129,8 +129,8 @@ final class DashboardDisplayModelTests: XCTestCase {
         let model = DashboardDisplayModel(assessment: .mock)
 
         XCTAssertTrue(model.updatedText.localizedCaseInsensitiveContains("Demo data"))
-        XCTAssertEqual(model.trendCaption, "Mock data")
-        XCTAssertTrue(model.searchableText.localizedCaseInsensitiveContains("Mock data"))
+        XCTAssertEqual(model.trendCaption, "Demo data")
+        XCTAssertTrue(model.searchableText.localizedCaseInsensitiveContains("Demo data"))
     }
 
     func testDashboardDisplayModelDoesNotImplyHealthKitDerivedProductionData() {
@@ -157,7 +157,7 @@ final class DashboardDisplayModelTests: XCTestCase {
 
         XCTAssertEqual(model.metrics.count, 4)
         XCTAssertEqual(model.trendValues, [62, 67, 64, 72, 70, 76, 74])
-        XCTAssertEqual(model.trendCaption, "Mock data")
+        XCTAssertEqual(model.trendCaption, "Demo data")
         XCTAssertTrue(model.updatedText.localizedCaseInsensitiveContains("Demo data"))
     }
 
@@ -1062,7 +1062,7 @@ final class HealthKitDashboardAssessmentProviderTests: XCTestCase {
 
         XCTAssertEqual(result.source, .fallback)
         XCTAssertEqual(result.assessment, .mock)
-        XCTAssertEqual(result.notice, "HealthKit data was unavailable, so the dashboard is showing mock data.")
+        XCTAssertEqual(result.notice, DashboardPresentationModel.unavailableFallbackNotice)
         XCTAssertFalse(result.usesHealthKitDerivedData)
     }
 
@@ -1085,7 +1085,7 @@ final class HealthKitDashboardAssessmentProviderTests: XCTestCase {
 
         XCTAssertEqual(result.source, .lowDataFallback)
         XCTAssertEqual(result.assessment, .mock)
-        XCTAssertEqual(result.notice, "Recent data is limited, so the dashboard is showing mock data.")
+        XCTAssertEqual(result.notice, DashboardPresentationModel.lowDataFallbackNotice)
         XCTAssertFalse(result.usesHealthKitDerivedData)
     }
 
@@ -1399,7 +1399,7 @@ final class HealthKitDashboardPhase84QATests: XCTestCase {
         XCTAssertEqual(model.stateLabel, "Mixed", file: file, line: line)
         XCTAssertEqual(model.confidence, .medium, file: file, line: line)
         XCTAssertTrue(model.updatedText.localizedCaseInsensitiveContains("Demo data"), file: file, line: line)
-        XCTAssertEqual(model.trendCaption, "Mock data", file: file, line: line)
+        XCTAssertEqual(model.trendCaption, "Demo data", file: file, line: line)
     }
 
     private func assertNoForbiddenHealthWording(
