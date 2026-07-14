@@ -52,7 +52,7 @@ struct DashboardPresentationModel {
         case .healthKitDerived:
             sourceBadgeText = "On-device wellness estimate"
             updatedText = "On-device data - Updated \(Self.formattedTime(for: result.assessment.date))"
-            noticeText = nil
+            noticeText = result.notice
             showsTrendChart = false
             trendValues = []
             trendCaption = "Unavailable"

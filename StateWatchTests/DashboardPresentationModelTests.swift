@@ -23,17 +23,21 @@ final class DashboardPresentationModelTests: XCTestCase {
     func testHealthKitDerivedPresentationDoesNotShowDemoTrendOrCopy() {
         let model = DashboardPresentationModel(
             result: DashboardAssessmentResult(
-                assessment: .mock,
+                assessment: healthKitAssessment,
                 source: .healthKitDerived,
-                notice: "This source should not show a fallback notice."
+                notice: nil
             )
         )
         let presentationText = [model.searchableText, model.accessibilitySummary, model.trendAccessibilitySummary]
             .joined(separator: " ")
 
+        XCTAssertEqual(model.score, 84)
+        XCTAssertEqual(model.stateLabel, "Steady")
+        XCTAssertEqual(model.confidence, .high)
         XCTAssertEqual(model.sourceBadgeText, "On-device wellness estimate")
         XCTAssertFalse(model.updatedText.contains("Demo"))
         XCTAssertNil(model.noticeText)
+        XCTAssertNil(model.noticeAccessibilityLabel)
         XCTAssertFalse(model.showsTrendChart)
         XCTAssertEqual(model.trendValues, [])
         XCTAssertEqual(model.trendUnavailableTitle, "Trend unavailable")
@@ -41,6 +45,29 @@ final class DashboardPresentationModelTests: XCTestCase {
 
         for forbiddenDemoTerm in ["Mock wellness estimate", "Demo wellness estimate", "Demo data", "Mock data"] {
             XCTAssertFalse(presentationText.localizedCaseInsensitiveContains(forbiddenDemoTerm))
+        }
+    }
+
+    func testHealthKitDerivedPresentationPreservesExplicitSafeNotice() {
+        let notice = "Some on-device details are not available yet."
+        let model = DashboardPresentationModel(
+            result: DashboardAssessmentResult(
+                assessment: healthKitAssessment,
+                source: .healthKitDerived,
+                notice: notice
+            )
+        )
+        let presentationText = [model.searchableText, model.accessibilitySummary, model.trendAccessibilitySummary]
+            .joined(separator: " ")
+
+        XCTAssertEqual(model.noticeText, notice)
+        XCTAssertTrue(model.noticeAccessibilityLabel?.contains(notice) == true)
+        XCTAssertEqual(model.sourceBadgeText, "On-device wellness estimate")
+        XCTAssertFalse(model.showsTrendChart)
+        XCTAssertEqual(model.trendValues, [])
+
+        for forbiddenTerm in ["mock", "demo", "diagnos", "disease", "clinical stress", "treatment", "warning", "emergency", "abnormal state", "health risk"] {
+            XCTAssertFalse(presentationText.localizedCaseInsensitiveContains(forbiddenTerm))
         }
     }
 
@@ -97,5 +124,20 @@ final class DashboardPresentationModelTests: XCTestCase {
         for forbiddenTerm in ["diagnos", "disease", "clinical stress", "treatment", "warning", "emergency", "abnormal state", "health risk"] {
             XCTAssertFalse(presentationText.localizedCaseInsensitiveContains(forbiddenTerm))
         }
+    }
+
+    private var healthKitAssessment: StateAssessment {
+        StateAssessment(
+            date: Date(timeIntervalSince1970: 1_735_689_600),
+            overallScore: 84,
+            level: .steady,
+            recovery: ScoreComponent(id: "recovery", title: "Recovery", score: 86, confidence: .high, summary: "Recovery context is steady."),
+            sleep: ScoreComponent(id: "sleep", title: "Sleep", score: 82, confidence: .high, summary: "Sleep context is steady."),
+            stressFatigue: ScoreComponent(id: "stressFatigue", title: "Fatigue Context", score: 79, confidence: .high, summary: "Fatigue context is steady."),
+            activityLoad: ScoreComponent(id: "activityLoad", title: "Activity Load", score: 88, confidence: .high, summary: "Activity load is steady."),
+            confidence: .high,
+            reasons: ["Recent on-device signals are steady."],
+            suggestions: ["Today may be a good day to keep things steady."]
+        )
     }
 }
