@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0BEC138EA3EA229A1B84DD4B /* StateWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA96331AEAE8DDC6AE343CF8 /* StateWatchApp.swift */; };
 		9CEED23D3BB6E3C2EF6B76B6 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC7AE0CAEE351EAECD47668 /* AppCoordinator.swift */; };
+		C10000000000000000000001 /* OnboardingCompletionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10100000000000000000001 /* OnboardingCompletionStore.swift */; };
 		A69000000000000000000001 /* MockDashboardSharedStatePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A69100000000000000000001 /* MockDashboardSharedStatePublisher.swift */; };
 		F82000000000000000000002 /* HealthKitDashboardFeatureFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82000000000000000000001 /* HealthKitDashboardFeatureFlag.swift */; };
 		F82000000000000000000003 /* HealthKitDashboardFeatureFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82000000000000000000001 /* HealthKitDashboardFeatureFlag.swift */; };
@@ -87,6 +88,7 @@
 		B97000000000000000000002 /* StateCheckInStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97000000000000000000001 /* StateCheckInStorageTests.swift */; };
 		E5800000000000000000000C /* StateWatchThemeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5900000000000000000000C /* StateWatchThemeTests.swift */; };
 		D10000000000000000000002 /* DashboardPresentationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10100000000000000000002 /* DashboardPresentationModelTests.swift */; };
+		C10000000000000000000002 /* AppCoordinatorOnboardingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10100000000000000000002 /* AppCoordinatorOnboardingTests.swift */; };
 		F5B400000000000000000004 /* StateWatchVisualPreviewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B500000000000000000005 /* StateWatchVisualPreviewTests.swift */; };
 		F64000000000000000000001 /* ComplicationStateSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64100000000000000000001 /* ComplicationStateSummary.swift */; };
 		F64000000000000000000002 /* StateWatchComplicationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64100000000000000000002 /* StateWatchComplicationProvider.swift */; };
@@ -141,6 +143,7 @@
 
 /* Begin PBXFileReference section */
 		4DC7AE0CAEE351EAECD47668 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/App/AppCoordinator.swift; sourceTree = "<group>"; };
+		C10100000000000000000001 /* OnboardingCompletionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/App/OnboardingCompletionStore.swift; sourceTree = "<group>"; };
 		AA96331AEAE8DDC6AE343CF8 /* StateWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/App/StateWatchApp.swift; sourceTree = "<group>"; };
 		A69100000000000000000001 /* MockDashboardSharedStatePublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/App/MockDashboardSharedStatePublisher.swift; sourceTree = "<group>"; };
 		F82000000000000000000001 /* HealthKitDashboardFeatureFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/App/HealthKitDashboardFeatureFlag.swift; sourceTree = "<group>"; };
@@ -204,6 +207,7 @@
 		B97000000000000000000001 /* StateCheckInStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/StateCheckInStorageTests.swift; sourceTree = "<group>"; };
 		E5900000000000000000000C /* StateWatchThemeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/StateWatchThemeTests.swift; sourceTree = "<group>"; };
 		D10100000000000000000002 /* DashboardPresentationModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/DashboardPresentationModelTests.swift; sourceTree = "<group>"; };
+		C10100000000000000000002 /* AppCoordinatorOnboardingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/AppCoordinatorOnboardingTests.swift; sourceTree = "<group>"; };
 		F5B500000000000000000005 /* StateWatchVisualPreviewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/StateWatchVisualPreviewTests.swift; sourceTree = "<group>"; };
 		A106FE680F4F943C00E6ABC1 /* StateWatchWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/App/StateWatchWatchApp.swift; sourceTree = "<group>"; };
 		DDA00BD7ACAE0EB5046D8BB8 /* StateWatchComplicationBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/Complications/StateWatchComplicationBundle.swift; sourceTree = "<group>"; };
@@ -298,6 +302,7 @@
 			isa = PBXGroup;
 			children = (
 				4DC7AE0CAEE351EAECD47668 /* AppCoordinator.swift */,
+				C10100000000000000000001 /* OnboardingCompletionStore.swift */,
 				F82000000000000000000001 /* HealthKitDashboardFeatureFlag.swift */,
 				A69100000000000000000001 /* MockDashboardSharedStatePublisher.swift */,
 				AA96331AEAE8DDC6AE343CF8 /* StateWatchApp.swift */,
@@ -480,6 +485,7 @@
 		CCC14EC45EB304A12306FE9E /* StateWatchTests */ = {
 			isa = PBXGroup;
 			children = (
+				C10100000000000000000002 /* AppCoordinatorOnboardingTests.swift */,
 				E935F18D147B46483011FF69 /* BaselineCalculatorTests.swift */,
 				D10100000000000000000002 /* DashboardPresentationModelTests.swift */,
 				F66F66F66F66F66F66F66F66 /* HealthKitPermissionTests.swift */,
@@ -771,6 +777,7 @@
 			files = (
 				0BEC138EA3EA229A1B84DD4B /* StateWatchApp.swift in Sources */,
 				9CEED23D3BB6E3C2EF6B76B6 /* AppCoordinator.swift in Sources */,
+				C10000000000000000000001 /* OnboardingCompletionStore.swift in Sources */,
 				F82000000000000000000002 /* HealthKitDashboardFeatureFlag.swift in Sources */,
 				A69000000000000000000001 /* MockDashboardSharedStatePublisher.swift in Sources */,
 				53FFE876097319951743F30D /* DailyHealthSnapshot.swift in Sources */,
@@ -852,6 +859,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C10000000000000000000002 /* AppCoordinatorOnboardingTests.swift in Sources */,
 				739149B27465A24F818A77CF /* BaselineCalculatorTests.swift in Sources */,
 				C31F3409BEAB476C9500E8A2 /* RecoveryScoreEngineTests.swift in Sources */,
 				45929C35B08CC6FC2D96A261 /* SleepScoreEngineTests.swift in Sources */,
