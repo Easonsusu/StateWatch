@@ -8,7 +8,10 @@ struct TodaySuggestionView: View {
             Text("Today")
                 .font(.headline)
             ForEach(suggestions, id: \.self) { suggestion in
-                Label(suggestion, systemImage: "leaf")
+                Label(
+                    Bundle.main.localizedString(forKey: suggestion, value: suggestion, table: nil),
+                    systemImage: "leaf"
+                )
                     .font(.callout)
             }
         }

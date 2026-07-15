@@ -59,9 +59,20 @@ struct StateWatchScoreRing: View {
     }
 
     private var accessibilityText: String {
-        var parts = ["Wellness score \(clampedScore)", label]
+        var parts = [
+            String.localizedStringWithFormat(
+                String(localized: "Wellness score %d"),
+                clampedScore
+            ),
+            label
+        ]
         if let confidence {
-            parts.append("Confidence \(StateWatchTheme.confidenceLabel(for: confidence))")
+            parts.append(
+                String.localizedStringWithFormat(
+                    String(localized: "Confidence %@"),
+                    StateWatchTheme.confidenceLabel(for: confidence)
+                )
+            )
         }
         return parts.joined(separator: ", ")
     }

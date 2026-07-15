@@ -15,15 +15,15 @@ enum HealthMetricType: String, CaseIterable, Codable, Identifiable, Equatable {
 
     var displayName: String {
         switch self {
-        case .restingHeartRate: return "Resting Heart Rate"
-        case .averageHeartRate: return "Average Heart Rate"
-        case .heartRateVariability: return "Heart Rate Variability"
-        case .sleepDuration: return "Sleep Duration"
-        case .activeEnergy: return "Active Energy"
-        case .exerciseMinutes: return "Exercise Minutes"
-        case .standHours: return "Stand Hours"
-        case .steps: return "Steps"
-        case .mindfulMinutes: return "Mindful Minutes"
+        case .restingHeartRate: return String(localized: "Resting Heart Rate")
+        case .averageHeartRate: return String(localized: "Average Heart Rate")
+        case .heartRateVariability: return String(localized: "Heart Rate Variability")
+        case .sleepDuration: return String(localized: "Sleep Duration")
+        case .activeEnergy: return String(localized: "Active Energy")
+        case .exerciseMinutes: return String(localized: "Exercise Minutes")
+        case .standHours: return String(localized: "Stand Hours")
+        case .steps: return String(localized: "Steps")
+        case .mindfulMinutes: return String(localized: "Mindful Minutes")
         }
     }
 
@@ -31,21 +31,21 @@ enum HealthMetricType: String, CaseIterable, Codable, Identifiable, Equatable {
         switch self {
         case .restingHeartRate, .averageHeartRate: return "bpm"
         case .heartRateVariability: return "ms"
-        case .sleepDuration: return "hr"
-        case .activeEnergy: return "kcal"
-        case .exerciseMinutes, .mindfulMinutes: return "min"
-        case .standHours: return "hr"
-        case .steps: return "steps"
+        case .sleepDuration: return String(localized: "hr")
+        case .activeEnergy: return String(localized: "kcal")
+        case .exerciseMinutes, .mindfulMinutes: return String(localized: "min")
+        case .standHours: return String(localized: "hr")
+        case .steps: return String(localized: "steps")
         }
     }
 
     var wellnessArea: String {
         switch self {
-        case .restingHeartRate, .heartRateVariability: return "Recovery"
-        case .averageHeartRate: return "Activity Load"
-        case .sleepDuration: return "Sleep"
-        case .activeEnergy, .exerciseMinutes, .standHours, .steps: return "Activity Load"
-        case .mindfulMinutes: return "Fatigue Context"
+        case .restingHeartRate, .heartRateVariability: return String(localized: "Recovery")
+        case .averageHeartRate: return String(localized: "Activity Load")
+        case .sleepDuration: return String(localized: "Sleep")
+        case .activeEnergy, .exerciseMinutes, .standHours, .steps: return String(localized: "Activity Load")
+        case .mindfulMinutes: return String(localized: "Fatigue Context")
         }
     }
 }

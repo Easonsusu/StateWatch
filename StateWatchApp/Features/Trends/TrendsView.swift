@@ -9,14 +9,14 @@ struct TrendsView: View {
                 Text("Mock trends")
                     .font(.title.bold())
                 MetricChartView(
-                    title: "Sleep Duration",
+                    title: String(localized: "Sleep Duration"),
                     values: snapshots.map { $0.sleepDurationHours ?? 0 },
-                    unit: "hr"
+                    unit: String(localized: "hr")
                 )
                 MetricChartView(
-                    title: "Active Energy",
+                    title: String(localized: "Active Energy"),
                     values: snapshots.map { $0.activeEnergyKcal ?? 0 },
-                    unit: "kcal"
+                    unit: String(localized: "kcal")
                 )
                 Spacer()
             }

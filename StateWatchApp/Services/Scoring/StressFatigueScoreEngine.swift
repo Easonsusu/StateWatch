@@ -61,15 +61,15 @@ struct StressFatigueScoreEngine {
         let summary: String
         switch confidence {
         case .high, .medium:
-            summary = "Fatigue context reflects recent wearable trends and your check-in when available."
+            summary = String(localized: "Fatigue context reflects recent wearable trends and your check-in when available.")
         case .low:
-            summary = "Fatigue context uses limited data, so this remains a softer wellness estimate."
+            summary = String(localized: "Fatigue context uses limited data, so this remains a softer wellness estimate.")
         case .unavailable:
-            summary = "Fatigue context is limited today because key signals are unavailable."
+            summary = String(localized: "Fatigue context is limited today because key signals are unavailable.")
         }
 
         return ScoreComponent(
-            title: "Fatigue Context",
+            title: String(localized: "Fatigue Context"),
             score: clamp(score),
             confidence: confidence,
             summary: summary

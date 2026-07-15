@@ -56,15 +56,15 @@ struct RecoveryScoreEngine {
         let summary: String
         switch confidence {
         case .high, .medium:
-            summary = "Recovery reflects HRV, resting heart rate, and recent load compared with your baseline."
+            summary = String(localized: "Recovery reflects HRV, resting heart rate, and recent load compared with your baseline.")
         case .low:
-            summary = "Recovery uses limited baseline data, so this remains a softer wellness estimate."
+            summary = String(localized: "Recovery uses limited baseline data, so this remains a softer wellness estimate.")
         case .unavailable:
-            summary = "Recovery data is limited today, so this score stays cautious."
+            summary = String(localized: "Recovery data is limited today, so this score stays cautious.")
         }
 
         return ScoreComponent(
-            title: "Recovery",
+            title: String(localized: "Recovery"),
             score: clamp(score),
             confidence: confidence,
             summary: summary

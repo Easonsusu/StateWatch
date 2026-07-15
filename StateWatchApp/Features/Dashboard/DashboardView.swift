@@ -320,7 +320,7 @@ struct DashboardView: View {
 
     private var suggestionSection: some View {
         StateWatchSuggestionCard(
-            title: "Today's suggestion",
+            title: String(localized: "Today's suggestion"),
             suggestion: content.suggestion,
             accentColor: content.accentColor
         )
@@ -370,8 +370,8 @@ struct DashboardView: View {
         ]
     }
 
-    private func sectionTitle(_ text: String) -> some View {
-        Text(text)
+    private func sectionTitle(_ key: LocalizedStringKey) -> some View {
+        Text(key)
             .font(StateWatchTypography.cardTitle)
             .foregroundStyle(StateWatchColors.textPrimary)
     }

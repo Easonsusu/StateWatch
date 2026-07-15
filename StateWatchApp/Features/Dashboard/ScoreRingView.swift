@@ -23,7 +23,13 @@ struct ScoreRingView: View {
         }
         .frame(width: 220, height: 220)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("Daily wellness score \(score), \(title)")
+        .accessibilityLabel(
+            String.localizedStringWithFormat(
+                String(localized: "Daily wellness score %d, %@"),
+                score,
+                title
+            )
+        )
     }
 }
 

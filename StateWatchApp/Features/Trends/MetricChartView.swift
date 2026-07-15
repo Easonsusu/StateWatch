@@ -16,7 +16,12 @@ struct MetricChartView: View {
                 }
             }
             .frame(height: 120)
-            Text("Mock data, unit: \(unit)")
+            Text(
+                String.localizedStringWithFormat(
+                    String(localized: "Mock data, unit: %@"),
+                    unit
+                )
+            )
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }

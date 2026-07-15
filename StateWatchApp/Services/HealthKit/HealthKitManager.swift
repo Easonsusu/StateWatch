@@ -64,26 +64,26 @@ final class HealthKitManager: ObservableObject {
     var statusTitle: String {
         switch authorizationState {
         case .notDetermined:
-            return "Health Access Not Requested"
+            return String(localized: "Health Access Not Requested")
         case .unavailable:
-            return "Health Data Unavailable"
+            return String(localized: "Health Data Unavailable")
         case .deniedOrLimited:
-            return "Health Access Limited"
+            return String(localized: "Health Access Limited")
         case .readAccessRequested:
-            return "Health Access Requested"
+            return String(localized: "Health Access Requested")
         }
     }
 
     var statusMessage: String {
         switch authorizationState {
         case .notDetermined:
-            return "StateWatch can request read-only Apple Health access or continue with mock data."
+            return String(localized: "StateWatch can request read-only Apple Health access or continue with mock data.")
         case .unavailable:
-            return lastErrorMessage ?? "Health data is not available in this environment. Mock data remains available."
+            return lastErrorMessage ?? String(localized: "Health data is not available in this environment. Mock data remains available.")
         case .deniedOrLimited:
-            return lastErrorMessage ?? "Some health access may be denied or limited. StateWatch can continue with mock data and optional values."
+            return lastErrorMessage ?? String(localized: "Some health access may be denied or limited. StateWatch can continue with mock data and optional values.")
         case .readAccessRequested:
-            return "The HealthKit request completed. Future local fetchers will use only data available on this device."
+            return String(localized: "The HealthKit request completed. Future local fetchers will use only data available on this device.")
         }
     }
 

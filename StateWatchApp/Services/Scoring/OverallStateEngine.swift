@@ -102,10 +102,10 @@ struct OverallStateEngine {
 
         guard usedSignals > 0 else {
             return ScoreComponent(
-                title: "Activity Load",
+                title: String(localized: "Activity Load"),
                 score: 50,
                 confidence: .unavailable,
-                summary: "Activity data is limited today, so this score stays cautious."
+                summary: String(localized: "Activity data is limited today, so this score stays cautious.")
             )
         }
 
@@ -113,14 +113,19 @@ struct OverallStateEngine {
         let summary: String
         switch confidence {
         case .high, .medium:
-            summary = "Activity load compares steps, active energy, and exercise minutes with your baseline."
+            summary = String(localized: "Activity load compares steps, active energy, and exercise minutes with your baseline.")
         case .low:
-            summary = "Activity load uses limited baseline data, so this remains a softer wellness estimate."
+            summary = String(localized: "Activity load uses limited baseline data, so this remains a softer wellness estimate.")
         case .unavailable:
-            summary = "Activity data is limited today, so this score stays cautious."
+            summary = String(localized: "Activity data is limited today, so this score stays cautious.")
         }
 
-        return ScoreComponent(title: "Activity Load", score: score, confidence: confidence, summary: summary)
+        return ScoreComponent(
+            title: String(localized: "Activity Load"),
+            score: score,
+            confidence: confidence,
+            summary: summary
+        )
     }
 
     private func applyActivityRule(
