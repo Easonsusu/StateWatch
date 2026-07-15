@@ -45,10 +45,10 @@ enum StateWatchTheme {
 
     static func confidenceLabel(for confidence: ScoreConfidence) -> String {
         switch confidence {
-        case .high: return "High"
-        case .medium: return "Medium"
-        case .low: return "Low data"
-        case .unavailable: return "Unavailable"
+        case .high: return String(localized: "High")
+        case .medium: return String(localized: "Medium")
+        case .low: return String(localized: "Low data")
+        case .unavailable: return String(localized: "Unavailable")
         }
     }
 

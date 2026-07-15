@@ -1,10 +1,26 @@
 import Foundation
 import SwiftUI
 
+private func localizedPresentationString(_ key: String) -> String {
+    Bundle.main.localizedString(forKey: key, value: key, table: nil)
+}
+
+private func localizedPresentationFormat(_ key: String, _ arguments: CVarArg...) -> String {
+    String(
+        format: localizedPresentationString(key),
+        locale: Locale.current,
+        arguments: arguments
+    )
+}
+
 struct DashboardPresentationModel {
     static let demoTrendValues: [Double] = [62, 67, 64, 72, 70, 76, 74]
-    static let lowDataFallbackNotice = "Recent Apple Health data is limited. Showing demo data."
-    static let unavailableFallbackNotice = "Apple Health data is unavailable. Showing demo data."
+    static var lowDataFallbackNotice: String {
+        String(localized: "Recent Apple Health data is limited. Showing demo data.")
+    }
+    static var unavailableFallbackNotice: String {
+        String(localized: "Apple Health data is unavailable. Showing demo data.")
+    }
 
     let assessment: StateAssessment
     let source: DashboardAssessmentSource
@@ -30,57 +46,71 @@ struct DashboardPresentationModel {
         assessment = result.assessment
         source = result.source
         score = StateWatchTheme.clampedScore(result.assessment.overallScore)
-        stateLabel = result.assessment.level.rawValue
+        stateLabel = result.assessment.level.displayName
         confidence = result.assessment.confidence
         summary = Self.summary(for: result.assessment.level)
         accentColor = StateWatchTheme.stateLabelColor(for: result.assessment.level)
         metrics = result.assessment.components.map(DashboardMetricDisplay.init(component:))
-        reasons = result.assessment.reasons
-        suggestion = result.assessment.primarySuggestion
+        reasons = result.assessment.reasons.map(localizedPresentationString)
+        suggestion = localizedPresentationString(result.assessment.primarySuggestion)
 
         switch result.source {
         case .mock:
-            sourceBadgeText = "Demo wellness estimate"
-            updatedText = "Demo data - Updated \(Self.formattedTime(for: result.assessment.date))"
+            sourceBadgeText = String(localized: "Demo wellness estimate")
+            updatedText = localizedPresentationFormat(
+                "Demo data - Updated %@",
+                Self.formattedTime(for: result.assessment.date)
+            )
             noticeText = nil
             showsTrendChart = true
             trendValues = Self.demoTrendValues
-            trendCaption = "Demo data"
+            trendCaption = String(localized: "Demo data")
             trendUnavailableTitle = nil
             trendUnavailableMessage = nil
 
         case .healthKitDerived:
-            sourceBadgeText = "On-device wellness estimate"
-            updatedText = "On-device data - Updated \(Self.formattedTime(for: result.assessment.date))"
-            noticeText = result.notice
+            sourceBadgeText = String(localized: "On-device wellness estimate")
+            updatedText = localizedPresentationFormat(
+                "On-device data - Updated %@",
+                Self.formattedTime(for: result.assessment.date)
+            )
+            noticeText = result.notice.map(localizedPresentationString)
             showsTrendChart = false
             trendValues = []
-            trendCaption = "Unavailable"
-            trendUnavailableTitle = "Trend unavailable"
-            trendUnavailableMessage = "A validated on-device trend is not available yet."
+            trendCaption = String(localized: "Unavailable")
+            trendUnavailableTitle = String(localized: "Trend unavailable")
+            trendUnavailableMessage = String(localized: "A validated on-device trend is not available yet.")
 
         case .lowDataFallback:
-            sourceBadgeText = "Demo wellness estimate"
-            updatedText = "Demo data - Updated \(Self.formattedTime(for: result.assessment.date))"
-            noticeText = result.notice ?? Self.lowDataFallbackNotice
+            sourceBadgeText = String(localized: "Demo wellness estimate")
+            updatedText = localizedPresentationFormat(
+                "Demo data - Updated %@",
+                Self.formattedTime(for: result.assessment.date)
+            )
+            noticeText = result.notice.map(localizedPresentationString) ?? Self.lowDataFallbackNotice
             showsTrendChart = true
             trendValues = Self.demoTrendValues
-            trendCaption = "Demo data"
+            trendCaption = String(localized: "Demo data")
             trendUnavailableTitle = nil
             trendUnavailableMessage = nil
 
         case .fallback:
-            sourceBadgeText = "Demo wellness estimate"
-            updatedText = "Demo data - Updated \(Self.formattedTime(for: result.assessment.date))"
-            noticeText = result.notice ?? Self.unavailableFallbackNotice
+            sourceBadgeText = String(localized: "Demo wellness estimate")
+            updatedText = localizedPresentationFormat(
+                "Demo data - Updated %@",
+                Self.formattedTime(for: result.assessment.date)
+            )
+            noticeText = result.notice.map(localizedPresentationString) ?? Self.unavailableFallbackNotice
             showsTrendChart = true
             trendValues = Self.demoTrendValues
-            trendCaption = "Demo data"
+            trendCaption = String(localized: "Demo data")
             trendUnavailableTitle = nil
             trendUnavailableMessage = nil
         }
 
-        noticeAccessibilityLabel = noticeText.map { "Dashboard information. \($0)" }
+        noticeAccessibilityLabel = noticeText.map {
+            localizedPresentationFormat("Dashboard information. %@", $0)
+        }
     }
 
     init(assessment: StateAssessment) {
@@ -88,15 +118,21 @@ struct DashboardPresentationModel {
     }
 
     var accessibilitySummary: String {
-        "\(sourceBadgeText). Score \(score). \(stateLabel). Confidence \(StateWatchTheme.confidenceLabel(for: confidence))."
+        localizedPresentationFormat(
+            "%@. Score %d. %@. Confidence %@.",
+            sourceBadgeText,
+            score,
+            stateLabel,
+            StateWatchTheme.confidenceLabel(for: confidence)
+        )
     }
 
     var trendAccessibilitySummary: String {
         if showsTrendChart {
-            return "7-day trend. \(trendCaption)."
+            return localizedPresentationFormat("7-day trend. %@.", trendCaption)
         }
 
-        return ["7-day trend", trendUnavailableTitle, trendUnavailableMessage]
+        return [String(localized: "7-day trend"), trendUnavailableTitle, trendUnavailableMessage]
             .compactMap { $0 }
             .joined(separator: ". ")
     }
@@ -106,9 +142,12 @@ struct DashboardPresentationModel {
             [
                 sourceBadgeText,
                 updatedText,
-                "Score \(score)",
+                localizedPresentationFormat("Score %d", score),
                 stateLabel,
-                "Confidence \(StateWatchTheme.confidenceLabel(for: confidence))",
+                localizedPresentationFormat(
+                    "Confidence %@",
+                    StateWatchTheme.confidenceLabel(for: confidence)
+                ),
                 summary,
                 suggestion,
                 noticeText ?? "",
@@ -124,13 +163,13 @@ struct DashboardPresentationModel {
     private static func summary(for level: StateLevel) -> String {
         switch level {
         case .steady:
-            return "Your recent signals look steady."
+            return String(localized: "Your recent signals look steady.")
         case .mixed:
-            return "Your recent signals look mixed."
+            return String(localized: "Your recent signals look mixed.")
         case .low:
-            return "Recent signals are softer than your recent pattern."
+            return String(localized: "Recent signals are softer than your recent pattern.")
         case .needsRest:
-            return "Recent signals support a gentler plan if that matches how you feel."
+            return String(localized: "Recent signals support a gentler plan if that matches how you feel.")
         }
     }
 
@@ -157,13 +196,16 @@ struct DashboardMetricDisplay: Identifiable {
         id = component.id
         title = Self.displayTitle(for: component)
         value = "\(StateWatchTheme.clampedScore(component.score))"
-        subtitle = component.summary
+        subtitle = localizedPresentationString(component.summary)
         progress = Double(StateWatchTheme.clampedScore(component.score)) / 100
         accentColor = Self.accentColor(for: component)
     }
 
     private static func displayTitle(for component: ScoreComponent) -> String {
-        component.id == "stressFatigue" ? "Fatigue Context" : component.title
+        if component.id == "stressFatigue" {
+            return String(localized: "Fatigue Context")
+        }
+        return localizedPresentationString(component.title)
     }
 
     private static func accentColor(for component: ScoreComponent) -> Color {

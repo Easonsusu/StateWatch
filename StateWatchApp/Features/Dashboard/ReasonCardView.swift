@@ -7,7 +7,7 @@ struct ReasonCardView: View {
         HStack(alignment: .top, spacing: 12) {
             Image(systemName: "info.circle")
                 .foregroundStyle(.blue)
-            Text(reason)
+            Text(Bundle.main.localizedString(forKey: reason, value: reason, table: nil))
                 .font(.body)
             Spacer(minLength: 0)
         }

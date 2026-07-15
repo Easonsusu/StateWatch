@@ -53,8 +53,18 @@ struct StateWatchMetricCard: View {
             }
         }
         .frame(height: 6)
-        .accessibilityLabel("\(title) progress")
-        .accessibilityValue("\(Int(clamped * 100)) percent")
+        .accessibilityLabel(
+            String.localizedStringWithFormat(
+                String(localized: "%@ progress"),
+                title
+            )
+        )
+        .accessibilityValue(
+            String.localizedStringWithFormat(
+                String(localized: "%d percent"),
+                Int(clamped * 100)
+            )
+        )
     }
 }
 

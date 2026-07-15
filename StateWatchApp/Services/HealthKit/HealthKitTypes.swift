@@ -32,15 +32,15 @@ enum HealthKitPermissionAccess: String, Codable, Equatable {
     var displayName: String {
         switch self {
         case .notDetermined:
-            return "Not Requested"
+            return String(localized: "Not Requested")
         case .requestCompleted:
-            return "Requested"
+            return String(localized: "Requested")
         case .deniedOrLimited:
-            return "Denied or Limited"
+            return String(localized: "Denied or Limited")
         case .unavailable:
-            return "Unavailable"
+            return String(localized: "Unavailable")
         case .unknown:
-            return "Unknown"
+            return String(localized: "Unknown")
         }
     }
 }
@@ -76,7 +76,7 @@ struct HealthKitAuthorizationResult: Codable, Equatable {
         isHealthDataAvailable: true,
         didRequestAuthorization: false,
         statuses: HealthKitTypes.permissionStatuses(access: .deniedOrLimited),
-        errorMessage: "Health access is denied or limited. StateWatch can continue with mock data until access is changed in Settings."
+        errorMessage: String(localized: "Health access is denied or limited. StateWatch can continue with mock data until access is changed in Settings.")
     )
 
     static func unavailable(reason: String) -> HealthKitAuthorizationResult {
@@ -111,52 +111,52 @@ enum HealthKitTypes {
     static let readPermissions: [HealthKitPermission] = [
         HealthKitPermission(
             id: .heartRate,
-            displayName: "Heart Rate",
-            wellnessReason: "Helps describe daily effort and recovery context in cautious wellness terms.",
-            exampleUse: "Shown as one signal in the daily state summary."
+            displayName: String(localized: "Heart Rate"),
+            wellnessReason: String(localized: "Helps describe daily effort and recovery context in cautious wellness terms."),
+            exampleUse: String(localized: "Shown as one signal in the daily state summary.")
         ),
         HealthKitPermission(
             id: .restingHeartRate,
-            displayName: "Resting Heart Rate",
-            wellnessReason: "Helps compare today with a personal baseline when data is available.",
-            exampleUse: "Used to explain when recovery may look lower than usual."
+            displayName: String(localized: "Resting Heart Rate"),
+            wellnessReason: String(localized: "Helps compare today with a personal baseline when data is available."),
+            exampleUse: String(localized: "Used to explain when recovery may look lower than usual.")
         ),
         HealthKitPermission(
             id: .heartRateVariabilitySDNN,
-            displayName: "Heart Rate Variability",
-            wellnessReason: "Supports a local wellness estimate of recovery and strain when available.",
-            exampleUse: "Used as an optional wellness signal with user context."
+            displayName: String(localized: "Heart Rate Variability"),
+            wellnessReason: String(localized: "Supports a local wellness estimate of recovery and strain when available."),
+            exampleUse: String(localized: "Used as an optional wellness signal with user context.")
         ),
         HealthKitPermission(
             id: .sleepAnalysis,
-            displayName: "Sleep Analysis",
-            wellnessReason: "Helps summarize recent rest and consistency.",
-            exampleUse: "Used for sleep score context and gentle suggestions."
+            displayName: String(localized: "Sleep Analysis"),
+            wellnessReason: String(localized: "Helps summarize recent rest and consistency."),
+            exampleUse: String(localized: "Used for sleep score context and gentle suggestions.")
         ),
         HealthKitPermission(
             id: .stepCount,
-            displayName: "Step Count",
-            wellnessReason: "Helps estimate daily activity load in a simple local model.",
-            exampleUse: "Used to balance recovery suggestions with movement."
+            displayName: String(localized: "Step Count"),
+            wellnessReason: String(localized: "Helps estimate daily activity load in a simple local model."),
+            exampleUse: String(localized: "Used to balance recovery suggestions with movement.")
         ),
         HealthKitPermission(
             id: .activeEnergyBurned,
-            displayName: "Active Energy",
-            wellnessReason: "Helps describe physical effort for the day.",
-            exampleUse: "Used with activity and recovery context when present."
+            displayName: String(localized: "Active Energy"),
+            wellnessReason: String(localized: "Helps describe physical effort for the day."),
+            exampleUse: String(localized: "Used with activity and recovery context when present.")
         ),
         HealthKitPermission(
             id: .workouts,
-            displayName: "Workouts",
-            wellnessReason: "Helps account for structured activity without uploading workout details.",
-            exampleUse: "Used to explain activity load and trend context."
+            displayName: String(localized: "Workouts"),
+            wellnessReason: String(localized: "Helps account for structured activity without uploading workout details."),
+            exampleUse: String(localized: "Used to explain activity load and trend context.")
         )
     ]
 
     static let infoPlistPrivacyNotes: [String] = [
-        "Apple Health access is read-only for the MVP.",
-        "StateWatch does not request permission to write HealthKit data.",
-        "Health data stays local and supports wellness summaries only."
+        String(localized: "Apple Health access is read-only for the MVP."),
+        String(localized: "StateWatch does not request permission to write HealthKit data."),
+        String(localized: "Health data stays local and supports wellness summaries only.")
     ]
 
     static func permissionStatuses(access: HealthKitPermissionAccess) -> [HealthKitPermissionStatus] {

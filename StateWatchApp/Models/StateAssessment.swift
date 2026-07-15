@@ -44,7 +44,7 @@ struct StateAssessment: Identifiable, Codable, Equatable {
     }
 
     var primarySuggestion: String {
-        suggestions.first ?? "Check in with how you feel before adjusting your day."
+        suggestions.first ?? String(localized: "Check in with how you feel before adjusting your day.")
     }
 
     // TODO: Add data-quality metadata once real local HealthKit reads can be partial or unavailable.
@@ -73,6 +73,15 @@ enum StateLevel: String, CaseIterable, Codable, Identifiable {
     case needsRest = "Needs Rest"
 
     var id: String { rawValue }
+
+    var displayName: String {
+        switch self {
+        case .steady: return String(localized: "Steady")
+        case .mixed: return String(localized: "Mixed")
+        case .low: return String(localized: "Low")
+        case .needsRest: return String(localized: "Needs Rest")
+        }
+    }
 
     static func level(for score: Int) -> StateLevel {
         switch score {

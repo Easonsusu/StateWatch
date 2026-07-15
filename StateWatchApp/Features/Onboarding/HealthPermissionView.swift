@@ -56,7 +56,11 @@ struct HealthPermissionView: View {
                 .buttonStyle(.borderedProminent)
 
                 Button(action: onContinue) {
-                    Text(healthKitManager.shouldUseMockData ? "Continue with Mock Data" : "Continue")
+                    Text(
+                        healthKitManager.shouldUseMockData
+                            ? String(localized: "Continue with Mock Data")
+                            : String(localized: "Continue")
+                    )
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.bordered)

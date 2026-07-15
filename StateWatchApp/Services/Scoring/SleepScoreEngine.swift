@@ -8,19 +8,19 @@ struct SleepScoreEngine {
     ) -> ScoreComponent {
         guard let sleep = snapshot.sleepDurationHours else {
             return ScoreComponent(
-                title: "Sleep",
+                title: String(localized: "Sleep"),
                 score: 50,
                 confidence: .unavailable,
-                summary: "Sleep data is unavailable for today."
+                summary: String(localized: "Sleep data is unavailable for today.")
             )
         }
 
         guard let baselineSleep = baseline.sleepDurationAverage else {
             return ScoreComponent(
-                title: "Sleep",
+                title: String(localized: "Sleep"),
                 score: 60,
                 confidence: .low,
-                summary: "Sleep duration is available, but baseline history is still building."
+                summary: String(localized: "Sleep duration is available, but baseline history is still building.")
             )
         }
 
@@ -56,15 +56,15 @@ struct SleepScoreEngine {
         let summary: String
         switch confidence {
         case .high, .medium:
-            summary = "Sleep reflects duration, recent trend, and estimated sleep debt compared with your baseline."
+            summary = String(localized: "Sleep reflects duration, recent trend, and estimated sleep debt compared with your baseline.")
         case .low:
-            summary = "Sleep uses limited baseline history, so this remains a softer wellness estimate."
+            summary = String(localized: "Sleep uses limited baseline history, so this remains a softer wellness estimate.")
         case .unavailable:
-            summary = "Sleep baseline history is unavailable, so this score stays cautious."
+            summary = String(localized: "Sleep baseline history is unavailable, so this score stays cautious.")
         }
 
         return ScoreComponent(
-            title: "Sleep",
+            title: String(localized: "Sleep"),
             score: clamp(score),
             confidence: confidence,
             summary: summary

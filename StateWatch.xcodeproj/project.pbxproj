@@ -107,6 +107,8 @@
 		A68000000000000000000007 /* SharedReadinessSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68100000000000000000001 /* SharedReadinessSummary.swift */; };
 		A68000000000000000000008 /* SharedReadinessStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68100000000000000000002 /* SharedReadinessStore.swift */; };
 		A68000000000000000000009 /* SharedReadinessStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68100000000000000000003 /* SharedReadinessStateTests.swift */; };
+		C13000000000000000000002 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C13000000000000000000001 /* Localizable.xcstrings */; };
+		C13000000000000000000004 /* TraditionalChineseLocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13000000000000000000003 /* TraditionalChineseLocalizationTests.swift */; };
 		654352D083481CB3F2CE4EAE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91D4105804A8108983609354 /* Assets.xcassets */; };
 		EB7EFA62BB587DF042AFB1C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C273FDA27C713F4E89B8D78 /* Assets.xcassets */; };
 		40BE8EC08D20FD2F0D580A05 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDD80F8A4F0C1686025DD75F /* HealthKit.framework */; };
@@ -176,6 +178,7 @@
 		91D4105804A8108983609354 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = StateWatchApp/Resources/Assets.xcassets; sourceTree = "<group>"; };
 		F083CE7B13FB89F932A9172B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = StateWatchApp/Resources/Info.plist; sourceTree = "<group>"; };
 		A77A77A77A77A77A77A77A77 /* StateWatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StateWatchApp/Resources/StateWatch.entitlements; sourceTree = "<group>"; };
+		C13000000000000000000001 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = StateWatchApp/Resources/Localizable.xcstrings; sourceTree = "<group>"; };
 		D42476271F4AF839F67B233F /* ExplanationGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Services/Explanation/ExplanationGenerator.swift; sourceTree = "<group>"; };
 		CEF6A442A71EA0F1E35F9ADF /* SuggestionGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Services/Explanation/SuggestionGenerator.swift; sourceTree = "<group>"; };
 		5D09D0A0F13BAF9B571EE754 /* HealthDataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Services/HealthKit/HealthDataFetcher.swift; sourceTree = "<group>"; };
@@ -213,6 +216,7 @@
 		C10100000000000000000002 /* AppCoordinatorOnboardingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/AppCoordinatorOnboardingTests.swift; sourceTree = "<group>"; };
 		D21100000000000000000002 /* SettingsPrivacyTruthfulnessTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/SettingsPrivacyTruthfulnessTests.swift; sourceTree = "<group>"; };
 		F5B500000000000000000005 /* StateWatchVisualPreviewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/StateWatchVisualPreviewTests.swift; sourceTree = "<group>"; };
+		C13000000000000000000003 /* TraditionalChineseLocalizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/TraditionalChineseLocalizationTests.swift; sourceTree = "<group>"; };
 		A106FE680F4F943C00E6ABC1 /* StateWatchWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/App/StateWatchWatchApp.swift; sourceTree = "<group>"; };
 		DDA00BD7ACAE0EB5046D8BB8 /* StateWatchComplicationBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/Complications/StateWatchComplicationBundle.swift; sourceTree = "<group>"; };
 		E67D696501BF3FC7D59194CA /* StateWatchWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/Complications/StateWatchWidgetView.swift; sourceTree = "<group>"; };
@@ -439,6 +443,7 @@
 			children = (
 				91D4105804A8108983609354 /* Assets.xcassets */,
 				F083CE7B13FB89F932A9172B /* Info.plist */,
+				C13000000000000000000001 /* Localizable.xcstrings */,
 				A77A77A77A77A77A77A77A77 /* StateWatch.entitlements */,
 			);
 			name = Resources;
@@ -505,6 +510,7 @@
 				B97000000000000000000001 /* StateCheckInStorageTests.swift */,
 				E5900000000000000000000C /* StateWatchThemeTests.swift */,
 				F5B500000000000000000005 /* StateWatchVisualPreviewTests.swift */,
+				C13000000000000000000003 /* TraditionalChineseLocalizationTests.swift */,
 			);
 			name = StateWatchTests;
 			sourceTree = "<group>";
@@ -728,6 +734,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				"zh-Hant",
 				Base,
 			);
 			mainGroup = ADCF10F76EBF2A74473E9DC4;
@@ -749,6 +756,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				654352D083481CB3F2CE4EAE /* Assets.xcassets in Resources */,
+				C13000000000000000000002 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -888,6 +896,7 @@
 				A68000000000000000000007 /* SharedReadinessSummary.swift in Sources */,
 				A68000000000000000000008 /* SharedReadinessStore.swift in Sources */,
 				A68000000000000000000009 /* SharedReadinessStateTests.swift in Sources */,
+				C13000000000000000000004 /* TraditionalChineseLocalizationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

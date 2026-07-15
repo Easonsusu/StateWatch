@@ -18,7 +18,12 @@ struct StateWatchMiniTrendChart: View {
                 }
                 .frame(height: 72)
                 .accessibilityLabel("Seven day trend")
-                .accessibilityValue("\(normalized.count) values")
+                .accessibilityValue(
+                    String.localizedStringWithFormat(
+                        String(localized: "%d values"),
+                        normalized.count
+                    )
+                )
             }
         }
     }

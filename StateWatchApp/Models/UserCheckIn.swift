@@ -7,6 +7,14 @@ struct UserCheckIn: Identifiable, Codable, Equatable {
         case good = "Good"
 
         var id: String { rawValue }
+
+        var displayName: String {
+            switch self {
+            case .low: return String(localized: "Low")
+            case .neutral: return String(localized: "Neutral")
+            case .good: return String(localized: "Good")
+            }
+        }
     }
 
     enum Intensity: String, CaseIterable, Codable, Identifiable {
@@ -15,6 +23,14 @@ struct UserCheckIn: Identifiable, Codable, Equatable {
         case high = "High"
 
         var id: String { rawValue }
+
+        var displayName: String {
+            switch self {
+            case .low: return String(localized: "Low")
+            case .medium: return String(localized: "Medium")
+            case .high: return String(localized: "High")
+            }
+        }
     }
 
     let id: UUID
