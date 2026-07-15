@@ -4,14 +4,24 @@ struct PrivacyView: View {
     var body: some View {
         List {
             Section("Local-first MVP") {
-                Text("StateWatch does not upload HealthKit data to any server in the MVP.")
-                Text("HealthKit data must not be used for advertising, marketing, data mining, or profiling.")
+                Text(SettingsPrivacyContent.localFirstDisclosure)
+                Text(SettingsPrivacyContent.dataUseDisclosure)
             }
+
+            Section("Stored Locally") {
+                Text(SettingsPrivacyContent.onboardingDisclosure)
+                Text(SettingsPrivacyContent.sharedSummaryDisclosure)
+                Text(SettingsPrivacyContent.watchCheckInDisclosure)
+            }
+
+            Section("Apple Health Boundaries") {
+                Text(SettingsPrivacyContent.healthKitProcessingDisclosure)
+                Text(SettingsPrivacyContent.healthKitIsolationDisclosure)
+                Text(SettingsPrivacyContent.healthKitSurfaceIsolationDisclosure)
+            }
+
             Section("Wellness only") {
-                Text("StateWatch is not a medical device. It does not diagnose, treat, cure, or prevent any disease, and it does not provide medical advice.")
-            }
-            Section("TODO") {
-                Text("Finalize privacy policy after HealthKit permissions and local storage are implemented.")
+                Text(SettingsPrivacyContent.wellnessOnlyDisclosure)
             }
         }
         .navigationTitle("Privacy")
