@@ -22,11 +22,19 @@ struct SettingsView: View {
                 }
                 #endif
 
-                Section("Data") {
-                    Text("HealthKit data stays local in the MVP.")
-                    Button("Reset Local Mock Data") {
-                        // TODO: Clear local persistence after it exists.
-                    }
+                Section("Local Data") {
+                    Label(
+                        SettingsPrivacyContent.dashboardDemoDisclosure,
+                        systemImage: "square.stack.3d.up"
+                    )
+                    Label(
+                        SettingsPrivacyContent.onboardingDisclosure,
+                        systemImage: "iphone"
+                    )
+                    Label(
+                        SettingsPrivacyContent.watchCheckInDisclosure,
+                        systemImage: "applewatch"
+                    )
                 }
             }
             .navigationTitle("Settings")

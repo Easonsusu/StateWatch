@@ -46,6 +46,7 @@
 		51E93BF3C85FA5447C4695C3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD28289274924C633330254 /* SettingsView.swift */; };
 		B22B22B22B22B22B22B22B22 /* DataPermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44D44D44D44D44D44D44D44 /* DataPermissionView.swift */; };
 		26A5D5805F75B8EEF449819D /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264518E81625260D83E6272D /* PrivacyView.swift */; };
+		D21000000000000000000001 /* SettingsPrivacyContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21100000000000000000001 /* SettingsPrivacyContent.swift */; };
 		F5A300000000000000000003 /* HealthKitScoringPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A400000000000000000004 /* HealthKitScoringPreviewView.swift */; };
 		F5B100000000000000000001 /* StateWatchVisualPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B200000000000000000002 /* StateWatchVisualPreviewView.swift */; };
 		E58000000000000000000001 /* StateWatchColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59000000000000000000001 /* StateWatchColors.swift */; };
@@ -89,6 +90,7 @@
 		E5800000000000000000000C /* StateWatchThemeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5900000000000000000000C /* StateWatchThemeTests.swift */; };
 		D10000000000000000000002 /* DashboardPresentationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10100000000000000000002 /* DashboardPresentationModelTests.swift */; };
 		C10000000000000000000002 /* AppCoordinatorOnboardingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10100000000000000000002 /* AppCoordinatorOnboardingTests.swift */; };
+		D21000000000000000000002 /* SettingsPrivacyTruthfulnessTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21100000000000000000002 /* SettingsPrivacyTruthfulnessTests.swift */; };
 		F5B400000000000000000004 /* StateWatchVisualPreviewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B500000000000000000005 /* StateWatchVisualPreviewTests.swift */; };
 		F64000000000000000000001 /* ComplicationStateSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64100000000000000000001 /* ComplicationStateSummary.swift */; };
 		F64000000000000000000002 /* StateWatchComplicationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64100000000000000000002 /* StateWatchComplicationProvider.swift */; };
@@ -161,6 +163,7 @@
 		F5B200000000000000000002 /* StateWatchVisualPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Debug/VisualPreview/StateWatchVisualPreviewView.swift; sourceTree = "<group>"; };
 		264518E81625260D83E6272D /* PrivacyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Settings/PrivacyView.swift; sourceTree = "<group>"; };
 		4DD28289274924C633330254 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Settings/SettingsView.swift; sourceTree = "<group>"; };
+		D21100000000000000000001 /* SettingsPrivacyContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Settings/SettingsPrivacyContent.swift; sourceTree = "<group>"; };
 		18C72C723877A11910304015 /* MetricChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Trends/MetricChartView.swift; sourceTree = "<group>"; };
 		853652C566447B2CA7A58A15 /* TrendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Features/Trends/TrendsView.swift; sourceTree = "<group>"; };
 		88A57ED9AFD7DDB1725B8E7F /* DailyHealthSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchApp/Models/DailyHealthSnapshot.swift; sourceTree = "<group>"; };
@@ -208,6 +211,7 @@
 		E5900000000000000000000C /* StateWatchThemeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/StateWatchThemeTests.swift; sourceTree = "<group>"; };
 		D10100000000000000000002 /* DashboardPresentationModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/DashboardPresentationModelTests.swift; sourceTree = "<group>"; };
 		C10100000000000000000002 /* AppCoordinatorOnboardingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/AppCoordinatorOnboardingTests.swift; sourceTree = "<group>"; };
+		D21100000000000000000002 /* SettingsPrivacyTruthfulnessTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/SettingsPrivacyTruthfulnessTests.swift; sourceTree = "<group>"; };
 		F5B500000000000000000005 /* StateWatchVisualPreviewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/StateWatchVisualPreviewTests.swift; sourceTree = "<group>"; };
 		A106FE680F4F943C00E6ABC1 /* StateWatchWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/App/StateWatchWatchApp.swift; sourceTree = "<group>"; };
 		DDA00BD7ACAE0EB5046D8BB8 /* StateWatchComplicationBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/Complications/StateWatchComplicationBundle.swift; sourceTree = "<group>"; };
@@ -401,6 +405,7 @@
 			children = (
 				D44D44D44D44D44D44D44D44 /* DataPermissionView.swift */,
 				264518E81625260D83E6272D /* PrivacyView.swift */,
+				D21100000000000000000001 /* SettingsPrivacyContent.swift */,
 				4DD28289274924C633330254 /* SettingsView.swift */,
 			);
 			name = Settings;
@@ -495,6 +500,7 @@
 				A00E70CE8EC82A9CC7441A44 /* OverallStateEngineTests.swift */,
 				63FD61DF151A3052AF940D1C /* RecoveryScoreEngineTests.swift */,
 				7D7961319B0F3E33F2242038 /* SleepScoreEngineTests.swift */,
+				D21100000000000000000002 /* SettingsPrivacyTruthfulnessTests.swift */,
 				A68100000000000000000003 /* SharedReadinessStateTests.swift */,
 				B97000000000000000000001 /* StateCheckInStorageTests.swift */,
 				E5900000000000000000000C /* StateWatchThemeTests.swift */,
@@ -815,6 +821,7 @@
 				51E93BF3C85FA5447C4695C3 /* SettingsView.swift in Sources */,
 				B22B22B22B22B22B22B22B22 /* DataPermissionView.swift in Sources */,
 				26A5D5805F75B8EEF449819D /* PrivacyView.swift in Sources */,
+				D21000000000000000000001 /* SettingsPrivacyContent.swift in Sources */,
 				F5A300000000000000000003 /* HealthKitScoringPreviewView.swift in Sources */,
 				F5B100000000000000000001 /* StateWatchVisualPreviewView.swift in Sources */,
 				E58000000000000000000001 /* StateWatchColors.swift in Sources */,
@@ -860,6 +867,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C10000000000000000000002 /* AppCoordinatorOnboardingTests.swift in Sources */,
+				D21000000000000000000002 /* SettingsPrivacyTruthfulnessTests.swift in Sources */,
 				739149B27465A24F818A77CF /* BaselineCalculatorTests.swift in Sources */,
 				C31F3409BEAB476C9500E8A2 /* RecoveryScoreEngineTests.swift in Sources */,
 				45929C35B08CC6FC2D96A261 /* SleepScoreEngineTests.swift in Sources */,
