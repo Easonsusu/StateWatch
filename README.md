@@ -74,8 +74,8 @@ StateWatch is still pre-release. The production iPhone dashboard and watchOS app
 - HealthKit-derived scoring should not become the default production Dashboard until later QA explicitly approves enabling the local feature flag beyond internal validation.
 - Developers should not have cloud or backend access to user HealthKit data.
 - App Group shared state currently carries mock summary data only; production HealthKit-derived shared summaries remain deferred.
-- Future State Check-in, visual-first UI, and bilingual Traditional Chinese / English support are roadmap directions and should start from the existing Figma design system before SwiftUI implementation.
-- Future visual-first UI, icon assets, check-in UI, and bilingual Traditional Chinese / English layout should go through Figma design review before SwiftUI implementation.
+- The production iPhone app, Apple Watch app, and WidgetKit complications support English and Traditional Chinese (`zh-Hant`) through target-specific native String Catalogs. English remains the source and fallback language, and each surface follows the system language automatically.
+- Future visual or localization-layout refinements should continue through Figma design review. Real-device Apple Watch and complication localization validation remains deferred.
 
 ## Privacy and Medical Safety Stance
 

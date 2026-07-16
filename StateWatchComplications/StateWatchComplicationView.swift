@@ -77,7 +77,7 @@ struct StateWatchComplicationView: View {
                 .lineLimit(1)
                 .minimumScaleFactor(0.8)
 
-            Text(entry.summary.shortSuggestion)
+            Text(entry.summary.localizedShortSuggestion)
                 .font(.system(size: 10, weight: .regular, design: .rounded))
                 .foregroundStyle(Color.stateWatchSecondary)
                 .lineLimit(1)

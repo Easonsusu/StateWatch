@@ -6,18 +6,18 @@ struct WatchSuggestionView: View {
     var body: some View {
         WatchPage {
             VStack(alignment: .leading, spacing: 12) {
-                Text("Suggestion")
+                Text(WatchLocalization.text("Suggestion"))
                     .font(.system(size: 15, weight: .semibold, design: .rounded))
                     .foregroundStyle(WatchStyle.textPrimary)
 
-                Text(text)
+                Text(WatchLocalization.text(text))
                     .font(.system(size: 15, weight: .semibold, design: .rounded))
                     .lineSpacing(2)
                     .multilineTextAlignment(.leading)
                     .foregroundStyle(WatchStyle.textPrimary)
                     .fixedSize(horizontal: false, vertical: true)
 
-                Text("If it matches how you feel")
+                Text(WatchLocalization.text("If it matches how you feel"))
                     .font(.system(size: 11, weight: .medium, design: .rounded))
                     .foregroundStyle(WatchStyle.textMuted)
                     .lineLimit(1)
@@ -32,7 +32,11 @@ struct WatchSuggestionView: View {
                     .stroke(WatchStyle.accentCyan.opacity(0.28), lineWidth: 1)
             )
         }
-        .accessibilityLabel("Suggestion. \(text)")
+        .accessibilityLabel(
+            Text(WatchLocalization.formatted(
+                "Suggestion. %@", WatchLocalization.text(text)
+            ))
+        )
     }
 }
 

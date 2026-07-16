@@ -28,7 +28,7 @@ struct WatchScoreView: View {
                             .monospacedDigit()
                             .foregroundStyle(WatchStyle.textPrimary)
 
-                        Text(level)
+                        Text(WatchLocalization.stateLabel(level))
                             .font(.system(size: 13, weight: .semibold, design: .rounded))
                             .lineLimit(1)
                             .minimumScaleFactor(0.74)
@@ -38,11 +38,11 @@ struct WatchScoreView: View {
                 .frame(width: 116, height: 116)
 
                 VStack(spacing: 3) {
-                    Text(confidence)
+                    Text(WatchLocalization.text(confidence))
                         .font(.system(size: 12, weight: .semibold, design: .rounded))
                         .foregroundStyle(WatchStyle.accentCyan)
 
-                    Text(updatedText)
+                    Text(WatchLocalization.text(updatedText))
                         .font(.system(size: 11, weight: .medium, design: .rounded))
                         .foregroundStyle(WatchStyle.textMuted)
                 }
@@ -50,7 +50,15 @@ struct WatchScoreView: View {
                 .minimumScaleFactor(0.8)
             }
         }
-        .accessibilityLabel("Mock wellness score \(score), \(level), confidence \(confidence), \(updatedText)")
+        .accessibilityLabel(
+            Text(WatchLocalization.formatted(
+                "Mock wellness score %d, %@, confidence %@, %@",
+                score,
+                WatchLocalization.stateLabel(level),
+                WatchLocalization.text(confidence),
+                WatchLocalization.text(updatedText)
+            ))
+        )
     }
 }
 

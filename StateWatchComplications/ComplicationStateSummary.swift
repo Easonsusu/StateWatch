@@ -44,16 +44,32 @@ struct ComplicationStateSummary: Equatable {
         isStale: false
     )
 
+    var localizedStateLabel: String {
+        localized(stateLabel)
+    }
+
+    var localizedShortSuggestion: String {
+        localized(shortSuggestion)
+    }
+
+    var localizedConfidence: String {
+        localized(confidence)
+    }
+
+    var localizedUpdatedText: String {
+        localized(updatedText)
+    }
+
     var circularLabel: String {
-        String(stateLabel.uppercased().prefix(3))
+        String(localizedStateLabel.uppercased().prefix(3))
     }
 
     var rectangularTitle: String {
-        "State \(score) - \(stateLabel)"
+        formatted("State %d - %@", score, localizedStateLabel)
     }
 
     var inlineText: String {
-        "StateWatch \(score) \(stateLabel)"
+        formatted("StateWatch %d %@", score, localizedStateLabel)
     }
 
     var searchableText: String {
@@ -65,5 +81,17 @@ struct ComplicationStateSummary: Equatable {
             updatedText,
             isStale ? "Stale" : "Current demo"
         ].joined(separator: " ")
+    }
+
+    private func localized(_ key: String) -> String {
+        Bundle.main.localizedString(forKey: key, value: key, table: nil)
+    }
+
+    private func formatted(_ key: String, _ arguments: CVarArg...) -> String {
+        String(
+            format: localized(key),
+            locale: Locale.current,
+            arguments: arguments
+        )
     }
 }

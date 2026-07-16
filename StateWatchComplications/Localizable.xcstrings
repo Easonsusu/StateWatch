@@ -1,0 +1,23 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Consider a lighter day if that matches how you feel." : { "localizations" : { "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "如果這符合您當下的感受，可以考慮今天採取輕鬆一些的方式。" } } } },
+    "Current demo" : { "localizations" : { "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "目前示範資料" } } } },
+    "Demo" : { "localizations" : { "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "示範" } } } },
+    "Demo data" : { "localizations" : { "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "示範資料" } } } },
+    "High" : { "localizations" : { "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "高" } } } },
+    "Low" : { "localizations" : { "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "較低" } } } },
+    "Low data" : { "localizations" : { "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "資料不足" } } } },
+    "Medium" : { "localizations" : { "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "中等" } } } },
+    "Mixed" : { "localizations" : { "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "綜合" } } } },
+    "Needs Rest" : { "localizations" : { "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "適合放慢步調" } } } },
+    "Shows a mock readiness summary." : { "localizations" : { "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "顯示模擬的每日狀態摘要。" } } } },
+    "Stale" : { "localizations" : { "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "資料已過期" } } } },
+    "State %d - %@" : { "localizations" : { "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "狀態 %d - %@" } } } },
+    "StateWatch" : { "localizations" : { "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "StateWatch" } } } },
+    "StateWatch %d %@" : { "localizations" : { "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "StateWatch %d %@" } } } },
+    "Steady" : { "localizations" : { "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "穩定" } } } },
+    "Unavailable" : { "localizations" : { "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "無法使用" } } } }
+  },
+  "version" : "1.0"
+}
