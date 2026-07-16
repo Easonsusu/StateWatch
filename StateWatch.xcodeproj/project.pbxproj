@@ -71,6 +71,8 @@
 		B97200000000000000000002 /* LocalStateCheckInStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97200000000000000000001 /* LocalStateCheckInStore.swift */; };
 		B97800000000000000000002 /* StateCheckInDisplayPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97800000000000000000001 /* StateCheckInDisplayPreference.swift */; };
 		2320930913CB8693BF55CAD0 /* StateWatchWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A106FE680F4F943C00E6ABC1 /* StateWatchWatchApp.swift */; };
+		C14000000000000000000001 /* WatchLocalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14100000000000000000001 /* WatchLocalization.swift */; };
+		C14000000000000000000002 /* Watch Localization Catalog in Resources */ = {isa = PBXBuildFile; fileRef = C14100000000000000000002 /* Watch Localization Catalog */; };
 		9B161F9D95FA2B2197EADE04 /* WatchDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CEC8652F64EEF8B1C402DE /* WatchDashboardView.swift */; };
 		B93000000000000000000005 /* WatchCheckInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93000000000000000000004 /* WatchCheckInView.swift */; };
 		020AD294E232EEAA418E9B15 /* WatchScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6787F57710496E230B5F3CB /* WatchScoreView.swift */; };
@@ -96,6 +98,7 @@
 		F64000000000000000000002 /* StateWatchComplicationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64100000000000000000002 /* StateWatchComplicationProvider.swift */; };
 		F64000000000000000000003 /* StateWatchComplicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64100000000000000000003 /* StateWatchComplicationView.swift */; };
 		F64000000000000000000004 /* StateWatchComplicationsBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64100000000000000000004 /* StateWatchComplicationsBundle.swift */; };
+		C14000000000000000000003 /* Complication Localization Catalog in Resources */ = {isa = PBXBuildFile; fileRef = C14100000000000000000003 /* Complication Localization Catalog */; };
 		F64000000000000000000005 /* ComplicationStateSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64100000000000000000001 /* ComplicationStateSummary.swift */; };
 		F64000000000000000000006 /* StateWatchComplications.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F64100000000000000000006 /* StateWatchComplications.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A68000000000000000000001 /* SharedReadinessSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68100000000000000000001 /* SharedReadinessSummary.swift */; };
@@ -109,6 +112,7 @@
 		A68000000000000000000009 /* SharedReadinessStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68100000000000000000003 /* SharedReadinessStateTests.swift */; };
 		C13000000000000000000002 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C13000000000000000000001 /* Localizable.xcstrings */; };
 		C13000000000000000000004 /* TraditionalChineseLocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13000000000000000000003 /* TraditionalChineseLocalizationTests.swift */; };
+		C14000000000000000000004 /* WatchTraditionalChineseLocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14100000000000000000004 /* WatchTraditionalChineseLocalizationTests.swift */; };
 		654352D083481CB3F2CE4EAE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91D4105804A8108983609354 /* Assets.xcassets */; };
 		EB7EFA62BB587DF042AFB1C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C273FDA27C713F4E89B8D78 /* Assets.xcassets */; };
 		40BE8EC08D20FD2F0D580A05 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDD80F8A4F0C1686025DD75F /* HealthKit.framework */; };
@@ -218,6 +222,8 @@
 		F5B500000000000000000005 /* StateWatchVisualPreviewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/StateWatchVisualPreviewTests.swift; sourceTree = "<group>"; };
 		C13000000000000000000003 /* TraditionalChineseLocalizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/TraditionalChineseLocalizationTests.swift; sourceTree = "<group>"; };
 		A106FE680F4F943C00E6ABC1 /* StateWatchWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/App/StateWatchWatchApp.swift; sourceTree = "<group>"; };
+		C14100000000000000000001 /* WatchLocalization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/Localization/WatchLocalization.swift; sourceTree = "<group>"; };
+		C14100000000000000000002 /* Watch Localization Catalog */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = StateWatchWatchApp/Resources/Localizable.xcstrings; sourceTree = "<group>"; };
 		DDA00BD7ACAE0EB5046D8BB8 /* StateWatchComplicationBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/Complications/StateWatchComplicationBundle.swift; sourceTree = "<group>"; };
 		E67D696501BF3FC7D59194CA /* StateWatchWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/Complications/StateWatchWidgetView.swift; sourceTree = "<group>"; };
 		B93000000000000000000004 /* WatchCheckInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchWatchApp/Features/WatchCheckInView.swift; sourceTree = "<group>"; };
@@ -234,6 +240,8 @@
 		F64100000000000000000003 /* StateWatchComplicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchComplications/StateWatchComplicationView.swift; sourceTree = "<group>"; };
 		F64100000000000000000004 /* StateWatchComplicationsBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchComplications/StateWatchComplicationsBundle.swift; sourceTree = "<group>"; };
 		F64100000000000000000005 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = StateWatchComplications/Info.plist; sourceTree = "<group>"; };
+		C14100000000000000000003 /* Complication Localization Catalog */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = StateWatchComplications/Localizable.xcstrings; sourceTree = "<group>"; };
+		C14100000000000000000004 /* WatchTraditionalChineseLocalizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/WatchTraditionalChineseLocalizationTests.swift; sourceTree = "<group>"; };
 		A68100000000000000000001 /* SharedReadinessSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchShared/SharedReadinessSummary.swift; sourceTree = "<group>"; };
 		A68100000000000000000002 /* SharedReadinessStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchShared/SharedReadinessStore.swift; sourceTree = "<group>"; };
 		A68100000000000000000003 /* SharedReadinessStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateWatchTests/SharedReadinessStateTests.swift; sourceTree = "<group>"; };
@@ -511,6 +519,7 @@
 				E5900000000000000000000C /* StateWatchThemeTests.swift */,
 				F5B500000000000000000005 /* StateWatchVisualPreviewTests.swift */,
 				C13000000000000000000003 /* TraditionalChineseLocalizationTests.swift */,
+				C14100000000000000000004 /* WatchTraditionalChineseLocalizationTests.swift */,
 			);
 			name = StateWatchTests;
 			sourceTree = "<group>";
@@ -519,6 +528,7 @@
 			isa = PBXGroup;
 			children = (
 				91581543C823F2A7F09B2E27 /* App */,
+				C14200000000000000000001 /* Localization */,
 				972F596C6058204C61AA3BC8 /* Complications */,
 				732088BE33F0083B8E1152BB /* Features */,
 				645C7608CD3854D8B2C803E9 /* Resources */,
@@ -533,6 +543,14 @@
 				A106FE680F4F943C00E6ABC1 /* StateWatchWatchApp.swift */,
 			);
 			name = App;
+			sourceTree = "<group>";
+		};
+		C14200000000000000000001 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				C14100000000000000000001 /* WatchLocalization.swift */,
+			);
+			name = Localization;
 			sourceTree = "<group>";
 		};
 		972F596C6058204C61AA3BC8 /* Complications */ = {
@@ -559,6 +577,7 @@
 			isa = PBXGroup;
 			children = (
 				9C273FDA27C713F4E89B8D78 /* Assets.xcassets */,
+				C14100000000000000000002 /* Watch Localization Catalog */,
 				FF0CF48A97B01E78D8BC2265 /* Info.plist */,
 				A68100000000000000000004 /* StateWatchWatchApp.entitlements */,
 			);
@@ -587,6 +606,7 @@
 			isa = PBXGroup;
 			children = (
 				F64100000000000000000001 /* ComplicationStateSummary.swift */,
+				C14100000000000000000003 /* Complication Localization Catalog */,
 				F64100000000000000000005 /* Info.plist */,
 				A68100000000000000000005 /* StateWatchComplications.entitlements */,
 				F64100000000000000000002 /* StateWatchComplicationProvider.swift */,
@@ -765,6 +785,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB7EFA62BB587DF042AFB1C3 /* Assets.xcassets in Resources */,
+				C14000000000000000000002 /* Watch Localization Catalog in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -779,6 +800,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C14000000000000000000003 /* Complication Localization Catalog in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -863,6 +885,7 @@
 				B97200000000000000000002 /* LocalStateCheckInStore.swift in Sources */,
 				B97800000000000000000002 /* StateCheckInDisplayPreference.swift in Sources */,
 				2320930913CB8693BF55CAD0 /* StateWatchWatchApp.swift in Sources */,
+				C14000000000000000000001 /* WatchLocalization.swift in Sources */,
 				B93000000000000000000005 /* WatchCheckInView.swift in Sources */,
 				9B161F9D95FA2B2197EADE04 /* WatchDashboardView.swift in Sources */,
 				020AD294E232EEAA418E9B15 /* WatchScoreView.swift in Sources */,
@@ -897,6 +920,7 @@
 				A68000000000000000000008 /* SharedReadinessStore.swift in Sources */,
 				A68000000000000000000009 /* SharedReadinessStateTests.swift in Sources */,
 				C13000000000000000000004 /* TraditionalChineseLocalizationTests.swift in Sources */,
+				C14000000000000000000004 /* WatchTraditionalChineseLocalizationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

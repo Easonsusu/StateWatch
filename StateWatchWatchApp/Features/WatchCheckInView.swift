@@ -37,11 +37,11 @@ struct WatchCheckInView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 9) {
                 VStack(alignment: .leading, spacing: 3) {
-                    Text(StateCheckInOption.screenTitle)
+                    Text(WatchLocalization.text(StateCheckInOption.screenTitle))
                         .font(.system(size: 15, weight: .semibold, design: .rounded))
                         .foregroundStyle(WatchStyle.textPrimary)
 
-                    Text(StateCheckInOption.screenSubtitle)
+                    Text(WatchLocalization.text(StateCheckInOption.screenSubtitle))
                         .font(.system(size: 11, weight: .medium, design: .rounded))
                         .foregroundStyle(WatchStyle.textMuted)
                         .lineLimit(2)
@@ -58,8 +58,8 @@ struct WatchCheckInView: View {
                             optionRow(option)
                         }
                         .buttonStyle(.plain)
-                        .accessibilityLabel(option.accessibilityLabel)
-                        .accessibilityHint(StateCheckInOption.saveAccessibilityHint)
+                        .accessibilityLabel(Text(localizedOptionAccessibilityLabel(option)))
+                        .accessibilityHint(Text(WatchLocalization.text(StateCheckInOption.saveAccessibilityHint)))
                     }
                 }
 
@@ -77,7 +77,7 @@ struct WatchCheckInView: View {
                 Button {
                     updateDisplayMode(mode)
                 } label: {
-                    Text(mode.compactLabel)
+                    Text(WatchLocalization.text(mode.compactLabel))
                         .font(.system(size: 10, weight: .semibold, design: .rounded))
                         .lineLimit(1)
                         .minimumScaleFactor(0.75)
@@ -92,13 +92,13 @@ struct WatchCheckInView: View {
                         )
                 }
                 .buttonStyle(.plain)
-                .accessibilityLabel("Check-in display style, \(mode.label)")
-                .accessibilityValue(displayMode == mode ? "Selected" : "Not selected")
-                .accessibilityHint(StateCheckInOption.displayStyleAccessibilityHint)
+                .accessibilityLabel(Text(WatchLocalization.formatted("Check-in display style, %@", WatchLocalization.text(mode.label))))
+                .accessibilityValue(Text(WatchLocalization.text(displayMode == mode ? "Selected" : "Not selected")))
+                .accessibilityHint(Text(WatchLocalization.text(StateCheckInOption.displayStyleAccessibilityHint)))
             }
         }
         .accessibilityElement(children: .contain)
-        .accessibilityLabel("Check-in display style")
+        .accessibilityLabel(Text(WatchLocalization.text("Check-in display style")))
         .onAppear {
             displayMode = displayPreferenceStore.load()
         }
@@ -114,7 +114,7 @@ struct WatchCheckInView: View {
             }
 
             if displayMode.showsText {
-                Text(option.label)
+                Text(localizedOptionLabel(option))
                     .font(.system(size: 13, weight: .semibold, design: .rounded))
                     .foregroundStyle(WatchStyle.textPrimary)
                     .lineLimit(1)
@@ -141,17 +141,17 @@ struct WatchCheckInView: View {
                 .foregroundStyle(WatchStyle.accentCyan)
 
             VStack(spacing: 3) {
-                Text(confirmationState.title)
+                Text(WatchLocalization.text(confirmationState.title))
                     .font(.system(size: 16, weight: .semibold, design: .rounded))
                     .foregroundStyle(WatchStyle.textPrimary)
 
-                Text(confirmationState.message)
+                Text(WatchLocalization.text(confirmationState.message))
                     .font(.system(size: 12, weight: .medium, design: .rounded))
                     .foregroundStyle(WatchStyle.textSecondary)
                     .lineLimit(1)
                     .minimumScaleFactor(0.82)
 
-                Text(option.label)
+                Text(localizedOptionLabel(option))
                     .font(.system(size: 13, weight: .bold, design: .rounded))
                     .foregroundStyle(optionColor(for: option))
                     .padding(.horizontal, 10)
@@ -160,13 +160,13 @@ struct WatchCheckInView: View {
                     .clipShape(Capsule())
             }
 
-            Text(confirmationState.detail)
+            Text(WatchLocalization.text(confirmationState.detail))
                 .font(.system(size: 11, weight: .medium, design: .rounded))
                 .foregroundStyle(WatchStyle.textMuted)
                 .lineLimit(2)
                 .multilineTextAlignment(.center)
 
-            Button(StateCheckInOption.doneButtonTitle) {
+            Button(WatchLocalization.text(StateCheckInOption.doneButtonTitle)) {
                 showsConfirmation = false
                 selectedOption = nil
             }
@@ -179,7 +179,7 @@ struct WatchCheckInView: View {
 
     private var recentHistorySection: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text(StateCheckInOption.recentCheckInsTitle)
+            Text(WatchLocalization.text(StateCheckInOption.recentCheckInsTitle))
                 .font(.system(size: 12, weight: .semibold, design: .rounded))
                 .foregroundStyle(WatchStyle.textSecondary)
 
@@ -199,16 +199,16 @@ struct WatchCheckInView: View {
 
             if let deleteFailureMessage {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(deleteFailureMessage)
+                    Text(WatchLocalization.text(deleteFailureMessage))
                         .font(.system(size: 11, weight: .semibold, design: .rounded))
                         .foregroundStyle(WatchStyle.textSecondary)
 
-                    Text(StateCheckInOption.tryAgainLaterMessage)
+                    Text(WatchLocalization.text(StateCheckInOption.tryAgainLaterMessage))
                         .font(.system(size: 10, weight: .medium, design: .rounded))
                         .foregroundStyle(WatchStyle.textMuted)
                 }
                 .accessibilityElement(children: .combine)
-                .accessibilityLabel("\(deleteFailureMessage). \(StateCheckInOption.tryAgainLaterMessage)")
+                .accessibilityLabel(Text(WatchLocalization.text("Delete unavailable. Try again later.")))
             }
         }
         .padding(.top, 2)
@@ -216,11 +216,11 @@ struct WatchCheckInView: View {
 
     private var emptyHistoryView: some View {
         VStack(alignment: .leading, spacing: 2) {
-            Text(StateCheckInOption.noCheckInTitle)
+            Text(WatchLocalization.text(StateCheckInOption.noCheckInTitle))
                 .font(.system(size: 11, weight: .semibold, design: .rounded))
                 .foregroundStyle(WatchStyle.textPrimary)
 
-            Text(StateCheckInOption.optionalCheckInMessage)
+            Text(WatchLocalization.text(StateCheckInOption.optionalCheckInMessage))
                 .font(.system(size: 10, weight: .medium, design: .rounded))
                 .foregroundStyle(WatchStyle.textMuted)
                 .lineLimit(2)
@@ -231,7 +231,7 @@ struct WatchCheckInView: View {
         .background(WatchStyle.panel.opacity(0.72))
         .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(StateCheckInOption.noCheckInTitle). \(StateCheckInOption.optionalCheckInMessage)")
+        .accessibilityLabel(Text(WatchLocalization.text("No check-in yet. Check-ins are optional.")))
     }
 
     private func recentHistoryRow(_ record: StateCheckInRecord) -> some View {
@@ -244,7 +244,7 @@ struct WatchCheckInView: View {
             }
 
             VStack(alignment: .leading, spacing: 1) {
-                Text(record.option.label)
+                Text(localizedOptionLabel(record.option))
                     .font(.system(size: 11, weight: .semibold, design: .rounded))
                     .foregroundStyle(WatchStyle.textPrimary)
                     .lineLimit(1)
@@ -270,8 +270,8 @@ struct WatchCheckInView: View {
                     .clipShape(Circle())
             }
             .buttonStyle(.plain)
-            .accessibilityLabel("Delete \(record.option.label) check-in")
-            .accessibilityHint(StateCheckInOption.deleteCheckInAccessibilityHint)
+            .accessibilityLabel(Text(WatchLocalization.formatted("Delete %@ check-in", localizedOptionLabel(record.option))))
+            .accessibilityHint(Text(WatchLocalization.text(StateCheckInOption.deleteCheckInAccessibilityHint)))
         }
         .padding(.horizontal, 9)
         .padding(.vertical, 7)
@@ -279,39 +279,39 @@ struct WatchCheckInView: View {
         .background(WatchStyle.panel.opacity(0.82))
         .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
         .accessibilityElement(children: .contain)
-        .accessibilityLabel("\(record.option.accessibilityLabel), \(timestampText(for: record.createdAt))")
-        .accessibilityHint(StateCheckInOption.recentCheckInAccessibilityHint)
+        .accessibilityLabel(Text(WatchLocalization.formatted("Recent check-in: %@, %@", localizedOptionAccessibilityLabel(record.option), timestampText(for: record.createdAt))))
+        .accessibilityHint(Text(WatchLocalization.text(StateCheckInOption.recentCheckInAccessibilityHint)))
     }
 
     private func deleteConfirmationView(for record: StateCheckInRecord) -> some View {
         VStack(alignment: .leading, spacing: 5) {
-            Text(StateCheckInOption.deleteCheckInPrompt)
+            Text(WatchLocalization.text(StateCheckInOption.deleteCheckInPrompt))
                 .font(.system(size: 11, weight: .semibold, design: .rounded))
                 .foregroundStyle(WatchStyle.textPrimary)
 
-            Text(StateCheckInOption.deleteCheckInDetail)
+            Text(WatchLocalization.text(StateCheckInOption.deleteCheckInDetail))
                 .font(.system(size: 10, weight: .medium, design: .rounded))
                 .foregroundStyle(WatchStyle.textMuted)
                 .lineLimit(2)
 
             HStack(spacing: 6) {
-                Button(StateCheckInOption.deleteButtonTitle) {
+                Button(WatchLocalization.text(StateCheckInOption.deleteButtonTitle)) {
                     delete(record)
                 }
                 .font(.system(size: 10, weight: .semibold, design: .rounded))
                 .buttonStyle(.borderedProminent)
                 .tint(WatchStyle.accentBlue)
-                .accessibilityLabel("\(StateCheckInOption.deleteCheckInTitle), \(record.option.label)")
-                .accessibilityHint(StateCheckInOption.confirmDeleteAccessibilityHint)
+                .accessibilityLabel(Text(WatchLocalization.formatted("Delete check-in, %@", localizedOptionLabel(record.option))))
+                .accessibilityHint(Text(WatchLocalization.text(StateCheckInOption.confirmDeleteAccessibilityHint)))
 
-                Button(StateCheckInOption.keepButtonTitle) {
+                Button(WatchLocalization.text(StateCheckInOption.keepButtonTitle)) {
                     pendingDeleteRecord = nil
                 }
                 .font(.system(size: 10, weight: .semibold, design: .rounded))
                 .buttonStyle(.bordered)
                 .tint(WatchStyle.textMuted)
-                .accessibilityLabel(StateCheckInOption.keepButtonTitle)
-                .accessibilityHint(StateCheckInOption.keepCheckInAccessibilityHint)
+                .accessibilityLabel(Text(WatchLocalization.text(StateCheckInOption.keepButtonTitle)))
+                .accessibilityHint(Text(WatchLocalization.text(StateCheckInOption.keepCheckInAccessibilityHint)))
             }
         }
         .padding(9)
@@ -319,20 +319,28 @@ struct WatchCheckInView: View {
         .background(WatchStyle.panel)
         .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(StateCheckInOption.deleteCheckInPrompt) \(StateCheckInOption.deleteCheckInDetail)")
+        .accessibilityLabel(Text(WatchLocalization.text("Remove this local check-in? This removes it from this Watch.")))
     }
 
     private var accessibilitySummary: String {
         if showsConfirmation, let selectedOption {
-            return "\(confirmationState.message). \(selectedOption.accessibilityLabel)."
+            return WatchLocalization.formatted(confirmationState.accessibilityFormatKey, localizedOptionAccessibilityLabel(selectedOption))
         }
 
-        return "\(StateCheckInOption.screenTitle). \(StateCheckInOption.screenSubtitle)"
+        return WatchLocalization.text("Check in. How do you feel right now?")
     }
 
     private func updateDisplayMode(_ mode: StateCheckInDisplayMode) {
         displayMode = mode
         displayPreferenceStore.save(mode)
+    }
+
+    private func localizedOptionLabel(_ option: StateCheckInOption) -> String {
+        WatchLocalization.text(option.label)
+    }
+
+    private func localizedOptionAccessibilityLabel(_ option: StateCheckInOption) -> String {
+        WatchLocalization.formatted("%@, self-reported state", localizedOptionLabel(option))
     }
 
     private func save(_ option: StateCheckInOption) {
@@ -369,11 +377,11 @@ struct WatchCheckInView: View {
         let calendar = Calendar.current
 
         if calendar.isDateInToday(date) {
-            return "Today \(date.formatted(date: .omitted, time: .shortened))"
+            return WatchLocalization.formatted("Today %@", date.formatted(date: .omitted, time: .shortened))
         }
 
         if calendar.isDateInYesterday(date) {
-            return "Yesterday"
+            return WatchLocalization.text("Yesterday")
         }
 
         return date.formatted(date: .numeric, time: .omitted)
@@ -421,6 +429,15 @@ private enum CheckInConfirmationState {
             return StateCheckInOption.confirmationDetail
         case .unavailable:
             return "Try again later."
+        }
+    }
+
+    var accessibilityFormatKey: String {
+        switch self {
+        case .saved:
+            return "Check-in saved. %@."
+        case .unavailable:
+            return "Check-in unavailable. %@."
         }
     }
 }

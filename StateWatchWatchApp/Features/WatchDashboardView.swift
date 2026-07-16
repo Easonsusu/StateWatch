@@ -36,7 +36,7 @@ struct WatchDashboardView: View {
     private var componentSummary: some View {
         WatchPage {
             VStack(alignment: .leading, spacing: 10) {
-                Text("Signals")
+                Text(WatchLocalization.text("Signals"))
                     .font(.system(size: 15, weight: .semibold, design: .rounded))
                     .foregroundStyle(WatchStyle.textPrimary)
 
@@ -51,29 +51,55 @@ struct WatchDashboardView: View {
                 }
             }
         }
-        .accessibilityLabel("Mock signal summary. Recovery 68. Sleep 81. Fatigue Context 64. Activity Load 75.")
+        .accessibilityLabel(Text(signalAccessibilityLabel))
     }
 
     private var confidenceSummary: some View {
         WatchPage {
             VStack(alignment: .leading, spacing: 10) {
-                Text("Estimate")
+                Text(WatchLocalization.text("Estimate"))
                     .font(.system(size: 15, weight: .semibold, design: .rounded))
                     .foregroundStyle(WatchStyle.textPrimary)
 
                 VStack(alignment: .leading, spacing: 8) {
-                    WatchStatusPill(text: "Confidence: \(content.confidenceText)", color: WatchStyle.confidenceColor(for: content.confidence))
-                    WatchStatusPill(text: "Updated: \(content.updatedText)", color: WatchStyle.accentCyan)
+                    WatchStatusPill(
+                        text: WatchLocalization.formatted("Confidence: %@", WatchLocalization.text(content.confidenceText)),
+                        color: WatchStyle.confidenceColor(for: content.confidence)
+                    )
+                    WatchStatusPill(
+                        text: WatchLocalization.formatted("Updated: %@", WatchLocalization.text(content.updatedText)),
+                        color: WatchStyle.accentCyan
+                    )
                 }
 
-                Text(content.dataSourceText)
+                Text(WatchLocalization.text(content.dataSourceText))
                     .font(.system(size: 12, weight: .medium, design: .rounded))
                     .foregroundStyle(WatchStyle.textMuted)
                     .lineLimit(1)
                     .minimumScaleFactor(0.82)
             }
         }
-        .accessibilityLabel("Confidence \(content.confidenceText). Updated \(content.updatedText). Mock data only.")
+        .accessibilityLabel(
+            Text(WatchLocalization.formatted(
+                "Confidence %@. Updated %@. Mock data only.",
+                WatchLocalization.text(content.confidenceText),
+                WatchLocalization.text(content.updatedText)
+            ))
+        )
+    }
+
+    private var signalAccessibilityLabel: String {
+        WatchLocalization.formatted(
+            "Mock signal summary. Recovery %d. Sleep %d. Fatigue Context %d. Activity Load %d.",
+            metricScore(id: "recovery"),
+            metricScore(id: "sleep"),
+            metricScore(id: "stressFatigue"),
+            metricScore(id: "activityLoad")
+        )
+    }
+
+    private func metricScore(id: String) -> Int {
+        content.metrics.first { $0.id == id }?.score ?? 0
     }
 }
 
@@ -109,7 +135,7 @@ private struct WatchMetricRow: View {
                 .frame(width: 7, height: 7)
                 .shadow(color: color.opacity(0.4), radius: 4, x: 0, y: 0)
 
-            Text(title)
+            Text(WatchLocalization.text(title))
                 .font(.system(size: 12, weight: .medium, design: .rounded))
                 .foregroundStyle(WatchStyle.textSecondary)
                 .lineLimit(1)
